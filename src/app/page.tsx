@@ -1,7 +1,3 @@
 export default function Home() {
-  return (
-    <div >
-      index 페이지입니다.
-    </div>
-  );
+  return <div>index-page, Do I success previewing PR?</div>;
 }
