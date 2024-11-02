@@ -1,37 +1,92 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 import TitleBox from 'components/main/TitleBox';
 import MenuGroup from 'components/main/MenuGroup';
+import Footer from 'components/main/Footer';
+import { ReactComponent as WorldSVG } from '../../assets/icon/world.svg';
 
 export default function MainPage() {
+  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const mapBoxRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseEnter: EventListener = (event) => {
+    const target = event.currentTarget as SVGPathElement;
+    const countryName = target.getAttribute('title');
+    if (countryName) {
+      setHoveredCountry(countryName);
+    }
+  };
+
+  const handleMouseMove: EventListener = (event) => {
+    const mouseEvent = event as MouseEvent;
+    if (mapBoxRef.current) {
+      const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
+      setTooltipPosition({
+        x: mouseEvent.clientX - mapBoxRect.left,
+        y: mouseEvent.clientY - mapBoxRect.top
+      });
+    }
+  };
+
+  const handleMouseLeave: EventListener = () => {
+    setHoveredCountry(null);
+    setTooltipPosition(null);
+  };
+
+  useEffect(() => {
+    const paths = svgRef.current?.querySelectorAll('.country');
+    paths?.forEach((path) => {
+      path.addEventListener('mouseenter', handleMouseEnter);
+      path.addEventListener('mousemove', handleMouseMove);
+      path.addEventListener('mouseleave', handleMouseLeave);
+    });
+
+    return () => {
+      paths?.forEach((path) => {
+        path.removeEventListener('mouseenter', handleMouseEnter);
+        path.removeEventListener('mousemove', handleMouseMove);
+        path.removeEventListener('mouseleave', handleMouseLeave);
+      });
+    };
+  }, []);
+
   return (
-    <MainPageComponents>
+    <MainPageComponent>
       <SideBar>
         <div>
-          <TitleBox></TitleBox>
-          <MenuGroup></MenuGroup>
+          <TitleBox />
+          <MenuGroup />
         </div>
-
-        <Footer>
-          <div>chat</div>
-          <div>|</div>
-          <div>mypage</div>
-        </Footer>
+        <Footer />
       </SideBar>
-      <MapBox>지도</MapBox>
-    </MainPageComponents>
+      <MapBox ref={mapBoxRef}>
+        <StyledWorldSVG ref={svgRef} />
+        {hoveredCountry && tooltipPosition && (
+          <Tooltip
+            style={{ top: tooltipPosition.y - 1, left: tooltipPosition.x }}
+          >
+            {hoveredCountry}
+          </Tooltip>
+        )}
+      </MapBox>
+    </MainPageComponent>
   );
 }
 
-const MainPageComponents = styled.div`
+const MainPageComponent = styled.div`
   display: flex;
   height: 100%;
 `;
-//------------------------------------------------------
+
 const SideBar = styled.div`
   z-index: 10;
-  width: 37.8rem;
+  min-width: 38.4rem;
   background: white;
   display: flex;
   flex-direction: column;
@@ -39,18 +94,39 @@ const SideBar = styled.div`
   align-items: center;
   box-shadow: 0.5rem 0 1rem rgba(0, 0, 0, 0.1);
 `;
-//------------------------------------------------------
-//------------------------------------------------------
 
 const MapBox = styled.div`
   background: yellow;
-  width: 50rem;
+  width: 72.5%;
   height: 100vh;
+  overflow: hidden;
+  position: relative;
 `;
 
-const Footer = styled.footer`
-  margin: 4rem 0;
-  display: flex;
-  gap: 0.5rem;
-  font-size: 2rem;
+const StyledWorldSVG = styled(WorldSVG)`
+  padding: 3rem;
+  width: 100%;
+  height: auto;
+
+  .country {
+    stroke: #cccccc;
+    stroke-width: 0.5;
+
+    &:hover {
+      fill: #ffffff;
+      cursor: pointer;
+    }
+  }
+`;
+
+const Tooltip = styled.div`
+  position: absolute;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 0.25rem;
+  pointer-events: none;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  transform: translate(-50%, -100%);
 `;
