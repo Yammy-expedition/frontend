@@ -96,7 +96,7 @@ const SideBar = styled.div`
 `;
 
 const MapBox = styled.div`
-  background: yellow;
+  background: #f3f3f3;
   width: 72.5%;
   height: 100vh;
   overflow: hidden;
@@ -109,11 +109,11 @@ const StyledWorldSVG = styled(WorldSVG)`
   height: auto;
 
   .country {
-    stroke: #cccccc;
+    stroke: #ffffff;
     stroke-width: 0.5;
 
     &:hover {
-      fill: #ffffff;
+      fill: #b2d8b2;
       cursor: pointer;
     }
   }
