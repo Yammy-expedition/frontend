@@ -85,8 +85,6 @@ export default function MapBox() {
     event
   ) => {
     const target = event.target as HTMLElement;
-    console.log('here i am');
-    console.log(target);
 
     // mapBoxRef가 현재 MapContainer를 가리키고 있는지 확인
     if (

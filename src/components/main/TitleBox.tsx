@@ -37,6 +37,7 @@ const ServiceName = styled.h1`
 `;
 
 const UnivName = styled.h2`
+  width: 95%;
   text-align: right;
   font-size: 1.6rem;
   font-family: 'Tahoma', sans-serif;

@@ -7,10 +7,9 @@ import styled from 'styled-components';
 export default function SideBar() {
   return (
     <SideBarContainer>
-      <div>
-        <TitleBox />
-        <MenuGroup />
-      </div>
+      <TitleBox />
+      <MenuGroup />
+
       <Footer />
     </SideBarContainer>
   );
