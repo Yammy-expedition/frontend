@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ReactComponent as WorldSVG } from '../../assets/icon/world.svg';
-
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
+import WorldMap from './WorldMap';
+import * as d3 from 'd3-geo';
+import { countries } from 'constants/countries';
 
 export default function MapBox() {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
@@ -13,11 +14,16 @@ export default function MapBox() {
   const [transform, setTransform] = useState<string>(
     'scale(1) translate(0, 0)'
   );
+
   const svgRef = useRef<SVGSVGElement>(null);
   const mapBoxRef = useRef<HTMLDivElement>(null);
+
+  // 나라 클릭했을 때, 색 변하게 하기 위한 변수
   const [selectedCountry, setSelectedCountry] = useState<SVGPathElement | null>(
     null
   );
+
+  // 검색바에서 사용하는 변수
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
@@ -46,8 +52,8 @@ export default function MapBox() {
     setTooltipPosition(null);
   };
 
-  const onClickCountry: EventListener = (event) => {
-    event.stopPropagation();
+  const onSelectedCountry: EventListener = (event) => {
+    //event.stopPropagation();
     const target = event.currentTarget as SVGPathElement;
     const countryName = target.getAttribute('title');
 
@@ -57,24 +63,6 @@ export default function MapBox() {
 
     target.style.fill = 'orange';
     setSelectedCountry(target);
-
-    const mouseEvent = event as MouseEvent;
-    if (mapBoxRef.current && svgRef.current) {
-      const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
-      const svgRect = svgRef.current.getBoundingClientRect();
-
-      const scale = 1;
-
-      const clickX = mouseEvent.clientX / scale - svgRect.left;
-      const clickY = mouseEvent.clientY / scale - svgRect.top;
-
-      const translateX = (mapBoxRect.width / 2 - clickX - 200) / scale;
-      const translateY = (mapBoxRect.height / 2 - clickY - 100) / scale;
-
-      setTransform(
-        `scale(${scale}) translate(${translateX}px, ${translateY}px)`
-      );
-    }
   };
 
   useEffect(() => {
@@ -97,11 +85,50 @@ export default function MapBox() {
     event
   ) => {
     const target = event.target as HTMLElement;
+    console.log('here i am');
+    console.log(target);
 
-    if (!target.classList.contains('country')) {
+    // mapBoxRef가 현재 MapContainer를 가리키고 있는지 확인
+    if (
+      (mapBoxRef.current && target === mapBoxRef.current) ||
+      (svgRef.current && target instanceof SVGSVGElement)
+    ) {
       resetTransform();
     }
   };
+
+  useEffect(() => {
+    if (selectedCountry) {
+      if (mapBoxRef.current && svgRef.current) {
+        const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
+        const svgRect = svgRef.current.getBoundingClientRect();
+        const projection = d3
+          .geoMercator()
+          .scale(100)
+          .translate([svgRect.width / 2 + 200, svgRect.height / 2 + 200]);
+
+        const countryData = countries.find(
+          (country) => country.name === selectedCountryName
+        );
+
+        if (countryData) {
+          const projectedCoordinates = projection([
+            countryData.longitude,
+            countryData.latitude
+          ]);
+
+          if (projectedCoordinates) {
+            const [x, y] = projectedCoordinates;
+            const translateX = mapBoxRect.width / 2 - x;
+            const translateY = mapBoxRect.height / 2 - y;
+            setTransform(
+              `scale(1) translate(${translateX}px, ${translateY}px)`
+            );
+          }
+        }
+      }
+    }
+  }, [selectedCountry]);
 
   useEffect(() => {
     const paths = svgRef.current?.querySelectorAll('.country');
@@ -109,7 +136,7 @@ export default function MapBox() {
       path.addEventListener('mouseenter', handleMouseEnter);
       path.addEventListener('mousemove', handleMouseMove);
       path.addEventListener('mouseleave', handleMouseLeave);
-      path.addEventListener('click', onClickCountry);
+      path.addEventListener('click', onSelectedCountry);
     });
 
     return () => {
@@ -117,24 +144,27 @@ export default function MapBox() {
         path.removeEventListener('mouseenter', handleMouseEnter);
         path.removeEventListener('mousemove', handleMouseMove);
         path.removeEventListener('mouseleave', handleMouseLeave);
-        path.removeEventListener('click', onClickCountry);
+        path.removeEventListener('click', onSelectedCountry);
       });
     };
   }, []);
 
   return (
     <MapContainer ref={mapBoxRef} onClick={handleMapBoxClick}>
-      <StyledWorldSVG ref={svgRef} style={{ transform }} />
-      {hoveredCountry && tooltipPosition && (
-        <Tooltip
-          style={{ top: tooltipPosition.y - 1, left: tooltipPosition.x }}
-        >
-          {hoveredCountry}
-        </Tooltip>
-      )}
+      <WorldMap
+        svgRef={svgRef}
+        transform={transform}
+        hoveredCountry={hoveredCountry}
+        tooltipPosition={tooltipPosition}
+      ></WorldMap>
+
       <SearchBar
+        svgRef={svgRef}
+        mapBoxRef={mapBoxRef}
         selectedCountryName={selectedCountryName}
         setSelectedCountryName={setSelectedCountryName}
+        setTransform={setTransform}
+        setSelectedCountry={setSelectedCountry}
       ></SearchBar>
     </MapContainer>
   );
@@ -146,34 +176,4 @@ const MapContainer = styled.div`
   height: 100vh;
   overflow: hidden;
   position: relative;
-`;
-
-const StyledWorldSVG = styled(WorldSVG)`
-  padding: 3rem;
-  width: auto;
-  height: auto;
-  transform-origin: center;
-  transition: transform 0.3s ease;
-
-  .country {
-    stroke: #ffffff;
-    stroke-width: 0.5;
-
-    &:hover {
-      fill: #b2d8b2;
-      cursor: pointer;
-    }
-  }
-`;
-
-const Tooltip = styled.div`
-  position: absolute;
-  padding: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  border-radius: 0.25rem;
-  pointer-events: none;
-  white-space: nowrap;
-  font-size: 0.75rem;
-  transform: translate(-50%, -100%);
 `;
