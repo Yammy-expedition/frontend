@@ -173,7 +173,6 @@ export default function MapBox() {
 const MapContainer = styled.div`
   background: #f3f3f3;
   width: 100%;
-  height: 100vh;
   overflow: hidden;
   position: relative;
 `;
