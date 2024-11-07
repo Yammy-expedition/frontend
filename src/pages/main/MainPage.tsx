@@ -5,7 +5,7 @@ import MapBox from 'components/main/MapBox';
 export default function MainPage() {
   return (
     <MainPageComponent>
-      <MapBox></MapBox>
+      <MapBox></MapBox>z
     </MainPageComponent>
   );
 }

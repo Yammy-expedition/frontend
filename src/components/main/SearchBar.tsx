@@ -1,121 +1,88 @@
-import styled from 'styled-components';
 import { countries } from 'constants/countries';
 import { majors } from 'constants/majors';
-import * as d3 from 'd3-geo';
+import { peopleData } from 'constants/peopleMockData';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import EachUserBox from './EachUserBox';
 
 interface SearchBarProps {
+  showUserList: boolean;
   selectedCountryName: string | null;
   setSelectedCountryName: React.Dispatch<React.SetStateAction<string | null>>;
-  svgRef: React.RefObject<SVGSVGElement>;
-  mapBoxRef: React.RefObject<HTMLDivElement>;
-  setTransform: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCountry: React.Dispatch<
-    React.SetStateAction<SVGPathElement | null>
-  >;
+  onClickSearchButton: () => void;
+  setShowUserList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SearchBar({
+  setShowUserList,
+  showUserList,
   selectedCountryName,
   setSelectedCountryName,
-  svgRef,
-  mapBoxRef,
-  setTransform,
-  setSelectedCountry
+  onClickSearchButton
 }: SearchBarProps) {
-  const onClickSearchButton = () => {
-    if (mapBoxRef.current && svgRef.current) {
-      const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
-      const svgRect = svgRef.current.getBoundingClientRect();
-      const projection = d3
-        .geoMercator()
-        .scale(100)
-        .translate([svgRect.width / 2 + 200, svgRect.height / 2 + 200]);
+  const [selectedMajorName, setSelectedMajorName] = useState<string | null>(
+    null
+  );
 
-      const countryData = countries.find(
-        (country) => country.name === selectedCountryName
-      );
+  const filteredUser = peopleData.filter(
+    (item) =>
+      item.nationality === selectedCountryName &&
+      item.major === selectedMajorName
+  );
 
-      const countryPath = svgRef.current.querySelector(
-        `.country[title="${selectedCountryName}"]`
-      ) as SVGPathElement;
-
-      if (countryPath) {
-        countryPath.style.fill = 'orange';
-        setSelectedCountry(countryPath);
-      }
-
-      if (countryData) {
-        const projectedCoordinates = projection([
-          countryData.longitude,
-          countryData.latitude
-        ]);
-
-        if (projectedCoordinates) {
-          const [x, y] = projectedCoordinates;
-          const translateX = mapBoxRect.width / 2 - x;
-          const translateY = mapBoxRect.height / 2 - y;
-
-          const newTransform = `scale(1) translate(${translateX}px, ${translateY}px)`;
-          console.log('Setting transform in SearchBar:', newTransform);
-          setTransform(newTransform);
-        }
-      }
-    }
+  const onChangeSelectedMajorName = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedMajorName(e.target.value);
+    setShowUserList(false);
   };
+
   return (
-    <SearchContainer>
-      {"Let's looking for friends in Sogang!"}
-      <div>
-        <select
-          name="countries"
-          id=""
-          value={selectedCountryName || ''}
-          onChange={(e) => setSelectedCountryName(e.target.value)}
-        >
-          <option disabled hidden value="">
-            Select Country
+    <div>
+      <select
+        name="countries"
+        id=""
+        value={selectedCountryName || ''}
+        onChange={(e) => setSelectedCountryName(e.target.value)}
+      >
+        <option disabled hidden value="">
+          Select Country
+        </option>
+        {countries.map((item, index) => (
+          <option key={index} value={item.name}>
+            {item.name}
           </option>
-          {countries.map((item, index) => (
-            <option key={index} value={item.name}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-        <select name="major" id="">
-          <option disabled hidden value="">
-            Select Major
-          </option>
-          {majors.map((item, index) => (
-            <option key={index}>{item}</option>
-          ))}
-        </select>
-        <SearchButton onClick={onClickSearchButton}>Search</SearchButton>
-      </div>
-    </SearchContainer>
+        ))}
+      </select>
+      <select
+        name="major"
+        id=""
+        value={selectedMajorName || ''}
+        onChange={onChangeSelectedMajorName}
+      >
+        <option disabled hidden value="">
+          Select Major
+        </option>
+        {majors.map((item, index) => (
+          <option key={index}>{item}</option>
+        ))}
+      </select>
+      <SearchButton onClick={onClickSearchButton}>Search</SearchButton>
+      {showUserList && (
+        <SearchResult $isEmpty={filteredUser.length === 0}>
+          {filteredUser.length === 0 ? (
+            <div>No User Exists TT</div>
+          ) : (
+            filteredUser.map((item, index) => {
+              return <EachUserBox key={index} user={item}></EachUserBox>;
+            })
+          )}
+          {}
+        </SearchResult>
+      )}
+    </div>
   );
 }
-
-const SearchContainer = styled.div`
-  position: absolute;
-  top: 5rem;
-  right: 10rem;
-  font-size: 2.4rem;
-  font-weight: 600;
-
-  > div {
-    margin-top: 1rem;
-    > * {
-      margin-left: 0.5rem;
-    }
-
-    > select {
-      width: 16rem;
-      height: 4.2rem;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-    }
-  }
-`;
 
 const SearchButton = styled.button`
   padding:0.75rem;
@@ -128,4 +95,20 @@ const SearchButton = styled.button`
   border:none;
   border-radius: 0.5rem;
 };
+`;
+
+const SearchResult = styled.div<{ $isEmpty: boolean }>`
+  background: white;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 3rem;
+  width: 100%;
+  height: 33rem;
+  overflow: auto;
+  border: 2.5px solid green;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  ${(props) =>
+    props.$isEmpty ? 'text-align: center; justify-content:center;' : ''}
 `;

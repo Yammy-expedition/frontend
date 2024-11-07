@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import SearchBar from './SearchBar';
 import WorldMap from './WorldMap';
 import * as d3 from 'd3-geo';
 import { countries } from 'constants/countries';
+import Search from './Search';
 
 export default function MapBox() {
+  const [showUserList, setShowUserList] = useState<boolean>(false);
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
     x: number;
@@ -14,19 +15,15 @@ export default function MapBox() {
   const [transform, setTransform] = useState<string>(
     'scale(1) translate(0, 0)'
   );
-
-  const svgRef = useRef<SVGSVGElement>(null);
-  const mapBoxRef = useRef<HTMLDivElement>(null);
-
-  // 나라 클릭했을 때, 색 변하게 하기 위한 변수
   const [selectedCountry, setSelectedCountry] = useState<SVGPathElement | null>(
     null
   );
-
-  // 검색바에서 사용하는 변수
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
+
+  const svgRef = useRef<SVGSVGElement>(null);
+  const mapBoxRef = useRef<HTMLDivElement>(null);
 
   const handleMouseEnter: EventListener = (event) => {
     const target = event.currentTarget as SVGPathElement;
@@ -60,9 +57,8 @@ export default function MapBox() {
     if (countryName) {
       setSelectedCountryName(countryName);
     }
-
-    target.style.fill = 'orange';
     setSelectedCountry(target);
+    setShowUserList(false);
   };
 
   useEffect(() => {
@@ -92,6 +88,7 @@ export default function MapBox() {
       (svgRef.current && target instanceof SVGSVGElement)
     ) {
       resetTransform();
+      setShowUserList(false);
     }
   };
 
@@ -108,6 +105,15 @@ export default function MapBox() {
         const countryData = countries.find(
           (country) => country.name === selectedCountryName
         );
+
+        const countryPath = svgRef.current.querySelector(
+          `.country[title="${selectedCountryName}"]`
+        ) as SVGPathElement;
+
+        if (countryPath) {
+          countryPath.style.fill = 'orange';
+          setSelectedCountry(countryPath);
+        }
 
         if (countryData) {
           const projectedCoordinates = projection([
@@ -156,14 +162,16 @@ export default function MapBox() {
         tooltipPosition={tooltipPosition}
       ></WorldMap>
 
-      <SearchBar
+      <Search
         svgRef={svgRef}
         mapBoxRef={mapBoxRef}
         selectedCountryName={selectedCountryName}
         setSelectedCountryName={setSelectedCountryName}
+        showUserList={showUserList}
         setTransform={setTransform}
         setSelectedCountry={setSelectedCountry}
-      ></SearchBar>
+        setShowUserList={setShowUserList}
+      ></Search>
     </MapContainer>
   );
 }
