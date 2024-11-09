@@ -118,20 +118,25 @@ const SearchResult = styled.div<{ $isEmpty: boolean }>`
   ${(props) =>
     props.$isEmpty ? 'text-align: center; justify-content:center;' : ''}
 
-  height: 27.5rem;
-  padding: 2rem;
-
-  @media screen and (min-width: 1024px) and (min-height: 768px) {
-    padding: 3rem;
-    height: 36.5rem;
-  }
+  height: 36.5rem;
+  padding: 3rem;
 
   @media screen and (min-width: 1024px) and (max-height: 768px) {
     padding: 3rem;
     height: 25.5rem;
   }
 
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media screen and (min-width: 1024px) and (max-height: 644px) {
+    padding: 3rem;
+    height: 14.5rem;
+  }
+
+  @media screen and (max-width: 1023px) and (max-height: 767px) {
+    padding: 2rem;
+    height: 18.5rem;
+  }
+
+  @media screen and (max-width: 1023px) and (min-height: 768px) {
     padding: 2rem;
     height: 27.5rem;
   }
