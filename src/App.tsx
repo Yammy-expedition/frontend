@@ -7,7 +7,9 @@ function App() {
   const location = useLocation();
   return (
     <div className="App">
-      {location.pathname !== '/admin' ? <SideBar></SideBar> : null}
+      {location.pathname !== '/admin' && location.pathname !== '/sign-up' ? (
+        <SideBar></SideBar>
+      ) : null}
       <Router />
     </div>
   );

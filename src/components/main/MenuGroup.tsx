@@ -54,35 +54,44 @@ export default function MenuGroup() {
 const OpenableBoxList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
+
+  font-size: 1.8rem;
+  @media screen and (min-width: 1024px) {
+    font-size: 2.2rem;
+  }
 `;
 
 const OpenableBox = styled.div<{ $isOpen: boolean }>`
-  padding: 0.2rem;
-  width: 33.9rem;
-  height: 6.2rem;
+  padding: 0 1.25rem;
+  width: 100%;
+
   background: white;
   border-radius: 1rem;
   border: 1px solid #888888;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   cursor: pointer;
 
   background-image: ${({ $isOpen }) =>
     $isOpen ? 'linear-gradient(to left, #000000, green)' : 'white'};
   color: ${({ $isOpen }) => ($isOpen ? 'white' : 'black')};
 
+  height: 5.5rem;
+  @media screen and (min-width: 1024px) {
+    height: 6.2rem;
+  }
+
   > p {
-    font-size: 2.4rem;
     font-weight: 600;
   }
 `;
 
 const IconWrapper = styled.div<{ $isOpen: boolean }>`
-  margin-left: 0.75rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: transform 0.3s ease;
   transform: ${({ $isOpen }) => ($isOpen ? 'rotate(45deg)' : 'rotate(0deg)')};
 `;

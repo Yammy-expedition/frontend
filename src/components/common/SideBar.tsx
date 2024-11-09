@@ -9,7 +9,6 @@ export default function SideBar() {
     <SideBarContainer>
       <TitleBox />
       <MenuGroup />
-
       <Footer />
     </SideBarContainer>
   );
@@ -17,12 +16,20 @@ export default function SideBar() {
 
 const SideBarContainer = styled.div`
   z-index: 10;
-  min-width: 38.4rem;
+  min-width: 35.4rem;
   background: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0.5rem 0 1rem rgba(0, 0, 0, 0.1);
-  height: 100vh;
+  min-height: 100vh;
+
+  min-width: 27.4rem;
+  padding: 0 1.6rem;
+
+  @media screen and (min-width: 1024px) {
+    min-width: 35.4rem;
+    padding: 0 2rem;
+  }
 `;

@@ -1,6 +1,7 @@
 import { postings } from 'constants/posting';
 import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as PlusSVG } from '../../assets/icon/plus.svg';
 
 export default function MarketRestaurantBox() {
   return (
@@ -12,7 +13,9 @@ export default function MarketRestaurantBox() {
               <Square></Square>
               <p>Restaurant</p>
             </div>
-            <Plus>plus</Plus>
+            <Plus>
+              <PlusSVG />
+            </Plus>
           </SquareRestaurantPlus>
         </div>
 
@@ -23,7 +26,7 @@ export default function MarketRestaurantBox() {
               <CircleTitleCreatedAt key={index2}>
                 <CircleTitle>
                   <Circle></Circle>
-                  {post.title}
+                  <Title>{post.title}</Title>
                 </CircleTitle>
                 <CreatedAt>{`${post.created_at.getMonth() + 1} / ${post.created_at.getDate()}`}</CreatedAt>
               </CircleTitleCreatedAt>
@@ -37,7 +40,9 @@ export default function MarketRestaurantBox() {
               <Square></Square>
               <p>Market</p>
             </div>
-            <Plus>plus</Plus>
+            <Plus>
+              <PlusSVG />
+            </Plus>
           </SquareRestaurantPlus>
         </div>
 
@@ -48,7 +53,7 @@ export default function MarketRestaurantBox() {
               <CircleTitleCreatedAt key={index2}>
                 <CircleTitle>
                   <Circle></Circle>
-                  {post.title}
+                  <Title>{post.title}</Title>
                 </CircleTitle>
                 <CreatedAt>{`${post.created_at.getMonth() + 1} / ${post.created_at.getDate()}`}</CreatedAt>
               </CircleTitleCreatedAt>
@@ -64,7 +69,7 @@ const MarketRestaurant = styled.div`
   justify-content: center;
   position: absolute;
   width: 100%;
-  gap: 4rem;
+  gap: 1.5rem;
   bottom: 0;
   padding: 0 4rem;
   height: 25rem;
@@ -72,14 +77,14 @@ const MarketRestaurant = styled.div`
 
 const Restaurent = styled.div`
   width: 48rem;
-  min-width: 28rem;
+  min-width: 23rem;
   display: flex;
   flex-direction: column;
 `;
 
 const Market = styled.div`
   width: 48rem;
-  min-width: 28rem;
+  min-width: 23rem;
   display: flex;
   flex-direction: column;
 `;
@@ -94,7 +99,10 @@ const SquareRestaurantPlus = styled.div`
     gap: 1rem;
 
     > p {
-      font-size: 2.4rem;
+      font-size: 2rem;
+      @media screen and (min-width: 1024px) {
+        font-size: 2.4rem;
+      }
     }
   }
 `;
@@ -104,9 +112,16 @@ const Square = styled.div`
   height: 2rem;
   background: black;
   border-radius: 0.75rem;
+  @media screen and (min-width: 1024px) {
+    width: 2rem;
+    height: 2rem;
+  }
+  }
 `;
 
-const Plus = styled.div``;
+const Plus = styled.div`
+  cursor: pointer;
+`;
 
 const List = styled.div`
   border: 2px solid #97979780;
@@ -124,12 +139,35 @@ const List = styled.div`
 const CircleTitleCreatedAt = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
 `;
 
 const CircleTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+`;
+
+const Title = styled.div`
+  cursor: pointer;
+  border-bottom: 1px solid white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  width: 11rem;
+  @media screen and (min-width: 1024px) {
+    width: 15rem;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: auto;
+  }
+
+  &: hover {
+    color: green;
+    border-bottom: 1px solid green;
+  }
 `;
 
 const CreatedAt = styled.div``;

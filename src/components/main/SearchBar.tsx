@@ -71,7 +71,7 @@ export default function SearchBar({
       {showUserList && (
         <SearchResult $isEmpty={filteredUser.length === 0}>
           {filteredUser.length === 0 ? (
-            <div>No User Exists TT</div>
+            <div>No User Exists OTL</div>
           ) : (
             filteredUser.map((item, index) => {
               return <EachUserBox key={index} user={item}></EachUserBox>;
@@ -86,14 +86,21 @@ export default function SearchBar({
 
 const SearchButton = styled.button`
   padding:0.75rem;
-  width: 7rem;
-  height: 4.2rem;
+
   color: white;
   font-style: italic;
   cursor:pointer;
   background-image: linear-gradient(to top, #000000, green);
   border:none;
   border-radius: 0.5rem;
+
+  width: ${(7 * 5) / 6}rem;
+  height: ${(4.2 * 5) / 6}rem;
+
+  @media screen and (min-width: 1024px) {
+      width: 7rem;
+      height: 4.2rem;
+  }
 };
 `;
 
@@ -101,14 +108,31 @@ const SearchResult = styled.div<{ $isEmpty: boolean }>`
   background: white;
   border-radius: 0.5rem;
   margin-top: 1.5rem;
-  padding: 3rem;
+
   width: 100%;
-  height: 33rem;
   overflow: auto;
   border: 2.5px solid green;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3.5rem;
   ${(props) =>
     props.$isEmpty ? 'text-align: center; justify-content:center;' : ''}
+
+  height: 27.5rem;
+  padding: 2rem;
+
+  @media screen and (min-width: 1024px) and (min-height: 768px) {
+    padding: 3rem;
+    height: 36.5rem;
+  }
+
+  @media screen and (min-width: 1024px) and (max-height: 768px) {
+    padding: 3rem;
+    height: 25.5rem;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    padding: 2rem;
+    height: 27.5rem;
+  }
 `;

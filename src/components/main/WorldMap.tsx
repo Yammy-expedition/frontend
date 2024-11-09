@@ -46,6 +46,10 @@ const StyledWorldSVG = styled(WorldSVG)`
       cursor: pointer;
     }
   }
+
+  @media screen and (mim-width: 1024px) {
+    display: none;
+  }
 `;
 
 const Tooltip = styled.div`
@@ -58,4 +62,8 @@ const Tooltip = styled.div`
   white-space: nowrap;
   font-size: 0.75rem;
   transform: translate(-50%, -100%);
+
+  @media screen and (mim-width: 1024px) {
+    display: none;
+  }
 `;

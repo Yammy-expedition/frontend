@@ -14,7 +14,8 @@ export default function TitleBox() {
 }
 
 const LogoBox = styled.div`
-  padding: 3rem 0 5rem 0px;
+  padding-top: 3rem;
+  margin-bottom: 4.5rem;
   position: relative;
   width: 100%;
   height: 9.5rem;
@@ -37,7 +38,6 @@ const ServiceName = styled.h1`
 `;
 
 const UnivName = styled.h2`
-  width: 95%;
   text-align: right;
   font-size: 1.6rem;
   font-family: 'Tahoma', sans-serif;

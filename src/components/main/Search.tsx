@@ -34,7 +34,7 @@ export default function Search({
       const projection = d3
         .geoMercator()
         .scale(100)
-        .translate([svgRect.width / 2 + 200, svgRect.height / 2 + 200]);
+        .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
 
       const countryData = countries.find(
         (country) => country.name === selectedCountryName
@@ -81,9 +81,15 @@ export default function Search({
 
 const SearchContainer = styled.div`
   position: absolute;
-  top: 5rem;
-  right: 10rem;
-  font-size: 2.4rem;
+  top: 4rem;
+  right: 5rem;
+
+  font-size: 2rem;
+  @media screen and (min-width: 1024px) {
+    font-size: 2.4rem;
+    top: 5rem;
+    right: 7.5rem;
+  }
   font-weight: 600;
 
   > div {
@@ -93,10 +99,15 @@ const SearchContainer = styled.div`
     }
 
     > select {
-      width: 16rem;
-      height: 4.2rem;
       padding: 0.5rem;
       border-radius: 0.5rem;
+      width: 13.3rem;
+      height: 3.5rem;
+
+      @media screen and (min-width: 1024px) {
+        width: 16rem;
+        height: 4.2rem;
+      }
     }
   }
 `;

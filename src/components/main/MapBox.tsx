@@ -100,7 +100,7 @@ export default function MapBox() {
         const projection = d3
           .geoMercator()
           .scale(100)
-          .translate([svgRect.width / 2 + 200, svgRect.height / 2 + 200]);
+          .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
 
         const countryData = countries.find(
           (country) => country.name === selectedCountryName
