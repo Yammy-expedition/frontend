@@ -1,16 +1,16 @@
-import React from 'react';
+import Restaurants from 'components/tips-for-sogang/Restaurants';
+import SogangMap from 'components/tips-for-sogang/SogangMap';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-const locationList = [
-  'All',
-  'In Sogang',
-  'Main Gate',
-  'Back Gate',
-  'West Gate',
-  'Sinchon'
-];
-
 export default function TipsForSogangPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get('category');
+
+  const handleCategoryChange = (category: string) => {
+    setSearchParams({ category });
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -20,33 +20,12 @@ export default function TipsForSogangPage() {
         </p>
       </Header>
       <Nav>
-        <div>Restaurants</div>
-        <div>Sogang Map</div>
+        <div onClick={() => handleCategoryChange('restaurants')}>
+          Restaurants
+        </div>
+        <div onClick={() => handleCategoryChange('sogang-map')}>Sogang Map</div>
       </Nav>
-      <section>
-        <LocationTab>
-          {locationList.map((el, key) => (
-            <li key={key}>{el}</li>
-          ))}
-        </LocationTab>
-        <PostList>
-          <li>
-            <figure>
-              <img src="" alt="" />
-            </figure>
-            <figcaption>
-              <div>
-                <h1>Gonzaga Plaza</h1>
-                <h3>variety of food in buffet style</h3>
-              </div>
-              <div>
-                <img src="" alt="" />
-                <img src="" alt="" />
-              </div>
-            </figcaption>
-          </li>
-        </PostList>
-      </section>
+      {category === 'sogang-map' ? <SogangMap /> : <Restaurants />}
     </Wrapper>
   );
 }
@@ -62,7 +41,11 @@ const Header = styled.header`
   flex-direction: column;
   gap: 2rem;
   padding-top: 5rem;
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid;
+  border-image: var(--line-gradient) 1;
+  font-family: var(--sub-font);
+  letter-spacing: -1px;
   div {
     font-size: 4rem;
   }
@@ -76,54 +59,24 @@ const Nav = styled.nav`
   padding: 2rem 0;
   display: flex;
   gap: 2rem;
+  letter-spacing: -0.5px;
   div {
+    width: 10vw;
     background-color: var(--main-gray);
     color: var(--secondary-text);
     border-radius: 6.5rem;
     padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.6rem;
     cursor: pointer;
+    transition:
+      color 0.3s,
+      background-color 0.3s;
     &:hover {
       background-color: var(--hover-bg);
       color: var(--hover-text);
-    }
-  }
-`;
-
-const LocationTab = styled.ul`
-  display: flex;
-  gap: 1rem;
-  list-style: none;
-  font-size: 1.6rem;
-  li {
-    background-color: var(--main-gray);
-    color: var(--main-text);
-    border-radius: 6.5rem;
-    padding: 1rem 3rem;
-    cursor: pointer;
-    &:hover {
-      color: var(--hover-text);
-      background-color: var(--primary-color);
-    }
-  }
-`;
-
-const PostList = styled.ul`
-  margin-top: 3rem;
-  border-top: 1px solid var(--border-color);
-  li {
-    display: flex;
-    padding: 2% 0;
-    list-style: none;
-    border-bottom: 1px solid var(--border-color);
-    figure {
-      width: 20rem;
-      height: 20rem;
-    }
-    figcaption {
-      background-color: darkorange;
-      h1 {
-      }
     }
   }
 `;
