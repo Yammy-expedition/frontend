@@ -1,15 +1,21 @@
+import styled from 'styled-components';
 import './App.css';
 import Router from 'Router';
+import './style/color.css';
+import './style/font.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">this is header</header>
-      <div>and lets check out does pr previewing work well</div>
-      <div>did well?</div>
+    <AppContainer className="App">
       <Router />
-    </div>
+    </AppContainer>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeee;
+`;

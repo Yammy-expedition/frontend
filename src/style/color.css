@@ -1,0 +1,21 @@
+:root {
+  --primary-color: #b21f7c;
+  --main-text: #333;
+  --secondary-text: #717171;
+  --main-gray: #d9d9d9;
+  --border-color: #c6c6c6;
+  --hover-bg: #000;
+  --hover-text: #fff;
+  --main-gradient: linear-gradient(
+    90deg,
+    rgba(178, 31, 124, 1) 22%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  --line-gradient: linear-gradient(
+    90deg,
+    rgba(178, 31, 124, 0) 41%,
+    rgba(178, 31, 124, 1) 100%
+  );
+  --main-font: 'Pretendard', sans-serif;
+  --sub-font: 'Times New Roman', serif;
+}
