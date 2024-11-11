@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import './App.css';
 import Router from 'Router';
 import './style/color.css';
+import './style/font.css';
 
 function App() {
   return (
