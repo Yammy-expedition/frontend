@@ -64,7 +64,6 @@ const OpenableBoxList = styled.div`
 
 const OpenableBox = styled.div<{ $isOpen: boolean }>`
   padding: 0 1.25rem;
-  width: 100%;
 
   background: white;
   border-radius: 1rem;
