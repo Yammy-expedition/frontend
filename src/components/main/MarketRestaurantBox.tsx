@@ -69,9 +69,7 @@ const MarketRestaurant = styled.div`
   justify-content: center;
   position: absolute;
   width: 100%;
-  gap: 1.5rem;
   bottom: 0;
-  padding: 0 4rem;
   height: 25rem;
 `;
 
@@ -80,6 +78,7 @@ const Restaurent = styled.div`
   min-width: 23rem;
   display: flex;
   flex-direction: column;
+  padding: 0 2rem;
 `;
 
 const Market = styled.div`
@@ -87,6 +86,7 @@ const Market = styled.div`
   min-width: 23rem;
   display: flex;
   flex-direction: column;
+  padding: 0 2rem;
 `;
 
 const SquareRestaurantPlus = styled.div`
