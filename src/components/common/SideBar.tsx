@@ -24,11 +24,11 @@ const SideBarContainer = styled.div`
   box-shadow: 0.5rem 0 1rem rgba(0, 0, 0, 0.1);
   min-height: 100vh;
 
-  min-width: 25.4rem;
+  min-width: 29.4rem;
   padding: 0 1.6rem;
 
   @media screen and (min-width: 1024px) {
-    min-width: 29.4rem;
+    min-width: 34.4rem;
     padding: 0 2rem;
   }
 `;

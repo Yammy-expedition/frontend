@@ -27,6 +27,7 @@ export default function Search({
   setShowUserList
 }: SearchBarProps) {
   const onClickSearchButton = () => {
+    if (!selectedCountryName) return;
     setShowUserList(true);
     if (mapBoxRef.current && svgRef.current) {
       const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
