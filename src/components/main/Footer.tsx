@@ -15,7 +15,10 @@ const FooterContainer = styled.footer`
   margin: 4rem 0;
   display: flex;
   gap: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
+  @media screen and (min-width: 1024px) {
+    font-size: 2rem;
+  }
 
   > div {
     cursor: pointer;
