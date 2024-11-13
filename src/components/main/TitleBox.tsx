@@ -14,7 +14,8 @@ export default function TitleBox() {
 }
 
 const LogoBox = styled.div`
-  padding: 3rem 0 5rem 0px;
+  padding-top: 3rem;
+  margin-bottom: 4.5rem;
   position: relative;
   width: 100%;
   height: 9.5rem;
