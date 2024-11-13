@@ -42,7 +42,7 @@ const StyledWorldSVG = styled(WorldSVG)`
     stroke-width: 0.5;
 
     &:hover {
-      fill: #b2d8b2;
+      fill: #b21f7c55;
       cursor: pointer;
     }
   }
