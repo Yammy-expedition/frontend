@@ -15,4 +15,6 @@ export interface User {
   univ_certified: boolean;
   created_at: string;
   is_staff: boolean;
+  startDate: string;
+  endDate: string;
 }

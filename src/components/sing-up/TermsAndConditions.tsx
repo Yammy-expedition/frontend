@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { TermsAndConditionsText } from 'constants/TermsAndConditionsText';
 
-export default function TermsAndConditions() {
+interface TermsAndConditionsProps {
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export default function TermsAndConditions({
+  setStep
+}: TermsAndConditionsProps) {
   const [checked, setChecked] = useState(false);
+
+  const onClickNextButton = () => {
+    setStep((prev) => prev + 1);
+  };
   return (
     <TermsAndConditionsContainer>
       <p>① Agreement to Terms and Conditions</p>
-      <Text>{TermsAndConditionsText}</Text>
+      <Form>{TermsAndConditionsText}</Form>
       <AgreeBox>
         <div>
           <input
@@ -18,7 +28,11 @@ export default function TermsAndConditions() {
           <span>Yes, I Agree</span>
         </div>
 
-        <NextButton $checked={checked} disabled={!checked}>
+        <NextButton
+          $checked={checked}
+          disabled={!checked}
+          onClick={onClickNextButton}
+        >
           Next
         </NextButton>
       </AgreeBox>
@@ -34,7 +48,7 @@ const TermsAndConditionsContainer = styled.div`
   }
 `;
 
-const Text = styled.div`
+const Form = styled.div`
   white-space: pre-wrap;
   width: 50rem;
   height: 30rem;
@@ -69,7 +83,7 @@ const NextButton = styled.button<{ $checked: boolean }>`
   width: 10rem;
   height: 5rem;
   font-size: 2rem;
-  background: ${(props) => (props.$checked ? 'var(--main-gradient)' : '')};
+  background: ${(props) => (props.$checked ? 'var(--vertical-gradient)' : '')};
   color: ${(props) => (props.$checked ? 'white' : '')};
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
