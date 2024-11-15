@@ -16,7 +16,10 @@
     rgba(178, 31, 124, 0) 41%,
     rgba(178, 31, 124, 1) 100%
   );
-  --vertical-gradient: linear-gradient(to top, #000000, var(--primary-color));
+  --vertical-gradient: linear-gradient(
+    rgba(178, 31, 124, 1) 22%,
+    rgba(0, 0, 0, 1) 100%
+  );
   --main-font: 'Pretendard', sans-serif;
   --sub-font: 'Times New Roman', serif;
 }

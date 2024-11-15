@@ -34,13 +34,13 @@ const ServiceName = styled.h1`
   text-align: center;
   color: var(--primary-color);
   font-size: 5.6rem;
-  font-family: var(--main-text);
-  font-weight: 700;
+  font-family: var(--sub-font);
+  font-weight: 600;
 `;
 
 const UnivName = styled.h2`
   text-align: right;
   font-size: 1.6rem;
-  font-family: var(--main-text);
-  font-weight: 700;
+  font-family: var(--sub-font);
+  font-weight: 600;
 `;

@@ -154,6 +154,10 @@ const Title = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.3;
+  color: black;
+  text-decoration: underline 1px white;
+  transition: 0.3s ease;
 
   width: 11rem;
   @media screen and (min-width: 1024px) {
@@ -165,8 +169,8 @@ const Title = styled.div`
   }
 
   &: hover {
-    color: green;
-    border-bottom: 1px solid green;
+    color: var(--primary-color);
+    text-decoration: underline 1px solid var(--primary-color);
   }
 `;
 

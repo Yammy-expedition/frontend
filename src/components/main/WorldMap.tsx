@@ -42,9 +42,11 @@ const StyledWorldSVG = styled(WorldSVG)`
     stroke-width: 0.5;
 
     &:hover {
-      fill: #b21f7c55;
+      fill: rgba(178, 31, 124, 0.5);
       cursor: pointer;
     }
+
+    transition: fill 0.3s ease;
   }
 
   @media screen and (mim-width: 1024px) {
