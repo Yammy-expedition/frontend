@@ -74,7 +74,7 @@ const OpenableBox = styled.div<{ $isOpen: boolean }>`
   cursor: pointer;
 
   background-image: ${({ $isOpen }) =>
-    $isOpen ? 'linear-gradient(to left, #000000, green)' : 'white'};
+    $isOpen ? 'var(--main-gradient)' : 'white'};
   color: ${({ $isOpen }) => ($isOpen ? 'white' : 'black')};
 
   height: 5.5rem;
@@ -114,11 +114,12 @@ const ChildItem = styled.a`
   display: inline-flex;
   align-items: center;
   font-size: 1.8rem;
-  color: green;
-  text-decoration: none;
+  color: black;
+  text-decoration: underline 1px solid white;
   padding: 0.2rem 0;
   &:hover {
     text-decoration: underline;
-    color: green;
+    color: var(--primary-color);
   }
+  transition: 0.3s ease;
 `;
