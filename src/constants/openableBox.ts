@@ -1,11 +1,13 @@
 export const openableBoxList = [
   {
     parent: 'Home',
-    child: []
+    child: [],
+    ownLink: '/'
   },
   {
     parent: 'What is Unicon',
-    child: []
+    child: [],
+    ownLink: ''
   },
   {
     parent: 'Tips for Sogang Life',
@@ -13,7 +15,8 @@ export const openableBoxList = [
       { name: 'a', link: '#' },
       { name: 'b', link: '#' },
       { name: 'c', link: '#' }
-    ]
+    ],
+    ownLink: '/tips-for-sogang'
   },
   {
     parent: 'Menu',
@@ -21,6 +24,7 @@ export const openableBoxList = [
       { name: 'Restaurants', link: '#' },
       { name: 'Markets', link: '#' },
       { name: 'Generel Discussion', link: '#' }
-    ]
+    ],
+    ownLink: '/menu'
   }
 ];

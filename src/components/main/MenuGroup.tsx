@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { openableBoxList } from 'constants/openableBox';
 import { ReactComponent as PlusSVG } from '../../assets/icon/plus.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuGroup() {
   const [OpenIndex, setOpenIndex] = useState<number | null>(null);
   const [closing, setClosing] = useState(false);
+  const navigate = useNavigate();
 
   const toggleBox = (index: number) => {
     if (OpenIndex === index) {
@@ -25,12 +27,27 @@ export default function MenuGroup() {
     }
   };
 
+  const onClickBox = (
+    item: {
+      parent: string;
+      child: {
+        name: string;
+        link: string;
+      }[];
+      ownLink: string;
+    },
+    index: number
+  ) => {
+    toggleBox(index);
+    navigate(item.ownLink);
+  };
+
   return (
     <OpenableBoxList>
       {openableBoxList.map((item, index) => (
         <div key={index}>
           <OpenableBox
-            onClick={() => toggleBox(index)}
+            onClick={() => onClickBox(item, index)}
             $isOpen={OpenIndex === index && !closing}
           >
             <IconWrapper $isOpen={OpenIndex === index && !closing}>
