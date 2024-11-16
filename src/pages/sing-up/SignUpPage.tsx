@@ -2,11 +2,13 @@ import PersonalInformation from 'components/sing-up/PersonalInformation';
 import SelfCertification from 'components/sing-up/SelfCertification';
 import TermsAndConditions from 'components/sing-up/TermsAndConditions';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { User } from 'types/user';
 
 export default function SignUpPage() {
   const [step, setStep] = useState<number>(1);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<User>({
     univcert: false,
@@ -16,7 +18,7 @@ export default function SignUpPage() {
     major: '',
     nationality: '',
     sex: null,
-    birth: null,
+    age: null,
     languages: '',
     introduce: '',
     hobby: null,
@@ -40,6 +42,14 @@ export default function SignUpPage() {
     }));
   };
 
+  const submit = () => {
+    console.log('ing');
+    //백엔드에 데이터 보내기
+    //데이터 부족하면 alert 하고 채우라고
+    //잘 있으면 홈으로
+    navigate('/');
+  };
+
   return (
     <SignUpPageContainer>
       <p>Sign Up</p>
@@ -48,7 +58,11 @@ export default function SignUpPage() {
         <SelfCertification setStep={setStep} updateFormData={updateFormData} />
       ) : null}
       {step === 3 ? (
-        <PersonalInformation updateFormData={updateFormData} />
+        <PersonalInformation
+          formData={formData}
+          updateFormData={updateFormData}
+          submit={submit}
+        />
       ) : null}
     </SignUpPageContainer>
   );

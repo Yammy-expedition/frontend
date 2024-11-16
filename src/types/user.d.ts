@@ -6,7 +6,7 @@ export interface User {
   major: string;
   nationality: string;
   sex: string | null;
-  birth: string | null;
+  age: string | null;
   languages: string;
   introduce: string;
   hobby: string | null;

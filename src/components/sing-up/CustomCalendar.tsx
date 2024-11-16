@@ -19,7 +19,7 @@ export default function CustomCalendar({
   disabled = false
 }: CustomCalendarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [nowDate, setNowDate] = useState<string>('날짜');
+  const [nowDate, setNowDate] = useState<string>('Date');
 
   const handleDateChange = (selectedDate: Date) => {
     updateFormData(type, selectedDate.toLocaleDateString());
