@@ -39,7 +39,6 @@ export default function MenuGroup() {
     index: number
   ) => {
     toggleBox(index);
-    navigate(item.ownLink);
   };
 
   return (
@@ -57,7 +56,10 @@ export default function MenuGroup() {
           </OpenableBox>
           <ChildList $isVisible={OpenIndex === index && !closing}>
             {item.child.map((childItem, childIndex) => (
-              <ChildItem key={childIndex} href={childItem.link}>
+              <ChildItem
+                key={childIndex}
+                onClick={() => navigate(childItem.link)}
+              >
                 {childItem.name}
               </ChildItem>
             ))}
@@ -127,7 +129,7 @@ const ChildList = styled.div<{ $isVisible: boolean }>`
   gap: 0.5rem;
 `;
 
-const ChildItem = styled.a`
+const ChildItem = styled.p`
   display: inline-flex;
   align-items: center;
   font-size: 1.8rem;

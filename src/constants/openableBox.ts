@@ -21,10 +21,10 @@ export const openableBoxList = [
   {
     parent: 'Menu',
     child: [
-      { name: 'Restaurants', link: '#' },
-      { name: 'Markets', link: '#' },
-      { name: 'Generel Discussion', link: '#' }
+      { name: 'Restaurants', link: '/menu/restaurants' },
+      { name: 'Markets', link: '/menu/markets' },
+      { name: 'Generel Discussion', link: '/menu/general-discussion' }
     ],
-    ownLink: '/menu'
+    ownLink: ''
   }
 ];
