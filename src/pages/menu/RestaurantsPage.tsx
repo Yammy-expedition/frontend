@@ -20,7 +20,7 @@ export default function RestaurantsPage() {
             <option value="content">Content</option>
           </select>
           <SearchBar>
-            <input value="" />
+            <input value="" readOnly />
             <button>
               <SearchSVG></SearchSVG>
             </button>
@@ -154,6 +154,7 @@ const EachPost = styled.div`
   padding: 2rem 0;
   border-bottom: 1px solid var(--secondary-text);
   font-family: var(--main-font);
+  cursor: pointer;
   > p {
     width: 50rem;
     height: 3rem;

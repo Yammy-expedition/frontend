@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchSVG } from '../../assets/icon/search.svg';
 import { ReactComponent as HeartSVG } from '../../assets/icon/heart.svg';
-import { ReactComponent as EyeSVG } from '../../assets/icon/eye.svg';
-import { ReactComponent as CommentSVG } from '../../assets/icon/coment.svg';
 
 export default function MarketsPage() {
   const price = 100000;
@@ -21,7 +19,7 @@ export default function MarketsPage() {
             <option value="content">Content</option>
           </select>
           <SearchBar>
-            <input value="" />
+            <input value="" readOnly />
             <button>
               <SearchSVG></SearchSVG>
             </button>
@@ -56,7 +54,7 @@ export default function MarketsPage() {
         <EachPost>
           <PostImageBox>asd</PostImageBox>
           <div>
-            <p>This is title1</p>
+            <p>This is title2</p>
             <PostInfo>
               <span>Writer </span>
               <span>24.10.01 </span>
@@ -151,6 +149,7 @@ const EachPost = styled.div`
   display: flex;
   gap: 1rem;
   padding: 2rem 0;
+  cursor: pointer;
   border-bottom: 1px solid var(--secondary-text);
   font-family: var(--main-font);
   > div > p {
