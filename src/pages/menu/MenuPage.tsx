@@ -9,10 +9,10 @@ export default function MenuPage() {
   const currentPath = location.pathname;
 
   return (
-    <div>
+    <>
       {currentPath.includes('/restaurants') && <RestaurantsPage />}
       {currentPath.includes('/markets') && <MarketsPage />}
       {currentPath.includes('/general-discussion') && <GeneralDiscussion />}
-    </div>
+    </>
   );
 }
