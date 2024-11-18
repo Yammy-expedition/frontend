@@ -5,14 +5,14 @@ import MarketRestaurantBox from 'components/main/MarketRestaurantBox';
 
 export default function MainPage() {
   return (
-    <MainPageComponent>
+    <MainPageContainer>
       <MapBox></MapBox>
       <MarketRestaurantBox></MarketRestaurantBox>
-    </MainPageComponent>
+    </MainPageContainer>
   );
 }
 
-const MainPageComponent = styled.div`
+const MainPageContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
