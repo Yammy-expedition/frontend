@@ -37,7 +37,7 @@ export default function MarketsPage() {
 
       <PostingContainer>
         <EachPost>
-          <PostImageBox>asd</PostImageBox>
+          <PostImageBox></PostImageBox>
           <div>
             <p>This is title1</p>
             <PostInfo>
@@ -52,7 +52,7 @@ export default function MarketsPage() {
         </EachPost>
 
         <EachPost>
-          <PostImageBox>asd</PostImageBox>
+          <PostImageBox></PostImageBox>
           <div>
             <p>This is title2</p>
             <PostInfo>

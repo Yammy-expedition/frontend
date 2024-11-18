@@ -8,8 +8,6 @@ export const openableBoxList = [
     parent: 'What is Unicon',
     child: [],
     ownLink: ''
-
-    
   },
   {
     parent: 'Tips for Sogang Life',
