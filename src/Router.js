@@ -9,7 +9,7 @@ import SignUpPage from 'pages/sing-up/SignUpPage';
 import TipsForSogangPage from 'pages/tips-for-sogang/TipsForSogangPage';
 import RestaurantsPage from 'pages/menu/RestaurantsPage';
 import MarketsPage from 'pages/menu/MarketsPage';
-import GeneralDiscussion from 'pages/menu/GeneralDiscussion';
+import GeneralDiscussion from 'pages/menu/GeneralDiscussionPage';
 
 function Router() {
   return (
