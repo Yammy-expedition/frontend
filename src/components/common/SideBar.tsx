@@ -2,6 +2,7 @@ import Footer from 'components/main/Footer';
 import MenuGroup from 'components/main/MenuGroup';
 import TitleBox from 'components/main/TitleBox';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function SideBar() {

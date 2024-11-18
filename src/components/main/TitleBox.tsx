@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function TitleBox() {
+  const navigate = useNavigate();
   return (
-    <LogoBox>
+    <LogoBox onClick={() => navigate('/')}>
       <BackgroundCircle />
       <div style={{ zIndex: 10, width: '100%' }}>
         <ServiceName>unicon</ServiceName>
@@ -21,6 +23,7 @@ const LogoBox = styled.div`
   height: 9.5rem;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 `;
 const BackgroundCircle = styled.div`
   position: absolute;

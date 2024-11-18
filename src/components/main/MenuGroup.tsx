@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { openableBoxList } from 'constants/openableBox';
 import { ReactComponent as PlusSVG } from '../../assets/icon/plus.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuGroup() {
   const [OpenIndex, setOpenIndex] = useState<number | null>(null);
   const [closing, setClosing] = useState(false);
+  const navigate = useNavigate();
 
   const toggleBox = (index: number) => {
     if (OpenIndex === index) {
@@ -25,12 +27,26 @@ export default function MenuGroup() {
     }
   };
 
+  const onClickBox = (
+    item: {
+      parent: string;
+      child: {
+        name: string;
+        link: string;
+      }[];
+      ownLink: string;
+    },
+    index: number
+  ) => {
+    toggleBox(index);
+  };
+
   return (
     <OpenableBoxList>
       {openableBoxList.map((item, index) => (
         <div key={index}>
           <OpenableBox
-            onClick={() => toggleBox(index)}
+            onClick={() => onClickBox(item, index)}
             $isOpen={OpenIndex === index && !closing}
           >
             <IconWrapper $isOpen={OpenIndex === index && !closing}>
@@ -40,7 +56,10 @@ export default function MenuGroup() {
           </OpenableBox>
           <ChildList $isVisible={OpenIndex === index && !closing}>
             {item.child.map((childItem, childIndex) => (
-              <ChildItem key={childIndex} href={childItem.link}>
+              <ChildItem
+                key={childIndex}
+                onClick={() => navigate(childItem.link)}
+              >
                 {childItem.name}
               </ChildItem>
             ))}
@@ -74,7 +93,7 @@ const OpenableBox = styled.div<{ $isOpen: boolean }>`
   cursor: pointer;
 
   background-image: ${({ $isOpen }) =>
-    $isOpen ? 'linear-gradient(to left, #000000, green)' : 'white'};
+    $isOpen ? 'var(--main-gradient)' : 'white'};
   color: ${({ $isOpen }) => ($isOpen ? 'white' : 'black')};
 
   height: 5.5rem;
@@ -110,12 +129,12 @@ const ChildList = styled.div<{ $isVisible: boolean }>`
   gap: 0.5rem;
 `;
 
-const ChildItem = styled.a`
+const ChildItem = styled.p`
   display: inline-flex;
   align-items: center;
   font-size: 1.8rem;
-  color: green;
-  text-decoration: none;
+  color: black;
+  text-decoration: underline 1px solid white;
   padding: 0.2rem 0;
   &:hover {
     text-decoration: underline;
