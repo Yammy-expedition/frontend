@@ -15,6 +15,7 @@ export default function RestaurantsPage() {
       <SearchContainer>
         <SearchBox>
           <select>
+            <option value="all">All</option>
             <option value="title">Title</option>
             <option value="content">Content</option>
           </select>
