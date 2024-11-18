@@ -32,13 +32,15 @@ const BackgroundCircle = styled.div`
 
 const ServiceName = styled.h1`
   text-align: center;
-  color: green;
+  color: var(--primary-color);
   font-size: 5.6rem;
-  font-family: 'Tahoma', sans-serif;
+  font-family: var(--sub-font);
+  font-weight: 600;
 `;
 
 const UnivName = styled.h2`
   text-align: right;
   font-size: 1.6rem;
-  font-family: 'Tahoma', sans-serif;
+  font-family: var(--sub-font);
+  font-weight: 600;
 `;

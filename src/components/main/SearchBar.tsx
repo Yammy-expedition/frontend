@@ -90,7 +90,7 @@ const SearchButton = styled.button`
   color: white;
   font-style: italic;
   cursor:pointer;
-  background-image: linear-gradient(to top, #000000, green);
+  background-image: var(--vertical-gradient);
   border:none;
   border-radius: 0.5rem;
 

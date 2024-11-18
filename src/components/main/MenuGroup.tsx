@@ -119,6 +119,7 @@ const ChildItem = styled.a`
   padding: 0.2rem 0;
   &:hover {
     text-decoration: underline;
-    color: green;
+    color: var(--primary-color);
   }
+  transition: 0.3s ease;
 `;
