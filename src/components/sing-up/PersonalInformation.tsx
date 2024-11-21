@@ -28,7 +28,7 @@ export default function PersonalInformation({
 
   const onChangeDetermined = () => {
     setIsToBeDetermined((prev) => !prev);
-    updateFormData('endDate', 'TBD');
+    updateFormData('end_date', 'TBD');
   };
 
   const onChangeLanguages = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -55,20 +55,26 @@ export default function PersonalInformation({
       <Form>
         <PasswordBox>
           <div>
-            <p>Password</p>
+            <p>
+              Password<span style={{ color: 'orange' }}>*</span>
+            </p>
             <input
               type="password"
               onChange={(e) => updateFormData('password', e.target.value)}
             />
           </div>
           <div>
-            <p>Password Check</p>
+            <p>
+              Password Check<span style={{ color: 'orange' }}>*</span>
+            </p>
             <input type="password" />
           </div>
         </PasswordBox>
 
         <NicknameBox>
-          <p>Nickname</p>
+          <p>
+            Nickname<span style={{ color: 'orange' }}>*</span>
+          </p>
           <input
             type="text"
             onChange={(e) => updateFormData('nickname', e.target.value)}
@@ -76,17 +82,19 @@ export default function PersonalInformation({
         </NicknameBox>
 
         <PeriodOfStayInKoreaBox>
-          <p>Period of stay in Korea</p>
+          <p>
+            Period of stay in Korea<span style={{ color: 'orange' }}>*</span>
+          </p>
           <div>
             <CustomCalendar
               updateFormData={updateFormData}
-              type="startDate"
+              type="start_date"
               date={date}
             />
             <span>~</span>
             <CustomCalendar
               updateFormData={updateFormData}
-              type="endDate"
+              type="end_date"
               date={date}
               disabled={isToBeDetermined}
             />
@@ -96,7 +104,9 @@ export default function PersonalInformation({
         </PeriodOfStayInKoreaBox>
 
         <MajorBox>
-          <p>Major</p>
+          <p>
+            Major<span style={{ color: 'orange' }}>*</span>
+          </p>
           <select
             name="major"
             id=""
@@ -113,7 +123,9 @@ export default function PersonalInformation({
         </MajorBox>
 
         <NationalityBox>
-          <p>Nationality</p>
+          <p>
+            Nationality<span style={{ color: 'orange' }}>*</span>
+          </p>
           <select
             name="countries"
             id=""
@@ -131,7 +143,7 @@ export default function PersonalInformation({
           </select>
         </NationalityBox>
 
-        <SexAgeBox>
+        <SexBirthBox>
           <div>
             <p>Sex</p>
             <select
@@ -150,12 +162,12 @@ export default function PersonalInformation({
           </div>
           {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
           <div>
-            <p>Age</p>
+            <p>Birth</p>
             <select
               name="age"
               id=""
-              value={formData.age || ''}
-              onChange={(e) => updateFormData('age', e.target.value)}
+              value={formData.birth || ''}
+              onChange={(e) => updateFormData('birth', e.target.value)}
             >
               <option disabled hidden value="">
                 Select Age
@@ -168,7 +180,7 @@ export default function PersonalInformation({
             </select>
           </div>
           {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
-        </SexAgeBox>
+        </SexBirthBox>
 
         <LanguageBox>
           <p>Languages you can</p>
@@ -264,7 +276,7 @@ const MajorBox = styled.div``;
 
 const NationalityBox = styled.div``;
 
-const SexAgeBox = styled.div`
+const SexBirthBox = styled.div`
   display: flex;
   gap: 2rem;
 `;

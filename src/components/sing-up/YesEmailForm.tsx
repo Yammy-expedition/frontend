@@ -1,7 +1,8 @@
-import { instance } from 'api/instance';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { User } from 'types/user';
+import { postSendCode } from 'utils/postSendCode';
+import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface YesEmailFormProps {
   updateFormData: (field: keyof User, value: any) => void;
@@ -15,38 +16,8 @@ export default function YesEmailForm({
   email
 }: YesEmailFormProps) {
   const [code, setCode] = useState<string>();
+  const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
-
-  const onClickSendCode = async () => {
-    const dataToSend = { email: email, college: '서강대학교' };
-    console.log(dataToSend);
-    try {
-      const response = await instance.post('user/email', dataToSend);
-      console.log(response.status);
-
-      if (response.status === 200) {
-      }
-    } catch (err) {
-      console.log('Error Occured');
-    }
-  };
-
-  const onClickSubmit = async () => {
-    const dataToSend = { email: email, college: '서강대학교' };
-    try {
-      const response = await instance.post(
-        'user/univcert/register',
-        dataToSend
-      );
-
-      if (response.status === 200) {
-        console.log(response.data);
-        /*코드 인증할때 왜 부가적인 정보가 필요되는지??? 비번, 닉네임, 기타 등등*/
-      }
-    } catch (err) {
-      console.log('Error Occured');
-    }
-  };
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
@@ -64,13 +35,17 @@ export default function YesEmailForm({
             }
           />
           <span> @sogang.ac.kr </span>
-          <button onClick={onClickSendCode}>send code</button>
+          <button onClick={() => postSendCode(email, setToken)}>
+            send code
+          </button>
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>
           <p>Code</p>
           <input type="text" onChange={(e) => setCode(e.target.value)} />
-          <button onClick={onClickSubmit}>submit</button>
+          <button onClick={() => postSubmitCode(token, code, setCertified)}>
+            submit
+          </button>
           <span>{certified ? 'completed' : 'uncompleted'}</span>
         </CertifyCodeContainer>
       </CertifyBox>

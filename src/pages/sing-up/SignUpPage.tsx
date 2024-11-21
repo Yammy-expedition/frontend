@@ -1,3 +1,4 @@
+import { instance } from 'api/instance';
 import PersonalInformation from 'components/sing-up/PersonalInformation';
 import SelfCertification from 'components/sing-up/SelfCertification';
 import TermsAndConditions from 'components/sing-up/TermsAndConditions';
@@ -18,17 +19,16 @@ export default function SignUpPage() {
     major: '',
     nationality: '',
     sex: null,
-    age: null,
+    birth: '',
     languages: '',
     introduce: '',
-    hobby: null,
     mbti: null,
     profile_image: null,
     univ_certified: false,
     created_at: new Date().toLocaleDateString(),
     is_staff: false,
-    startDate: '',
-    endDate: ''
+    start_date: '',
+    end_date: ''
   });
 
   useEffect(() => {
@@ -42,12 +42,40 @@ export default function SignUpPage() {
     }));
   };
 
-  const submit = () => {
-    console.log('ing');
-    //백엔드에 데이터 보내기
-    //데이터 부족하면 alert 하고 채우라고
-    //잘 있으면 홈으로
-    navigate('/');
+  const submit = async () => {
+    const {
+      univcert,
+      email,
+      password,
+      nickname,
+      major,
+      nationality,
+      start_date,
+      end_date,
+      mbti
+    } = formData;
+
+    const dataToSend = {
+      univcert: univcert,
+      email: email,
+      password: password,
+      nickname: nickname,
+      major: major,
+      nationality: nationality,
+      start_date: start_date,
+      end_date: end_date,
+      mbti: mbti
+    };
+    try {
+      const response = await instance.post('user/register', dataToSend);
+      console.log(response);
+      if (response.status === 201) {
+        navigate('/');
+      }
+    } catch (err) {
+      console.log('Error occured');
+    }
+    //
   };
 
   return (
