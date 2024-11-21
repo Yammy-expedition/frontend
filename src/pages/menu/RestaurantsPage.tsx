@@ -70,6 +70,22 @@ export default function RestaurantsPage() {
             </span>
           </PostInfo>
         </EachPost>
+        <EachPost>
+          <p>This is title2</p>
+          <PostInfo>
+            <span>Writer </span>
+            <span>24.10.01 </span>
+            <span>
+              <HeartSVG></HeartSVG> 0
+            </span>
+            <span>
+              <EyeSVG></EyeSVG> 0
+            </span>
+            <span>
+              <CommentSVG></CommentSVG> 0
+            </span>
+          </PostInfo>
+        </EachPost>
       </PostingContainer>
 
       <BottomBox>
