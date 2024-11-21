@@ -1,3 +1,4 @@
+import { instance } from 'api/instance';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { User } from 'types/user';
@@ -5,20 +6,46 @@ import { User } from 'types/user';
 interface NoEmailFormProps {
   updateFormData: (field: keyof User, value: any) => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
 }
 
 export default function NoEmailForm({
   updateFormData,
-  setStep
+  setStep,
+  email
 }: NoEmailFormProps) {
   const [code, setCode] = useState<string>();
+  const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
   const [imgFile, setImgFile] = useState('');
   const imgFileRef = useRef<HTMLInputElement>(null);
 
-  const onClickSubmit = () => {
-    if (code === '000000') {
-      setCertified(true);
+  const onClickSendCode = async () => {
+    const dataToSend = { email: email };
+    console.log(dataToSend);
+    try {
+      const response = await instance.post('user/email', dataToSend);
+      console.log(response.status);
+
+      if (response.status === 201) {
+        const codetoken = response.data.token;
+        setToken(codetoken);
+      }
+    } catch (err) {
+      console.log('Error Occured');
+    }
+  };
+
+  const onClickSubmit = async () => {
+    const dataToSend = { token: token, verification_code: code };
+    try {
+      const response = await instance.post('user/verify', dataToSend);
+
+      if (response.status === 200) {
+        setCertified(true);
+      }
+    } catch (err) {
+      console.log('Error Occured');
     }
 
     console.log(imgFile);
@@ -41,7 +68,6 @@ export default function NoEmailForm({
 
           if (imgFileRef.current) {
             imgFileRef.current.value = '';
-            console.log(imgFileRef.current);
           }
         };
       }
@@ -65,7 +91,7 @@ export default function NoEmailForm({
             type="email"
             onChange={(e) => updateFormData('email', e.target.value)}
           />
-          <button>send code</button>
+          <button onClick={onClickSendCode}>send code</button>
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>

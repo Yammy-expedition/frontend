@@ -55,7 +55,11 @@ export default function SignUpPage() {
       <p>Sign Up</p>
       {step === 1 ? <TermsAndConditions setStep={setStep} /> : null}
       {step === 2 ? (
-        <SelfCertification setStep={setStep} updateFormData={updateFormData} />
+        <SelfCertification
+          setStep={setStep}
+          updateFormData={updateFormData}
+          email={formData.email}
+        />
       ) : null}
       {step === 3 ? (
         <PersonalInformation
