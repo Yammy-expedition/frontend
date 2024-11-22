@@ -3,17 +3,28 @@ import styled from 'styled-components';
 import YesEmailForm from './YesEmailForm';
 import NoEmailForm from './NoEmailForm';
 import { User } from 'types/user';
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister
+} from 'react-hook-form';
 
 interface SelfCertificationProps {
+  getValues: UseFormGetValues<User>;
+  register: UseFormRegister<User>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updateFormData: (field: keyof User, value: any) => void;
-  email: string;
+  imgFile: File | null;
+  setImgFile: React.Dispatch<React.SetStateAction<File | null>>;
+  errors: FieldErrors<User>;
 }
 
 export default function SelfCertification({
+  getValues,
+  register,
   setStep,
-  updateFormData,
-  email
+  imgFile,
+  setImgFile,
+  errors
 }: SelfCertificationProps) {
   const [haveEmail, setHaveEmail] = useState<boolean | null>(null);
 
@@ -32,15 +43,18 @@ export default function SelfCertification({
         </>
       ) : haveEmail === true ? (
         <YesEmailForm
-          updateFormData={updateFormData}
+          getValues={getValues}
+          register={register}
           setStep={setStep}
-          email={email}
         />
       ) : (
         <NoEmailForm
-          updateFormData={updateFormData}
+          getValues={getValues}
+          register={register}
           setStep={setStep}
-          email={email}
+          imgFile={imgFile}
+          setImgFile={setImgFile}
+          errors={errors}
         />
       )}
     </SelfCertificationContainer>

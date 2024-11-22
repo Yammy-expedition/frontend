@@ -64,7 +64,7 @@ export default function SearchBar({
           Select Major
         </option>
         {majors.map((item, index) => (
-          <option key={index}>{item}</option>
+          <option key={index}>{item.name}</option>
         ))}
       </select>
       <SearchButton onClick={onClickSearchButton}>Search</SearchButton>

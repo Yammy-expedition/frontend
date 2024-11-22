@@ -3,10 +3,12 @@ import { AxiosError } from 'axios';
 
 export const postSendCode = async (
   email: string,
-  setToken: React.Dispatch<React.SetStateAction<string | undefined>>
+  setToken: React.Dispatch<React.SetStateAction<string | undefined>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean | null>>
 ) => {
   const dataToSend = { email: email };
   console.log(dataToSend);
+  setIsLoading(true);
   try {
     const response = await instance.post('user/email', dataToSend);
     console.log(response.status);
@@ -21,5 +23,7 @@ export const postSendCode = async (
     if (error.status === 409) {
       alert('This email is already registered.');
     }
+  } finally {
+    setIsLoading(false);
   }
 };
