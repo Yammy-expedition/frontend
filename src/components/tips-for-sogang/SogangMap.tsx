@@ -24,6 +24,7 @@ export default function SogangMap() {
           <input type="text" placeholder="search..." />
         </SearchBox>
       </LocationTab>
+      <div>여기는 맵 자리</div>
     </Section>
   );
 }
