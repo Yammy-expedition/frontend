@@ -59,30 +59,33 @@ export default function SignUpPage() {
           if (response2.status === 200) {
             const accessToken = response2.data.access;
             window.localStorage.setItem('accessToken', accessToken);
-            const formData = new FormData();
-            if (imgFile) {
-              formData.append('image', imgFile);
-            }
 
-            const headers = {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              'Content-Type': 'multipart/form-data'
-            };
-            try {
-              const response3 = await instance.post(
-                `user/univrequest/${response1.data.id}`,
-                formData,
-                { headers }
-              );
-
-              if (response3.status === 201) {
-                console.log('Send completely');
-                console.log(response3.data);
-                navigate('/');
+            if (!dataToSend.email.includes('sogang.ac.kr')) {
+              const formData = new FormData();
+              if (imgFile) {
+                formData.append('image', imgFile);
               }
-            } catch (err) {
-              console.log('Error occured in Image Sending');
-            }
+
+              const headers = {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                'Content-Type': 'multipart/form-data'
+              };
+              try {
+                const response3 = await instance.post(
+                  `user/univrequest/${response1.data.id}`,
+                  formData,
+                  { headers }
+                );
+
+                if (response3.status === 201) {
+                  console.log('Send completely');
+                  console.log(response3.data);
+                  navigate('/');
+                }
+              } catch (err) {
+                console.log('Error occured in Image Sending');
+              }
+            } else navigate('/');
           }
         } catch (err) {
           console.log('Error occured in Login');
