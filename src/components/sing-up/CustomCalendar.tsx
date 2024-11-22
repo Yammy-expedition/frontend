@@ -5,16 +5,17 @@ import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import { User } from 'types/user';
 import { formatDateToYYYYMMDD } from 'utils/FormatDate';
+import { UseFormSetValue } from 'react-hook-form';
 
 interface CustomCalendarProps {
-  updateFormData: (field: keyof User, value: any) => void;
+  setValue: UseFormSetValue<User>;
   type: keyof User;
   date: Date;
   disabled?: boolean;
 }
 
 export default function CustomCalendar({
-  updateFormData,
+  setValue,
   type,
   date,
   disabled = false
@@ -26,7 +27,7 @@ export default function CustomCalendar({
     const formattedDate = formatDateToYYYYMMDD(
       selectedDate.toLocaleDateString()
     );
-    updateFormData(type, formattedDate);
+    setValue(type, formattedDate, { shouldValidate: true });
     setNowDate(moment(selectedDate).format('YYYY.MM.DD'));
     setIsOpen(false);
   };

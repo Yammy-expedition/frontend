@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { UseFormGetValues, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import { User } from 'types/user';
 import { postSendCode } from 'utils/postSendCode';
 import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface YesEmailFormProps {
-  updateFormData: (field: keyof User, value: any) => void;
+  getValues: UseFormGetValues<User>;
+  register: UseFormRegister<User>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  email: string;
 }
 
 export default function YesEmailForm({
-  updateFormData,
-  setStep,
-  email
+  getValues,
+  register,
+  setStep
 }: YesEmailFormProps) {
   const [code, setCode] = useState<string>();
   const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    if (certified === true) {
-      updateFormData('univ_certified', true);
-      updateFormData('univcert', true);
-    }
-  }, [certified]);
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
@@ -38,12 +32,17 @@ export default function YesEmailForm({
           <p>Sogang University E-mail Address (ID)</p>
           <input
             type="email"
-            onChange={(e) =>
-              updateFormData('email', e.target.value + '@sogang.ac.kr')
-            }
+            {...register('email', {
+              required: true
+            })}
+            disabled={certified}
           />
           <span> @sogang.ac.kr </span>
-          <button onClick={() => postSendCode(email, setToken, setIsLoading)}>
+          <button
+            onClick={() =>
+              postSendCode(getValues('email'), setToken, setIsLoading)
+            }
+          >
             send code
           </button>
           {isLoading === true
