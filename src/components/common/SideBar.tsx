@@ -1,8 +1,6 @@
-import Footer from 'components/main/Footer';
-import MenuGroup from 'components/main/MenuGroup';
-import TitleBox from 'components/main/TitleBox';
-import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import Footer from 'components/common/Footer';
+import MenuGroup from 'components/common/MenuGroup';
+import TitleBox from 'components/common/TitleBox';
 import styled from 'styled-components';
 
 export default function SideBar() {
@@ -22,12 +20,10 @@ const SideBarContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0.5rem 0 1rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 3.8px 0px rgba(0, 0, 0, 0.25);
   min-height: 100vh;
-
   min-width: 29.4rem;
-  padding: 0 1.6rem;
-
+  padding: 0 0.6rem;
   @media screen and (min-width: 1024px) {
     min-width: 34.4rem;
     padding: 0 2rem;
