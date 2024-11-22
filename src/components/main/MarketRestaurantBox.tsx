@@ -1,7 +1,7 @@
 import { postings } from 'constants/posting';
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as PlusSVG } from '../../assets/icon/plus.svg';
+import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
 
 export default function MarketRestaurantBox() {
   return (
@@ -116,7 +116,6 @@ const Square = styled.div`
     width: 2rem;
     height: 2rem;
   }
-  }
 `;
 
 const Plus = styled.div`
@@ -168,7 +167,7 @@ const Title = styled.div`
     width: auto;
   }
 
-  &: hover {
+  &:hover {
     color: var(--primary-color);
     text-decoration: underline 1px solid var(--primary-color);
   }

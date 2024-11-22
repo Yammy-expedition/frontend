@@ -5,8 +5,8 @@ const locationList = [
   'In Sogang',
   'Main Gate',
   'Back Gate',
-  'West Gate'
-  // 'Sinchon'
+  'West Gate',
+  'Sinchon'
 ];
 
 const testData = [

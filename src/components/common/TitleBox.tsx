@@ -8,8 +8,8 @@ export default function TitleBox() {
     <LogoBox onClick={() => navigate('/')}>
       <BackgroundCircle />
       <div style={{ zIndex: 10, width: '100%' }}>
-        <ServiceName>unicon</ServiceName>
-        <UnivName>for Sogang University.</UnivName>
+        {/* <ServiceName>unicon</ServiceName> */}
+        {/* <UnivName>for Sogang University.</UnivName> */}
       </div>
     </LogoBox>
   );
@@ -29,7 +29,7 @@ const BackgroundCircle = styled.div`
   position: absolute;
   width: 9.5rem;
   height: 9.5rem;
-  background-image: linear-gradient(to top left, #888888, #ffffff, #ffffff);
+  background-image: linear-gradient(150deg, #fff 43.89%, #888 92.28%);
   border-radius: 10rem;
 `;
 
@@ -38,12 +38,12 @@ const ServiceName = styled.h1`
   color: var(--primary-color);
   font-size: 5.6rem;
   font-family: var(--sub-font);
-  font-weight: 600;
+  font-weight: 300;
 `;
 
 const UnivName = styled.h2`
   text-align: right;
   font-size: 1.6rem;
   font-family: var(--sub-font);
-  font-weight: 600;
+  font-weight: 300;
 `;

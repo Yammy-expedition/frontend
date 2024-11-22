@@ -61,7 +61,7 @@ const Nav = styled.nav`
   gap: 2rem;
   letter-spacing: -0.5px;
   div {
-    width: 10vw;
+    width: fit-content;
     background-color: var(--main-gray);
     color: var(--secondary-text);
     border-radius: 6.5rem;

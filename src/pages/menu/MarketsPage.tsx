@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchSVG } from '../../assets/icon/search.svg';
-import { ReactComponent as HeartSVG } from '../../assets/icon/heart.svg';
+import { ReactComponent as SearchSVG } from '../../assets/icons/search.svg';
+import { ReactComponent as HeartSVG } from '../../assets/icons/heart.svg';
 
 export default function MarketsPage() {
   const price = 100000;
