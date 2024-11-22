@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchSVG } from '../../assets/icon/search.svg';
-import { ReactComponent as HeartSVG } from '../../assets/icon/heart.svg';
-import { ReactComponent as EyeSVG } from '../../assets/icon/eye.svg';
-import { ReactComponent as CommentSVG } from '../../assets/icon/coment.svg';
+import { ReactComponent as SearchSVG } from '../../assets/icons/search.svg';
+import { ReactComponent as HeartSVG } from '../../assets/icons/heart.svg';
+import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
+import { ReactComponent as CommentSVG } from '../../assets/icons/coment.svg';
 
 export default function RestaurantsPage() {
   return (
