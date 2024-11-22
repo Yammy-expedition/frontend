@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { User } from 'types/user';
 import { postSendCode } from 'utils/postSendCode';
@@ -18,6 +18,14 @@ export default function YesEmailForm({
   const [code, setCode] = useState<string>();
   const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (certified === true) {
+      updateFormData('univ_certified', true);
+      updateFormData('univcert', true);
+    }
+  }, [certified]);
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
@@ -35,9 +43,14 @@ export default function YesEmailForm({
             }
           />
           <span> @sogang.ac.kr </span>
-          <button onClick={() => postSendCode(email, setToken)}>
+          <button onClick={() => postSendCode(email, setToken, setIsLoading)}>
             send code
           </button>
+          {isLoading === true
+            ? 'Sending...'
+            : isLoading === false
+              ? 'Successfully Sent'
+              : ''}
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>

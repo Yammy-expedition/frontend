@@ -8,12 +8,16 @@ interface SelfCertificationProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updateFormData: (field: keyof User, value: any) => void;
   email: string;
+  imgFile: string;
+  setImgFile: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function SelfCertification({
   setStep,
   updateFormData,
-  email
+  email,
+  imgFile,
+  setImgFile
 }: SelfCertificationProps) {
   const [haveEmail, setHaveEmail] = useState<boolean | null>(null);
 
@@ -41,6 +45,8 @@ export default function SelfCertification({
           updateFormData={updateFormData}
           setStep={setStep}
           email={email}
+          imgFile={imgFile}
+          setImgFile={setImgFile}
         />
       )}
     </SelfCertificationContainer>

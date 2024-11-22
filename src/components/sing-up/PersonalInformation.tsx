@@ -5,7 +5,6 @@ import 'react-calendar/dist/Calendar.css';
 import CustomCalendar from './CustomCalendar';
 import { majors } from 'constants/majors';
 import { countries } from 'constants/countries';
-import { ages } from 'constants/ages';
 import { languages } from 'constants/languages';
 import { mbtiTypes } from 'constants/mbti';
 

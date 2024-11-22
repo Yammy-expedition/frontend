@@ -8,17 +8,21 @@ interface NoEmailFormProps {
   updateFormData: (field: keyof User, value: any) => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   email: string;
+  imgFile: string;
+  setImgFile: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function NoEmailForm({
   updateFormData,
   setStep,
-  email
+  email,
+  imgFile,
+  setImgFile
 }: NoEmailFormProps) {
   const [code, setCode] = useState<string>();
   const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
-  const [imgFile, setImgFile] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean | null>(null);
   const imgFileRef = useRef<HTMLInputElement>(null);
 
   const onClickNextButton = () => {
@@ -63,11 +67,16 @@ export default function NoEmailForm({
             disabled={certified}
           />
           <button
-            onClick={() => postSendCode(email, setToken)}
+            onClick={() => postSendCode(email, setToken, setIsLoading)}
             disabled={certified}
           >
             send code
           </button>
+          {isLoading === true
+            ? 'Sending...'
+            : isLoading === false
+              ? 'Successfully Sent'
+              : ''}
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>

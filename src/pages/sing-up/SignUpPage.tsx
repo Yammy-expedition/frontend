@@ -9,6 +9,7 @@ import { User } from 'types/user';
 
 export default function SignUpPage() {
   const [step, setStep] = useState<number>(1);
+  const [imgFile, setImgFile] = useState<string>('');
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<User>({
@@ -32,8 +33,8 @@ export default function SignUpPage() {
   });
 
   useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+    console.log(imgFile);
+  }, [imgFile]);
 
   const updateFormData = (field: string, value: any) => {
     setFormData((prev) => ({
@@ -45,6 +46,7 @@ export default function SignUpPage() {
   const submit = async () => {
     const {
       univcert,
+      univ_certified,
       email,
       password,
       nickname,
@@ -52,11 +54,16 @@ export default function SignUpPage() {
       nationality,
       start_date,
       end_date,
-      mbti
+      mbti,
+      sex,
+      birth,
+      languages,
+      introduce
     } = formData;
 
     const dataToSend = {
       univcert: univcert,
+      univ_certified: univ_certified,
       email: email,
       password: password,
       nickname: nickname,
@@ -64,16 +71,34 @@ export default function SignUpPage() {
       nationality: nationality,
       start_date: start_date,
       end_date: end_date,
-      mbti: mbti
+      mbti: mbti,
+      sex: sex,
+      birth: birth,
+      languages: languages,
+      introduce: introduce
     };
     try {
-      const response = await instance.post('user/register', dataToSend);
-      console.log(response);
-      if (response.status === 201) {
-        navigate('/');
+      const response1 = await instance.post('user/register', dataToSend);
+      console.log(response1);
+      if (response1.status === 201) {
+        try {
+          const response2 = await instance.post(
+            `user/univrequest/${response1.data.id}`,
+            {
+              image: imgFile
+            }
+          );
+          console.log(response2);
+
+          if (response2.status === 201) {
+            navigate('/');
+          }
+        } catch (err) {
+          console.log('Error occured inner post');
+        }
       }
     } catch (err) {
-      console.log('Error occured');
+      console.log('Error occured outer post');
     }
     //
   };
@@ -87,6 +112,8 @@ export default function SignUpPage() {
           setStep={setStep}
           updateFormData={updateFormData}
           email={formData.email}
+          imgFile={imgFile}
+          setImgFile={setImgFile}
         />
       ) : null}
       {step === 3 ? (
