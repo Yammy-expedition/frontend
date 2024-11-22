@@ -7,11 +7,13 @@ import { User } from 'types/user';
 interface SelfCertificationProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updateFormData: (field: keyof User, value: any) => void;
+  email: string;
 }
 
 export default function SelfCertification({
   setStep,
-  updateFormData
+  updateFormData,
+  email
 }: SelfCertificationProps) {
   const [haveEmail, setHaveEmail] = useState<boolean | null>(null);
 
@@ -29,9 +31,17 @@ export default function SelfCertification({
           </ButtonContainer>
         </>
       ) : haveEmail === true ? (
-        <YesEmailForm updateFormData={updateFormData} setStep={setStep} />
+        <YesEmailForm
+          updateFormData={updateFormData}
+          setStep={setStep}
+          email={email}
+        />
       ) : (
-        <NoEmailForm updateFormData={updateFormData} setStep={setStep} />
+        <NoEmailForm
+          updateFormData={updateFormData}
+          setStep={setStep}
+          email={email}
+        />
       )}
     </SelfCertificationContainer>
   );

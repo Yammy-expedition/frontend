@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { User } from 'types/user';
+import { postSendCode } from 'utils/postSendCode';
+import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface YesEmailFormProps {
   updateFormData: (field: keyof User, value: any) => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
 }
 
 export default function YesEmailForm({
   updateFormData,
-  setStep
+  setStep,
+  email
 }: YesEmailFormProps) {
   const [code, setCode] = useState<string>();
+  const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
-
-  const onClickSubmit = () => {
-    if (code === '000000') {
-      setCertified(true);
-      updateFormData('univcert', true);
-    }
-  };
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
@@ -37,13 +35,17 @@ export default function YesEmailForm({
             }
           />
           <span> @sogang.ac.kr </span>
-          <button>send code</button>
+          <button onClick={() => postSendCode(email, setToken)}>
+            send code
+          </button>
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>
           <p>Code</p>
           <input type="text" onChange={(e) => setCode(e.target.value)} />
-          <button onClick={onClickSubmit}>submit</button>
+          <button onClick={() => postSubmitCode(token, code, setCertified)}>
+            submit
+          </button>
           <span>{certified ? 'completed' : 'uncompleted'}</span>
         </CertifyCodeContainer>
       </CertifyBox>

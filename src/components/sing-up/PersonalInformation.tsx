@@ -25,10 +25,11 @@ export default function PersonalInformation({
   const [selectedLanguages, setSelectedLanguages] = useState<string | null>(
     null
   );
+  const [selectedForeigner, setSelectedForeigner] = useState<string>('');
 
   const onChangeDetermined = () => {
     setIsToBeDetermined((prev) => !prev);
-    updateFormData('endDate', 'TBD');
+    updateFormData('end_date', 'TBD');
   };
 
   const onChangeLanguages = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -55,48 +56,82 @@ export default function PersonalInformation({
       <Form>
         <PasswordBox>
           <div>
-            <p>Password</p>
+            <p>
+              Password<span style={{ color: 'orange' }}>*</span>
+            </p>
             <input
               type="password"
               onChange={(e) => updateFormData('password', e.target.value)}
             />
           </div>
           <div>
-            <p>Password Check</p>
+            <p>
+              Password Check<span style={{ color: 'orange' }}>*</span>
+            </p>
             <input type="password" />
           </div>
         </PasswordBox>
 
         <NicknameBox>
-          <p>Nickname</p>
+          <p>
+            Nickname<span style={{ color: 'orange' }}>*</span>
+          </p>
           <input
             type="text"
             onChange={(e) => updateFormData('nickname', e.target.value)}
           />
         </NicknameBox>
 
-        <PeriodOfStayInKoreaBox>
-          <p>Period of stay in Korea</p>
-          <div>
-            <CustomCalendar
-              updateFormData={updateFormData}
-              type="startDate"
-              date={date}
+        <Foreigner>
+          <p>Foreigner</p>
+          <label>
+            <input
+              name="foreigner"
+              type="radio"
+              value="Korean"
+              onChange={(e) => setSelectedForeigner(e.target.value)}
             />
-            <span>~</span>
-            <CustomCalendar
-              updateFormData={updateFormData}
-              type="endDate"
-              date={date}
-              disabled={isToBeDetermined}
+            Korean
+          </label>
+          <label>
+            <input
+              name="foreigner"
+              type="radio"
+              value="Foreigner"
+              onChange={(e) => setSelectedForeigner(e.target.value)}
             />
-            <input type="checkbox" onChange={onChangeDetermined} />
-            <span>To Be Determined</span>
-          </div>
-        </PeriodOfStayInKoreaBox>
+            Foreigner
+          </label>
+        </Foreigner>
+        {selectedForeigner === 'Foreigner' ? (
+          <PeriodOfStayInKoreaBox>
+            <p>
+              Period of stay in Korea<span style={{ color: 'orange' }}>*</span>
+            </p>
+            <div></div>
+            <div>
+              <CustomCalendar
+                updateFormData={updateFormData}
+                type="start_date"
+                date={date}
+              />
+              <span> ~ </span>
+              <CustomCalendar
+                updateFormData={updateFormData}
+                type="end_date"
+                date={date}
+                disabled={isToBeDetermined}
+              />
+              <input type="checkbox" onChange={onChangeDetermined} />
+              <span>To Be Determined</span>
+            </div>
+          </PeriodOfStayInKoreaBox>
+        ) : null}
 
         <MajorBox>
-          <p>Major</p>
+          <p>
+            Major<span style={{ color: 'orange' }}>*</span>
+          </p>
           <select
             name="major"
             id=""
@@ -113,7 +148,9 @@ export default function PersonalInformation({
         </MajorBox>
 
         <NationalityBox>
-          <p>Nationality</p>
+          <p>
+            Nationality<span style={{ color: 'orange' }}>*</span>
+          </p>
           <select
             name="countries"
             id=""
@@ -131,7 +168,7 @@ export default function PersonalInformation({
           </select>
         </NationalityBox>
 
-        <SexAgeBox>
+        <SexBirthBox>
           <div>
             <p>Sex</p>
             <select
@@ -148,27 +185,16 @@ export default function PersonalInformation({
               <option value="Others">Others</option>
             </select>
           </div>
-          {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
+
           <div>
-            <p>Age</p>
-            <select
-              name="age"
-              id=""
-              value={formData.age || ''}
-              onChange={(e) => updateFormData('age', e.target.value)}
-            >
-              <option disabled hidden value="">
-                Select Age
-              </option>
-              {ages.map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <p>Birth</p>
+            <CustomCalendar
+              updateFormData={updateFormData}
+              type="birth"
+              date={date}
+            />
           </div>
-          {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
-        </SexAgeBox>
+        </SexBirthBox>
 
         <LanguageBox>
           <p>Languages you can</p>
@@ -264,7 +290,7 @@ const MajorBox = styled.div``;
 
 const NationalityBox = styled.div``;
 
-const SexAgeBox = styled.div`
+const SexBirthBox = styled.div`
   display: flex;
   gap: 2rem;
 `;
@@ -300,3 +326,5 @@ const SubmitButton = styled.button`
   border: 1px solid var(--border-color);
   cursor: pointer;
 `;
+
+const Foreigner = styled.div``;

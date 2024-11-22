@@ -1,28 +1,25 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { User } from 'types/user';
+import { postSendCode } from 'utils/postSendCode';
+import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface NoEmailFormProps {
   updateFormData: (field: keyof User, value: any) => void;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  email: string;
 }
 
 export default function NoEmailForm({
   updateFormData,
-  setStep
+  setStep,
+  email
 }: NoEmailFormProps) {
   const [code, setCode] = useState<string>();
+  const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
   const [imgFile, setImgFile] = useState('');
   const imgFileRef = useRef<HTMLInputElement>(null);
-
-  const onClickSubmit = () => {
-    if (code === '000000') {
-      setCertified(true);
-    }
-
-    console.log(imgFile);
-  };
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
@@ -41,7 +38,6 @@ export default function NoEmailForm({
 
           if (imgFileRef.current) {
             imgFileRef.current.value = '';
-            console.log(imgFileRef.current);
           }
         };
       }
@@ -64,14 +60,29 @@ export default function NoEmailForm({
           <input
             type="email"
             onChange={(e) => updateFormData('email', e.target.value)}
+            disabled={certified}
           />
-          <button>send code</button>
+          <button
+            onClick={() => postSendCode(email, setToken)}
+            disabled={certified}
+          >
+            send code
+          </button>
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>
           <p>Code</p>
-          <input type="text" onChange={(e) => setCode(e.target.value)} />
-          <button onClick={onClickSubmit}>submit</button>
+          <input
+            type="text"
+            onChange={(e) => setCode(e.target.value)}
+            disabled={certified}
+          />
+          <button
+            onClick={() => postSubmitCode(token, code, setCertified)}
+            disabled={certified}
+          >
+            submit
+          </button>
           <span>{certified ? 'completed' : 'uncompleted'}</span>
         </CertifyCodeContainer>
 

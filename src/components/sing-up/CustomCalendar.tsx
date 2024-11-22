@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import { User } from 'types/user';
+import { formatDateToYYYYMMDD } from 'utils/FormatDate';
 
 interface CustomCalendarProps {
   updateFormData: (field: keyof User, value: any) => void;
@@ -22,7 +23,10 @@ export default function CustomCalendar({
   const [nowDate, setNowDate] = useState<string>('Date');
 
   const handleDateChange = (selectedDate: Date) => {
-    updateFormData(type, selectedDate.toLocaleDateString());
+    const formattedDate = formatDateToYYYYMMDD(
+      selectedDate.toLocaleDateString()
+    );
+    updateFormData(type, formattedDate);
     setNowDate(moment(selectedDate).format('YYYY.MM.DD'));
     setIsOpen(false);
   };
