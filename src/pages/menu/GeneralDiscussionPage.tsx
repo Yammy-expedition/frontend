@@ -30,7 +30,7 @@ export default function GeneralDiscussionPage() {
   return (
     <RestaurantsPageContainer>
       <PageNameBox>
-        <p>Restaurant</p>
+        <p>General Discussion</p>
       </PageNameBox>
 
       <SearchContainer>
@@ -67,7 +67,11 @@ export default function GeneralDiscussionPage() {
         {postings?.map((posting, index) => (
           <EachPost
             key={index}
-            onClick={() => navigate(`/posting-detail/${posting.id}`)}
+            onClick={() =>
+              navigate(`/posting-detail/${posting.id}`, {
+                state: { boardType: 'General Dicsussion', posting: posting }
+              })
+            }
           >
             <p>{posting.title}</p>
             <PostInfo>
@@ -90,7 +94,9 @@ export default function GeneralDiscussionPage() {
       <BottomBox>
         <div></div>
         <PageNation>페이지 네이션 위치</PageNation>
-        <WriteButton>write</WriteButton>
+        <WriteButton onClick={() => navigate('/writing-post')}>
+          write
+        </WriteButton>
       </BottomBox>
     </RestaurantsPageContainer>
   );

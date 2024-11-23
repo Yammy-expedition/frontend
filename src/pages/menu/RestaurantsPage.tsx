@@ -58,7 +58,11 @@ export default function RestaurantsPage() {
         {postings?.map((posting, index) => (
           <EachPost
             key={index}
-            onClick={() => navigate(`/posting-detail/${posting.id}`)}
+            onClick={() =>
+              navigate(`/posting-detail/${posting.id}`, {
+                state: { boardType: 'Restaurant', posting: posting }
+              })
+            }
           >
             <p>{posting.title}</p>
             <PostInfo>
@@ -81,7 +85,15 @@ export default function RestaurantsPage() {
       <BottomBox>
         <div></div>
         <PageNation>페이지 네이션 위치</PageNation>
-        <WriteButton>write</WriteButton>
+        <WriteButton
+          onClick={() =>
+            navigate('/writing-post', {
+              state: { boardType: { name: 'Restaurant', code: 'restaurant' } }
+            })
+          }
+        >
+          write
+        </WriteButton>
       </BottomBox>
     </RestaurantsPageContainer>
   );

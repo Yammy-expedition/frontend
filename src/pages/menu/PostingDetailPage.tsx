@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
 import { getPostingDetail } from 'utils/getPostingDetail';
@@ -8,20 +8,21 @@ import { ReactComponent as MoreSVG } from '../../assets/icons/more.svg';
 import { ReactComponent as LikeSVG } from '../../assets/icons/like.svg';
 
 export default function PostingDetailPage() {
+  const location = useLocation();
+  const state = location.state as { boardType: string; posting: Posting };
   const { postingId } = useParams();
   const [posting, setPosting] = useState<Posting>();
-
   useEffect(() => {
     getPostingDetail(postingId, setPosting);
   }, []);
 
   if (!posting) {
-    return <div>404</div>;
+    return <></>;
   }
   return (
     <PostingDetailContainer>
       <PageNameBox>
-        <p>Restaurant</p>
+        <p>{state.boardType}</p>
       </PageNameBox>
 
       <PostHeader>

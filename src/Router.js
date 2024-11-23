@@ -11,6 +11,7 @@ import RestaurantsPage from 'pages/menu/RestaurantsPage';
 import MarketsPage from 'pages/menu/MarketsPage';
 import GeneralDiscussion from 'pages/menu/GeneralDiscussionPage';
 import PostingDetailPage from 'pages/menu/PostingDetailPage';
+import WritingPostPage from 'pages/menu/WritingPostPage';
 
 function Router() {
   return (
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/my-page" element={<MyPage />} />
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/tips-for-sogang" element={<TipsForSogangPage />} />
+      <Route path="/writing-post" element={<WritingPostPage />} />
     </Routes>
   );
 }
