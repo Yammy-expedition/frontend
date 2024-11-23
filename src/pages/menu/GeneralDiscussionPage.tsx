@@ -6,11 +6,13 @@ import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
 import { ReactComponent as CommentSVG } from '../../assets/icons/coment.svg';
 import { Posting } from 'types/posting';
 import { getPostingList } from 'utils/getPostingList';
+import { useNavigate } from 'react-router-dom';
 
 export default function GeneralDiscussionPage() {
   const [postings, setPostings] = useState<Posting[]>();
   const [searchType, setSearchType] = useState<string>();
   const [orderType, setOrderType] = useState<string>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPostingList('general', setPostings);
@@ -63,7 +65,10 @@ export default function GeneralDiscussionPage() {
 
       <PostingContainer>
         {postings?.map((posting, index) => (
-          <EachPost key={index}>
+          <EachPost
+            key={index}
+            onClick={() => navigate(`/posting-detail/${posting.id}`)}
+          >
             <p>{posting.title}</p>
             <PostInfo>
               <span>{posting.writer_nickname}</span>
