@@ -6,14 +6,21 @@ import { getPostingDetail } from 'utils/getPostingDetail';
 import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
 import { ReactComponent as MoreSVG } from '../../assets/icons/more.svg';
 import { ReactComponent as LikeSVG } from '../../assets/icons/like.svg';
+import { postPostingViewCount } from 'utils/postPostingViewCount';
+import { postPostingLike } from 'utils/postPostingLike';
+import '../../../node_modules/react-quill-new/dist/quill.snow.css';
+import ReactQuill from 'react-quill-new';
 
 export default function PostingDetailPage() {
   const location = useLocation();
   const state = location.state as { boardType: string; posting: Posting };
   const { postingId } = useParams();
   const [posting, setPosting] = useState<Posting>();
+  const [like, setLike] = useState<boolean>(false);
+
   useEffect(() => {
     getPostingDetail(postingId, setPosting);
+    postPostingViewCount(postingId);
   }, []);
 
   if (!posting) {
@@ -47,9 +54,17 @@ export default function PostingDetailPage() {
       <LineGradient></LineGradient>
 
       <PostContentBox>
-        <Content>{posting.content}</Content>
+        <Content>
+          <CustomReactQuill
+            value={posting.content}
+            readOnly={true}
+            theme="snow"
+            modules={{ toolbar: false }}
+            style={{ border: 'none' }}
+          />
+        </Content>
         <LikeWrapper>
-          <div>
+          <div onClick={() => postPostingLike(postingId, setLike)}>
             <LikeSVG></LikeSVG>
           </div>
           <p>{posting.like_count}</p>
@@ -161,5 +176,19 @@ const PostCommentBox = styled.div`
       color: var(--primary-color);
       font-weight: 400;
     }
+  }
+`;
+
+const CustomReactQuill = styled(ReactQuill)`
+  & .ql-container {
+    border: none;
+  }
+
+  & .ql-editor strong {
+    font-weight: bold;
+  }
+
+  & .ql-editor em {
+    font-style: italic;
   }
 `;
