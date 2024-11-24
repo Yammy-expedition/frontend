@@ -8,7 +8,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -16,7 +16,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2010-01-15T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -26,7 +28,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -34,7 +36,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2012-03-18T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -44,7 +48,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -52,7 +56,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2014-07-10T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -62,7 +68,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -70,7 +76,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2016-11-23T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -80,7 +88,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -88,7 +96,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2018-02-05T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -98,7 +108,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -106,7 +116,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2020-09-09T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -116,7 +128,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -124,7 +136,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2021-12-01T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -134,7 +148,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -142,7 +156,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2019-06-15T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -152,7 +168,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -160,7 +176,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2015-03-11T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -170,7 +188,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'China',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -178,7 +196,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2013-08-25T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
 
   // 캐나다 (10명)
@@ -190,7 +210,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -198,7 +218,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2017-04-12T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -208,7 +230,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -216,7 +238,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2019-11-07T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -226,7 +250,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -234,7 +258,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2020-01-29T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -244,7 +270,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -252,7 +278,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2018-10-18T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -262,7 +290,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -270,7 +298,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2016-05-04T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -280,7 +310,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -288,7 +318,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2014-12-20T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -298,7 +330,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -306,7 +338,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2015-07-19T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -316,7 +350,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -324,7 +358,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2013-09-03T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -334,7 +370,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Canada',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -342,7 +378,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2012-03-15T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -352,7 +390,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -360,7 +398,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2011-09-25T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -370,7 +410,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -378,7 +418,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2013-11-12T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -388,7 +430,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -396,7 +438,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2015-04-08T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -406,7 +450,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -414,7 +458,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2016-06-22T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -424,7 +470,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -432,7 +478,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2017-08-15T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -442,7 +490,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -450,7 +498,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2018-10-30T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -460,7 +510,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -468,7 +518,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2019-12-01T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -478,7 +530,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -486,7 +538,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2020-02-11T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -496,7 +550,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -504,7 +558,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2021-05-17T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -514,7 +570,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'United States',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -522,7 +578,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2022-07-25T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -532,7 +590,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -540,7 +598,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2012-01-14T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -550,7 +610,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -558,7 +618,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2014-05-17T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -568,7 +630,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -576,7 +638,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2015-09-09T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -586,7 +650,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -594,7 +658,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2016-12-13T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -604,7 +670,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -612,7 +678,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2018-03-27T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -622,7 +690,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -630,7 +698,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2019-07-02T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -640,7 +710,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -648,7 +718,9 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2020-10-19T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   },
   {
     univcert: false,
@@ -658,7 +730,7 @@ export const peopleData = [
     major: 'Others',
     nationality: 'Russia',
     sex: null,
-    birth: null,
+    age: null,
     languages: 'English',
     introduce: "Hello, I'm a student!",
     hobby: null,
@@ -666,6 +738,8 @@ export const peopleData = [
     profile_image: null,
     univ_certified: false,
     created_at: '2021-01-11T00:00:00',
-    is_staff: false
+    is_staff: false,
+    startDate: '',
+    endDate: ''
   }
 ];

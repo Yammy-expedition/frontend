@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { openableBoxList } from 'constants/openableBox';
-import { ReactComponent as PlusSVG } from '../../assets/icon/plus.svg';
+import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuGroup() {
   const [OpenIndex, setOpenIndex] = useState<number | null>(null);
   const [closing, setClosing] = useState(false);
+  const navigate = useNavigate();
 
   const toggleBox = (index: number) => {
     if (OpenIndex === index) {
@@ -25,12 +27,26 @@ export default function MenuGroup() {
     }
   };
 
+  const onClickBox = (
+    item: {
+      parent: string;
+      child: {
+        name: string;
+        link: string;
+      }[];
+      ownLink: string;
+    },
+    index: number
+  ) => {
+    toggleBox(index);
+  };
+
   return (
     <OpenableBoxList>
       {openableBoxList.map((item, index) => (
         <div key={index}>
           <OpenableBox
-            onClick={() => toggleBox(index)}
+            onClick={() => onClickBox(item, index)}
             $isOpen={OpenIndex === index && !closing}
           >
             <IconWrapper $isOpen={OpenIndex === index && !closing}>
@@ -40,7 +56,10 @@ export default function MenuGroup() {
           </OpenableBox>
           <ChildList $isVisible={OpenIndex === index && !closing}>
             {item.child.map((childItem, childIndex) => (
-              <ChildItem key={childIndex} href={childItem.link}>
+              <ChildItem
+                key={childIndex}
+                onClick={() => navigate(childItem.link)}
+              >
                 {childItem.name}
               </ChildItem>
             ))}
@@ -53,9 +72,9 @@ export default function MenuGroup() {
 
 const OpenableBoxList = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 2rem;
-
   font-size: 1.8rem;
   @media screen and (min-width: 1024px) {
     font-size: 2.2rem;
@@ -63,27 +82,44 @@ const OpenableBoxList = styled.div`
 `;
 
 const OpenableBox = styled.div<{ $isOpen: boolean }>`
-  padding: 0 1.25rem;
-
-  background: white;
-  border-radius: 1rem;
-  border: 1px solid #888888;
+  padding: 0 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 1rem;
   cursor: pointer;
-
   background-image: ${({ $isOpen }) =>
-    $isOpen ? 'linear-gradient(to left, #000000, green)' : 'white'};
+    $isOpen ? 'var(--main-gradient)' : 'white'};
   color: ${({ $isOpen }) => ($isOpen ? 'white' : 'black')};
-
   height: 5.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease-in;
   @media screen and (min-width: 1024px) {
     height: 6.2rem;
   }
-
   > p {
-    font-weight: 600;
+    letter-spacing: -1px;
+    font-weight: 500;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: var(--main-gradient);
+    opacity: 0;
+  }
+  &:hover::after {
+    opacity: 1;
+    transition: opacity 0.4s ease-in;
+  }
+  &:hover {
+    color: white;
   }
 `;
 
@@ -91,8 +127,15 @@ const IconWrapper = styled.div<{ $isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
   transform: ${({ $isOpen }) => ($isOpen ? 'rotate(45deg)' : 'rotate(0deg)')};
+  svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    path {
+      color: ${({ $isOpen }) => ($isOpen ? 'white' : 'var(--primary-color)')};
+    }
+  }
 `;
 
 const ChildList = styled.div<{ $isVisible: boolean }>`
@@ -102,24 +145,27 @@ const ChildList = styled.div<{ $isVisible: boolean }>`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition:
     opacity 0.4s ease,
-    max-height 0.4s ease;
+    max-height 0.9s ease;
   margin-left: 4rem;
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.7rem;
 `;
 
-const ChildItem = styled.a`
+const ChildItem = styled.p`
   display: inline-flex;
   align-items: center;
   font-size: 1.8rem;
-  color: green;
-  text-decoration: none;
+  color: var(--main-text);
+  text-decoration: underline 1px solid white;
   padding: 0.2rem 0;
+  cursor: pointer;
   &:hover {
     text-decoration: underline;
     color: var(--primary-color);
   }
-  transition: 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-decoration 0.3s ease;
 `;
