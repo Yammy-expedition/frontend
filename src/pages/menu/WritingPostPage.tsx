@@ -6,6 +6,9 @@ import { Posting } from 'types/posting';
 import 'react-quill/dist/quill.snow.css';
 import { postPosting } from 'utils/postPosting';
 import { ImageResize } from 'quill-image-resize-module-ts';
+import imageCompression from 'browser-image-compression';
+import { dataURLToFile } from 'utils/dataURLToFile';
+import { fileToDataURL } from 'utils/fileToDataURL';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -18,19 +21,89 @@ export default function WritingPostPage() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [price, setPrice] = useState<string>('');
+  const [isContentUpdated, setIsContentUpdated] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const onClickSubmit = () => {
-    postPosting(title, content, state.boardType.code, price).then((result) => {
-      navigate(`/posting-detail/${result.id}`, {
-        state: { boardType: state.boardType.name, posting: result }
-      });
-    });
+  async function compressAndConvertToDataURL(file: File): Promise<string> {
+    const options = {
+      maxSizeMB: 0.4, // 최대 크기 1MB로 압축
+      maxWidthOrHeight: 400, // 최대 가로/세로 1920px
+      useWebWorker: true, // Web Worker 사용
+      initialQuality: 1
+    };
+
+    try {
+      // 이미지 압축
+      const compressedFile = await imageCompression(file, options);
+      console.log('압축 완료:', compressedFile);
+
+      // 압축된 파일을 Data URL로 변환
+      const dataURL = await fileToDataURL(compressedFile);
+      console.log('데이터 URL:', dataURL);
+
+      return dataURL;
+    } catch (error) {
+      console.error('압축 또는 변환 중 오류 발생:', error);
+      throw error;
+    }
+  }
+
+  const onClickSubmit = async () => {
+    const srcArray: string[] = [];
+    const gainSource = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g;
+
+    while (gainSource.test(content)) {
+      const result = RegExp.$2; // src 속성 값 추출
+      srcArray.push(result);
+    }
+
+    let updatedContent = content; // content 상태 복사
+
+    for (let i = 0; i < srcArray.length; i++) {
+      const originalSrc = srcArray[i];
+      console.log('원본 src:', originalSrc);
+
+      if (originalSrc.startsWith('data:')) {
+        // src가 데이터 URL인 경우에만 처리
+        try {
+          const file = await dataURLToFile(originalSrc, 'image.png'); // 데이터 URL을 파일로 변환
+          const compressedDataURL = await compressAndConvertToDataURL(file); // 압축 후 데이터 URL로 변환
+
+          // 원본 src를 압축된 데이터 URL로 교체
+          updatedContent = updatedContent.replace(
+            originalSrc,
+            compressedDataURL
+          );
+          console.log('교체된 src:', compressedDataURL);
+        } catch (error) {
+          console.error('이미지 압축 또는 변환 중 오류:', error);
+        }
+      }
+    }
+
+    // 업데이트된 content를 상태에 저장
+
+    setContent(updatedContent);
+    setIsContentUpdated(true);
   };
 
   useEffect(() => {
-    console.log(content);
-  }, [content]);
+    if (isContentUpdated) {
+      postPosting(title, content, state.boardType.code, price).then(
+        (result) => {
+          navigate(`/posting-detail/${result.id}`, {
+            state: { boardType: state.boardType.name, posting: result }
+          });
+        }
+      );
+      setIsContentUpdated(false); // 플래그 초기화
+    }
+  }, [isContentUpdated]);
+
+  // useEffect(() => {
+  //   console.log(content);
+  // }, [content]);
+
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }], // 헤더
