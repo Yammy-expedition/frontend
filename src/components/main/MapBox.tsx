@@ -18,9 +18,12 @@ export default function MapBox() {
   const [selectedCountry, setSelectedCountry] = useState<SVGPathElement | null>(
     null
   );
+  const beforeSelectedCountryRef = useRef<SVGPathElement | null>(null);
+
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
+  const [scale, setScale] = useState<number>(1);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const mapBoxRef = useRef<HTMLDivElement>(null);
@@ -57,7 +60,10 @@ export default function MapBox() {
     if (countryName) {
       setSelectedCountryName(countryName);
     }
-    setSelectedCountry(target);
+    setSelectedCountry((prev) => {
+      beforeSelectedCountryRef.current = prev;
+      return target;
+    });
     setShowUserList(false);
   };
 
@@ -71,10 +77,15 @@ export default function MapBox() {
 
   const resetTransform = () => {
     setTransform('scale(1) translate(0, 0)');
+
     if (selectedCountry) {
       selectedCountry.style.fill = '';
-      setSelectedCountry(null);
+      setSelectedCountry((prev) => {
+        beforeSelectedCountryRef.current = prev;
+        return null;
+      });
     }
+    setScale(1);
   };
 
   const handleMapBoxClick: React.MouseEventHandler<HTMLDivElement> = (
@@ -102,9 +113,15 @@ export default function MapBox() {
           .scale(100)
           .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
 
+        const projectionScaled = d3
+          .geoMercator()
+          .scale(100)
+          .translate([svgRect.width / 2, (svgRect.height * 1.1) / 2]);
+
         const countryData = countries.find(
           (country) => country.name === selectedCountryName
         );
+        setScale(1.5);
 
         const countryPath = svgRef.current.querySelector(
           `.country[title="${selectedCountryName}"]`
@@ -116,17 +133,17 @@ export default function MapBox() {
         }
 
         if (countryData) {
-          const projectedCoordinates = projection([
-            countryData.longitude,
-            countryData.latitude
-          ]);
+          const projectedCoordinates =
+            beforeSelectedCountryRef.current === null
+              ? projection([countryData.longitude, countryData.latitude])
+              : projectionScaled([countryData.longitude, countryData.latitude]);
 
           if (projectedCoordinates) {
             const [x, y] = projectedCoordinates;
             const translateX = mapBoxRect.width / 2 - x;
             const translateY = mapBoxRect.height / 2 - y;
             setTransform(
-              `scale(1) translate(${translateX}px, ${translateY}px)`
+              `scale(1.5) translate(${translateX}px, ${translateY}px)`
             );
           }
         }
