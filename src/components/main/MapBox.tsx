@@ -133,10 +133,10 @@ export default function MapBox() {
         }
 
         if (countryData) {
-          const projectedCoordinates = projection([
-            countryData.longitude,
-            countryData.latitude
-          ]);
+          const projectedCoordinates =
+            beforeSelectedCountryRef.current === null
+              ? projection([countryData.longitude, countryData.latitude])
+              : projectionScaled([countryData.longitude, countryData.latitude]);
 
           if (projectedCoordinates) {
             const [x, y] = projectedCoordinates;
