@@ -18,6 +18,8 @@ export default function MapBox() {
   const [selectedCountry, setSelectedCountry] = useState<SVGPathElement | null>(
     null
   );
+  const beforeSelectedCountryRef = useRef<SVGPathElement | null>(null);
+
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
@@ -57,7 +59,10 @@ export default function MapBox() {
     if (countryName) {
       setSelectedCountryName(countryName);
     }
-    setSelectedCountry(target);
+    setSelectedCountry((prev) => {
+      beforeSelectedCountryRef.current = prev;
+      return target;
+    });
     setShowUserList(false);
   };
 
@@ -71,9 +76,13 @@ export default function MapBox() {
 
   const resetTransform = () => {
     setTransform('scale(1) translate(0, 0)');
+
     if (selectedCountry) {
       selectedCountry.style.fill = '';
-      setSelectedCountry(null);
+      setSelectedCountry((prev) => {
+        beforeSelectedCountryRef.current = prev;
+        return null;
+      });
     }
   };
 
@@ -102,6 +111,11 @@ export default function MapBox() {
           .scale(100)
           .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
 
+        const projectionScaled = d3
+          .geoMercator()
+          .scale(100)
+          .translate([svgRect.width / 2, (svgRect.height * 1.1) / 2]);
+
         const countryData = countries.find(
           (country) => country.name === selectedCountryName
         );
@@ -116,17 +130,19 @@ export default function MapBox() {
         }
 
         if (countryData) {
-          const projectedCoordinates = projection([
-            countryData.longitude,
-            countryData.latitude
-          ]);
+          const projectedCoordinates =
+            beforeSelectedCountryRef.current === null
+              ? projection([countryData.longitude, countryData.latitude])
+              : projectionScaled([countryData.longitude, countryData.latitude]);
+          console.log(projectedCoordinates);
+          console.log(beforeSelectedCountryRef.current);
 
           if (projectedCoordinates) {
             const [x, y] = projectedCoordinates;
             const translateX = mapBoxRect.width / 2 - x;
             const translateY = mapBoxRect.height / 2 - y;
             setTransform(
-              `scale(1) translate(${translateX}px, ${translateY}px)`
+              `scale(1.5) translate(${translateX}px, ${translateY}px)`
             );
           }
         }
@@ -163,6 +179,7 @@ export default function MapBox() {
       ></WorldMap>
 
       <Search
+        beforeSelectedCountryRef={beforeSelectedCountryRef}
         svgRef={svgRef}
         mapBoxRef={mapBoxRef}
         selectedCountryName={selectedCountryName}
