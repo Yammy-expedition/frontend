@@ -4,6 +4,7 @@ import * as d3 from 'd3-geo';
 import SearchBar from './SearchBar';
 
 interface SearchBarProps {
+  beforeSelectedCountryRef: React.MutableRefObject<SVGPathElement | null>;
   showUserList: boolean;
   selectedCountryName: string | null;
   setSelectedCountryName: React.Dispatch<React.SetStateAction<string | null>>;
@@ -17,6 +18,7 @@ interface SearchBarProps {
 }
 
 export default function Search({
+  beforeSelectedCountryRef,
   selectedCountryName,
   setSelectedCountryName,
   svgRef,
@@ -30,39 +32,50 @@ export default function Search({
     if (!selectedCountryName) return;
     setShowUserList(true);
     if (mapBoxRef.current && svgRef.current) {
-      const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
-      const svgRect = svgRef.current.getBoundingClientRect();
-      const projection = d3
-        .geoMercator()
-        .scale(100)
-        .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
+      // const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
+      // const svgRect = svgRef.current.getBoundingClientRect();
+      // const projection = d3
+      //   .geoMercator()
+      //   .scale(100)
+      //   .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
 
-      const countryData = countries.find(
-        (country) => country.name === selectedCountryName
-      );
+      // const projectionScaled = d3
+      //   .geoMercator()
+      //   .scale(100)
+      //   .translate([svgRect.width / 2, (svgRect.height * 1.1) / 2]);
+
+      // const countryData = countries.find(
+      //   (country) => country.name === selectedCountryName
+      // );
 
       const countryPath = svgRef.current.querySelector(
         `.country[title="${selectedCountryName}"]`
       ) as SVGPathElement;
 
       if (countryPath) {
+        console.log(countryPath);
         countryPath.style.fill = 'orange';
-        setSelectedCountry(countryPath);
+        setSelectedCountry((prev) => {
+          beforeSelectedCountryRef.current = prev;
+          return countryPath;
+        });
       }
 
-      if (countryData) {
-        const projectedCoordinates = projection([
-          countryData.longitude,
-          countryData.latitude
-        ]);
+      // if (countryData) {
+      //   const projectedCoordinates =
+      //     beforeSelectedCountryRef.current === null
+      //       ? projection([countryData.longitude, countryData.latitude])
+      //       : projectionScaled([countryData.longitude, countryData.latitude]);
+      //   console.log(projectedCoordinates);
+      //   console.log(beforeSelectedCountryRef.current);
 
-        if (projectedCoordinates) {
-          const [x, y] = projectedCoordinates;
-          const translateX = mapBoxRect.width / 2 - x;
-          const translateY = mapBoxRect.height / 2 - y;
-          setTransform(`scale(1) translate(${translateX}px, ${translateY}px)`);
-        }
-      }
+      //   if (projectedCoordinates) {
+      //     const [x, y] = projectedCoordinates;
+      //     const translateX = mapBoxRect.width / 2 - x;
+      //     const translateY = mapBoxRect.height / 2 - y;
+      //     setTransform(`scale(1) translate(${translateX}px, ${translateY}px)`);
+      //   }
+      // }
     }
   };
 
