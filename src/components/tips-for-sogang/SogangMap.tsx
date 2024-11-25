@@ -3,6 +3,7 @@ import { ReactComponent as PrinterIcon } from '../../assets/icons/printer.svg';
 import { ReactComponent as BookIcon } from '../../assets/icons/book.svg';
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg';
 import styled from 'styled-components';
+import KakaoMap from './KakaoMap';
 
 export default function SogangMap() {
   return (
@@ -24,7 +25,9 @@ export default function SogangMap() {
           <input type="text" placeholder="search..." />
         </SearchBox>
       </LocationTab>
-      <div>여기는 맵 자리</div>
+      <div className="mapWrapper">
+        <KakaoMap />
+      </div>
     </Section>
   );
 }
@@ -32,6 +35,13 @@ export default function SogangMap() {
 const Section = styled.section`
   overflow-x: hidden;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .mapWrapper {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const LocationTab = styled.ul`

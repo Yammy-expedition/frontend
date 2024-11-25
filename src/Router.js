@@ -5,7 +5,7 @@ import LoginPage from 'pages/login/LoginPage';
 import MainPage from 'pages/main/MainPage';
 import MenuPage from 'pages/menu/MenuPage';
 import MyPage from 'pages/my-page/MyPage';
-import SignUpPage from 'pages/sing-up/SignUpPage';
+import SignUpPage from 'pages/sign-up/SignUpPage';
 import TipsForSogangPage from 'pages/tips-for-sogang/TipsForSogangPage';
 import RestaurantsPage from 'pages/menu/RestaurantsPage';
 import MarketsPage from 'pages/menu/MarketsPage';
