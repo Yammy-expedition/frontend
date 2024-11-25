@@ -36,7 +36,7 @@ const StyledWorldSVG = styled(WorldSVG)`
   padding: 3rem;
   transform-origin: center;
   transition: transform 0.3s ease;
-  will-change: transform;
+  will-change: transform, transition;
 
   .country {
     stroke: #ffffff;
