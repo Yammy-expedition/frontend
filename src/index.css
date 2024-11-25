@@ -102,6 +102,7 @@ section {
 }
 body {
   line-height: 1;
+  position: relative;
 }
 ol,
 ul {
@@ -125,4 +126,11 @@ table {
 
 html {
   font-size: 62.5%;
+}
+
+#login-modal {
+  position: absolute;
+  top: 0;
+  z-index: 20;
+  left: 0;
 }

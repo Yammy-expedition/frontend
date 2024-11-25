@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchSVG } from '../../assets/icons/search.svg';
 import { ReactComponent as HeartSVG } from '../../assets/icons/heart.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function MarketsPage() {
   const price = 100000;
+  const navigate = useNavigate();
   return (
     <MarketsPageContainer>
       <PageNameBox>
@@ -50,6 +52,76 @@ export default function MarketsPage() {
             <Price>{price.toLocaleString()}won</Price>
           </div>
         </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
 
         <EachPost>
           <PostImageBox></PostImageBox>
@@ -70,7 +142,9 @@ export default function MarketsPage() {
       <BottomBox>
         <div></div>
         <PageNation>페이지 네이션 위치</PageNation>
-        <WriteButton>write</WriteButton>
+        <WriteButton onClick={() => navigate('/writing-post')}>
+          write
+        </WriteButton>
       </BottomBox>
     </MarketsPageContainer>
   );

@@ -14,6 +14,7 @@ export default function SideBar() {
 }
 
 const SideBarContainer = styled.div`
+  position: fixed;
   z-index: 10;
   background: white;
   display: flex;

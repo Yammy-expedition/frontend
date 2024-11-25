@@ -1,20 +1,18 @@
 export interface User {
-  univcert: boolean;
   email: string;
   password: string;
+  check_password: string;
   nickname: string;
   major: string;
   nationality: string;
   sex: string | null;
-  age: string | null;
-  languages: string;
+  birth: string | null;
+  languages: string | null;
   introduce: string;
-  hobby: string | null;
   mbti: string | null;
   profile_image: string | null;
-  univ_certified: boolean;
   created_at: string;
   is_staff: boolean;
-  startDate: string;
-  endDate: string;
+  start_date: string;
+  end_date: string;
 }

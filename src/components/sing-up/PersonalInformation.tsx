@@ -5,33 +5,52 @@ import 'react-calendar/dist/Calendar.css';
 import CustomCalendar from './CustomCalendar';
 import { majors } from 'constants/majors';
 import { countries } from 'constants/countries';
-import { ages } from 'constants/ages';
 import { languages } from 'constants/languages';
 import { mbtiTypes } from 'constants/mbti';
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormSetValue
+} from 'react-hook-form';
 
 interface PersonalInformationProps {
-  formData: User;
-  updateFormData: (field: keyof User, value: any) => void;
-  submit: () => void;
+  handleSubmit: UseFormHandleSubmit<User, undefined>;
+  setValue: UseFormSetValue<User>;
+  getValues: UseFormGetValues<User>;
+  register: UseFormRegister<User>;
+  submit: (data: User) => Promise<void>;
+  errors: FieldErrors<User>;
 }
 
 export default function PersonalInformation({
-  formData,
-  updateFormData,
-  submit
+  handleSubmit,
+  setValue,
+  getValues,
+  register,
+  submit,
+  errors
 }: PersonalInformationProps) {
   const date = new Date();
   const [isToBeDetermined, setIsToBeDetermined] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState<string | null>(
     null
   );
+  const [selectedLanguagesCode, setSelectedLanguagesCode] = useState<
+    string | null
+  >('');
+  const [selectedForeigner, setSelectedForeigner] = useState<string>('');
 
   const onChangeDetermined = () => {
     setIsToBeDetermined((prev) => !prev);
-    updateFormData('endDate', 'TBD');
+    setValue('end_date', 'TBD');
   };
 
   const onChangeLanguages = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const label = selectedOption.getAttribute('data-label');
+
     setSelectedLanguages((prev) => {
       if (prev === null || prev === '') {
         return e.target.value;
@@ -43,132 +62,200 @@ export default function PersonalInformation({
       }
       return prev + ',' + e.target.value;
     });
+
+    setSelectedLanguagesCode((prev) => {
+      if (prev === null || prev === '') {
+        return label;
+      } else if (prev.split(',').includes(label as string)) {
+        const value = prev.split(',').filter((element) => element !== label);
+        return value.join(',');
+      }
+      return prev + ',' + label;
+    });
   };
 
   useEffect(() => {
-    updateFormData('languages', selectedLanguages);
-  }, [selectedLanguages]);
+    setValue('languages', selectedLanguagesCode);
+  }, [selectedLanguagesCode]);
 
   return (
-    <PersonalInformationContainer>
+    <PersonalInformationContainer onSubmit={handleSubmit(submit)}>
       <p>③ Self-Certification</p>
       <Form>
         <PasswordBox>
           <div>
-            <p>Password</p>
+            <p>
+              Password<span style={{ color: 'orange' }}>*</span>
+            </p>
             <input
               type="password"
-              onChange={(e) => updateFormData('password', e.target.value)}
+              {...register('password', {
+                required: 'password is neccessary field',
+                minLength: {
+                  value: 7,
+                  message: 'Minimum length is 7'
+                }
+              })}
             />
+            {errors.password && (
+              <small role="alert">{errors.password.message}</small>
+            )}
           </div>
           <div>
-            <p>Password Check</p>
-            <input type="password" />
+            <p>
+              Password Check<span style={{ color: 'orange' }}>*</span>
+            </p>
+            <input
+              type="password"
+              {...register('check_password', {
+                required: 'password is neccessary field',
+                minLength: {
+                  value: 7,
+                  message: 'Minimum length is 7'
+                },
+                validate: {
+                  check: (val) => {
+                    if (getValues('password') !== val) {
+                      return 'Password doen not match';
+                    }
+                  }
+                }
+              })}
+            />
+            {errors.check_password && (
+              <small role="alert">{errors.check_password.message}</small>
+            )}
           </div>
         </PasswordBox>
 
         <NicknameBox>
-          <p>Nickname</p>
+          <p>
+            Nickname<span style={{ color: 'orange' }}>*</span>
+          </p>
           <input
             type="text"
-            onChange={(e) => updateFormData('nickname', e.target.value)}
+            {...register('nickname', {
+              required: 'Nickname is neccessary field',
+              minLength: {
+                value: 3,
+                message: 'Minimun length is 3'
+              },
+              maxLength: {
+                value: 7,
+                message: 'Maximum length is 7'
+              }
+            })}
           />
+          {errors.nickname && (
+            <small role="alert">{errors.nickname.message}</small>
+          )}
         </NicknameBox>
 
-        <PeriodOfStayInKoreaBox>
-          <p>Period of stay in Korea</p>
-          <div>
-            <CustomCalendar
-              updateFormData={updateFormData}
-              type="startDate"
-              date={date}
+        <Foreigner>
+          <p>
+            Are you international student? (exchange student, Language School
+            etc,,)
+          </p>
+          <label>
+            <input
+              name="foreigner"
+              type="radio"
+              value="Foreigner"
+              onChange={(e) => setSelectedForeigner(e.target.value)}
             />
-            <span>~</span>
-            <CustomCalendar
-              updateFormData={updateFormData}
-              type="endDate"
-              date={date}
-              disabled={isToBeDetermined}
+            Yes
+          </label>
+          <label>
+            <input
+              name="foreigner"
+              type="radio"
+              value="Korean"
+              onChange={(e) => setSelectedForeigner(e.target.value)}
             />
-            <input type="checkbox" onChange={onChangeDetermined} />
-            <span>To Be Determined</span>
-          </div>
-        </PeriodOfStayInKoreaBox>
+            No
+          </label>
+        </Foreigner>
+        {selectedForeigner === 'Foreigner' ? (
+          <PeriodOfStayInKoreaBox>
+            <p>
+              Period of stay in Korea<span style={{ color: 'orange' }}>*</span>
+            </p>
+            <div></div>
+            <div>
+              <CustomCalendar
+                setValue={setValue}
+                type="start_date"
+                date={date}
+              />
+              <span> ~ </span>
+              <CustomCalendar
+                setValue={setValue}
+                type="end_date"
+                date={date}
+                disabled={isToBeDetermined}
+              />
+              <input type="checkbox" onChange={onChangeDetermined} />
+              <span>To Be Determined</span>
+            </div>
+          </PeriodOfStayInKoreaBox>
+        ) : null}
 
         <MajorBox>
-          <p>Major</p>
+          <p>
+            Major<span style={{ color: 'orange' }}>*</span>
+          </p>
           <select
-            name="major"
-            id=""
-            value={formData.major || ''}
-            onChange={(e) => updateFormData('major', e.target.value)}
+            id="major"
+            {...register('major', { required: 'Select Major' })}
           >
             <option disabled hidden value="">
               Select Major
             </option>
             {majors.map((item, index) => (
-              <option key={index}>{item}</option>
+              <option key={index} value={item.code}>
+                {item.name}
+              </option>
             ))}
           </select>
         </MajorBox>
 
         <NationalityBox>
-          <p>Nationality</p>
+          <p>
+            Nationality<span style={{ color: 'orange' }}>*</span>
+          </p>
           <select
-            name="countries"
-            id=""
-            value={formData.nationality}
-            onChange={(e) => updateFormData('nationality', e.target.value)}
+            id="nationality"
+            {...register('nationality', { required: 'Select Country' })}
           >
             <option disabled hidden value="">
               Select Country
             </option>
             {countries.map((item, index) => (
-              <option key={index} value={item.name}>
+              <option key={index} value={item.code}>
                 {item.name}
               </option>
             ))}
           </select>
         </NationalityBox>
 
-        <SexAgeBox>
+        <SexBirthBox>
           <div>
             <p>Sex</p>
-            <select
-              name="sex"
-              id=""
-              value={formData.sex || ''}
-              onChange={(e) => updateFormData('sex', e.target.value)}
-            >
+            <select id="sex" {...register('sex', { required: 'Select Sex' })}>
               <option disabled hidden value="">
                 Select Sex
               </option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Others">Others</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <option value="O">Other</option>
             </select>
           </div>
-          {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
+
           <div>
-            <p>Age</p>
-            <select
-              name="age"
-              id=""
-              value={formData.age || ''}
-              onChange={(e) => updateFormData('age', e.target.value)}
-            >
-              <option disabled hidden value="">
-                Select Age
-              </option>
-              {ages.map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <p>Birth</p>
+            <CustomCalendar setValue={setValue} type="birth" date={date} />
           </div>
-          {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
-        </SexAgeBox>
+        </SexBirthBox>
 
         <LanguageBox>
           <p>Languages you can</p>
@@ -177,8 +264,8 @@ export default function PersonalInformation({
               Select Languages
             </option>
             {languages.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
+              <option key={index} value={item.name} data-label={item.code}>
+                {item.name}
               </option>
             ))}
           </select>
@@ -188,21 +275,15 @@ export default function PersonalInformation({
         <IntroduceBox>
           <p>Introduce</p>
           <textarea
-            value={formData.introduce}
             placeholder={`Introducing yourself in more detail will help you find friends.
 ex) Hometown, university (if you have), what you like, the purpose of coming to Korea ...`}
-            onChange={(e) => updateFormData('introduce', e.target.value)}
+            {...register('introduce')}
           />
         </IntroduceBox>
 
         <MbtiBox>
           <p>MBTI</p>
-          <select
-            name="age"
-            id=""
-            value={formData.mbti || ''}
-            onChange={(e) => updateFormData('mbti', e.target.value)}
-          >
+          <select id="mbti" {...register('mbti', { required: 'Select MBTI' })}>
             <option disabled hidden value="">
               Select Mbti
             </option>
@@ -216,13 +297,13 @@ ex) Hometown, university (if you have), what you like, the purpose of coming to 
       </Form>
 
       <SubmitButtonWrapper>
-        <SubmitButton onClick={submit}>submit</SubmitButton>
+        <SubmitButton type="submit">submit</SubmitButton>
       </SubmitButtonWrapper>
     </PersonalInformationContainer>
   );
 }
 
-const PersonalInformationContainer = styled.div`
+const PersonalInformationContainer = styled.form`
   > p {
     font-family: var(--main-font);
     font-size: 2rem;
@@ -264,7 +345,7 @@ const MajorBox = styled.div``;
 
 const NationalityBox = styled.div``;
 
-const SexAgeBox = styled.div`
+const SexBirthBox = styled.div`
   display: flex;
   gap: 2rem;
 `;
@@ -300,3 +381,5 @@ const SubmitButton = styled.button`
   border: 1px solid var(--border-color);
   cursor: pointer;
 `;
+
+const Foreigner = styled.div``;

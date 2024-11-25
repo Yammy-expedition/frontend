@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchSVG } from '../../assets/icons/search.svg';
 import { ReactComponent as HeartSVG } from '../../assets/icons/heart.svg';
 import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
 import { ReactComponent as CommentSVG } from '../../assets/icons/coment.svg';
+import { Posting } from 'types/posting';
+import { getPostingList } from 'utils/getPostingList';
+import { useNavigate } from 'react-router-dom';
 
 export default function GeneralDiscussionPage() {
+  const [postings, setPostings] = useState<Posting[]>();
+  const [searchType, setSearchType] = useState<string>();
+  const [orderType, setOrderType] = useState<string>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getPostingList('general', setPostings);
+  }, [orderType]);
+
+  const getWindowHeight = () => {
+    const height = window.innerHeight;
+    console.log('Viewport height:', height);
+    return height;
+  };
+
+  useEffect(() => {
+    console.log(getWindowHeight());
+  }, [window.innerHeight]);
   return (
     <RestaurantsPageContainer>
       <PageNameBox>
@@ -14,7 +35,10 @@ export default function GeneralDiscussionPage() {
 
       <SearchContainer>
         <SearchBox>
-          <select>
+          <select
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
             <option value="all">All</option>
             <option value="title">Title</option>
             <option value="content">Content</option>
@@ -27,7 +51,10 @@ export default function GeneralDiscussionPage() {
           </SearchBar>
         </SearchBox>
         <FilteringBox>
-          <select>
+          <select
+            value={orderType}
+            onChange={(e) => setOrderType(e.target.value)}
+          >
             <option value="">Recent</option>
             <option value="">Popular</option>
           </select>
@@ -37,45 +64,39 @@ export default function GeneralDiscussionPage() {
       <LineGradient></LineGradient>
 
       <PostingContainer>
-        <EachPost>
-          <p>This is title1</p>
-          <PostInfo>
-            <span>Writer </span>
-            <span>24.10.01 </span>
-            <span>
-              <HeartSVG></HeartSVG> 0
-            </span>
-            <span>
-              <EyeSVG></EyeSVG> 0
-            </span>
-            <span>
-              <CommentSVG></CommentSVG> 0
-            </span>
-          </PostInfo>
-        </EachPost>
-
-        <EachPost>
-          <p>This is title2</p>
-          <PostInfo>
-            <span>Writer </span>
-            <span>24.10.01 </span>
-            <span>
-              <HeartSVG></HeartSVG> 0
-            </span>
-            <span>
-              <EyeSVG></EyeSVG> 0
-            </span>
-            <span>
-              <CommentSVG></CommentSVG> 0
-            </span>
-          </PostInfo>
-        </EachPost>
+        {postings?.map((posting, index) => (
+          <EachPost
+            key={index}
+            onClick={() =>
+              navigate(`/posting-detail/${posting.id}`, {
+                state: { boardType: 'General Dicsussion', posting: posting }
+              })
+            }
+          >
+            <p>{posting.title}</p>
+            <PostInfo>
+              <span>{posting.writer_nickname}</span>
+              <span>{posting.created_at.split('T')[0]}</span>
+              <span>
+                <HeartSVG></HeartSVG> {posting.like_count}
+              </span>
+              <span>
+                <EyeSVG></EyeSVG> {posting.view_count}
+              </span>
+              <span>
+                <CommentSVG></CommentSVG> {posting.comment_count}
+              </span>
+            </PostInfo>
+          </EachPost>
+        ))}
       </PostingContainer>
 
       <BottomBox>
         <div></div>
         <PageNation>페이지 네이션 위치</PageNation>
-        <WriteButton>write</WriteButton>
+        <WriteButton onClick={() => navigate('/writing-post')}>
+          write
+        </WriteButton>
       </BottomBox>
     </RestaurantsPageContainer>
   );

@@ -1,12 +1,52 @@
-import React from 'react';
+import LoginModal from 'components/login/LoginModal';
+import LoginModalPortal from 'components/portal/LoginModalPortal';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function Footer() {
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>();
+
+  const HandleModalShow = () => {
+    setLoginModalOpen(false);
+  };
+
+  const onClickLogout = () => {
+    window.localStorage.removeItem('accessToken');
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (window.localStorage.getItem('accessToken')) {
+      setIsLogin(true);
+    }
+  }, []);
+
+  const navigate = useNavigate();
   return (
     <FooterContainer>
-      <div>chat</div>
-      <p>|</p>
-      <div>mypage</div>
+      {isLogin ? (
+        <>
+          <div>chat</div>
+          <p>|</p>
+          <div>mypage</div>
+          <p>|</p>
+          <div onClick={onClickLogout}>logout</div>
+        </>
+      ) : (
+        <>
+          <div onClick={() => setLoginModalOpen(true)}>login</div>
+          <p>|</p>
+          <div onClick={() => navigate('/sign-up')}>sign up</div>
+
+          {loginModalOpen && (
+            <LoginModalPortal>
+              <LoginModal onClose={HandleModalShow}></LoginModal>
+            </LoginModalPortal>
+          )}
+        </>
+      )}
     </FooterContainer>
   );
 }

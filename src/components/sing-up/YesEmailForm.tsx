@@ -1,29 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue
+} from 'react-hook-form';
 import styled from 'styled-components';
 import { User } from 'types/user';
+import { postSendCode } from 'utils/postSendCode';
+import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface YesEmailFormProps {
-  updateFormData: (field: keyof User, value: any) => void;
+  setValue: UseFormSetValue<User>;
+  getValues: UseFormGetValues<User>;
+  register: UseFormRegister<User>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function YesEmailForm({
-  updateFormData,
+  setValue,
+  getValues,
+  register,
   setStep
 }: YesEmailFormProps) {
   const [code, setCode] = useState<string>();
+  const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
-
-  const onClickSubmit = () => {
-    if (code === '000000') {
-      setCertified(true);
-      updateFormData('univcert', true);
-    }
-  };
+  const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
   };
+
+  const onClickSendCode = () => {
+    postSendCode(getValues('email') + '@sogang.ac.kr', setToken, setIsLoading);
+  };
+
+  useEffect(() => {
+    return () => {
+      const value = getValues('email');
+      setValue('email', `${value}@sogang.ac.kr`);
+    };
+  }, []);
 
   return (
     <YesEmailFormContainer>
@@ -32,18 +49,26 @@ export default function YesEmailForm({
           <p>Sogang University E-mail Address (ID)</p>
           <input
             type="email"
-            onChange={(e) =>
-              updateFormData('email', e.target.value + '@sogang.ac.kr')
-            }
+            {...register('email', {
+              required: true
+            })}
+            disabled={certified}
           />
           <span> @sogang.ac.kr </span>
-          <button>send code</button>
+          <button onClick={onClickSendCode}>send code</button>
+          {isLoading === true
+            ? 'Sending...'
+            : isLoading === false
+              ? 'Successfully Sent'
+              : ''}
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>
           <p>Code</p>
           <input type="text" onChange={(e) => setCode(e.target.value)} />
-          <button onClick={onClickSubmit}>submit</button>
+          <button onClick={() => postSubmitCode(token, code, setCertified)}>
+            submit
+          </button>
           <span>{certified ? 'completed' : 'uncompleted'}</span>
         </CertifyCodeContainer>
       </CertifyBox>
