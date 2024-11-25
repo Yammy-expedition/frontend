@@ -52,6 +52,76 @@ export default function MarketsPage() {
             <Price>{price.toLocaleString()}won</Price>
           </div>
         </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
+        <EachPost>
+          <PostImageBox></PostImageBox>
+          <div>
+            <p>This is title1</p>
+            <PostInfo>
+              <span>Writer </span>
+              <span>24.10.01 </span>
+              <span>
+                <HeartSVG></HeartSVG> 0
+              </span>
+            </PostInfo>
+            <Price>{price.toLocaleString()}won</Price>
+          </div>
+        </EachPost>
 
         <EachPost>
           <PostImageBox></PostImageBox>
