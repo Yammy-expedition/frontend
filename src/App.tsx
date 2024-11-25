@@ -5,9 +5,11 @@ import Router from 'Router';
 import './style/color.css';
 import './style/font.css';
 import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function App() {
   const location = useLocation();
+
   return (
     <AppContainer className="App">
       {location.pathname !== '/admin' && location.pathname !== '/sign-up' ? (

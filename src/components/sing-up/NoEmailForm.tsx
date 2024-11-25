@@ -1,28 +1,37 @@
 import React, { useRef, useState } from 'react';
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister
+} from 'react-hook-form';
 import styled from 'styled-components';
 import { User } from 'types/user';
+import { postSendCode } from 'utils/postSendCode';
+import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface NoEmailFormProps {
-  updateFormData: (field: keyof User, value: any) => void;
+  getValues: UseFormGetValues<User>;
+  register: UseFormRegister<User>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  imgFile: File | null;
+  setImgFile: React.Dispatch<React.SetStateAction<File | null>>;
+  errors: FieldErrors<User>;
 }
 
 export default function NoEmailForm({
-  updateFormData,
-  setStep
+  getValues,
+  register,
+  setStep,
+  imgFile,
+  setImgFile,
+  errors
 }: NoEmailFormProps) {
   const [code, setCode] = useState<string>();
+  const [token, setToken] = useState<string>();
   const [certified, setCertified] = useState<boolean>(false);
-  const [imgFile, setImgFile] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean | null>(null);
+  const [preview, setPreview] = useState<string>('');
   const imgFileRef = useRef<HTMLInputElement>(null);
-
-  const onClickSubmit = () => {
-    if (code === '000000') {
-      setCertified(true);
-    }
-
-    console.log(imgFile);
-  };
 
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
@@ -33,15 +42,15 @@ export default function NoEmailForm({
 
     if (imgFileRef.current?.files) {
       const file = imgFileRef.current.files[0];
+      setImgFile(file);
 
       if (file) {
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-          setImgFile(reader.result as string);
+          setPreview(reader.result as string);
 
           if (imgFileRef.current) {
             imgFileRef.current.value = '';
-            console.log(imgFileRef.current);
           }
         };
       }
@@ -63,15 +72,44 @@ export default function NoEmailForm({
           <p>E-mail Address (ID)</p>
           <input
             type="email"
-            onChange={(e) => updateFormData('email', e.target.value)}
+            {...register('email', {
+              required: true,
+              pattern: {
+                value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                message: 'Invalid email format'
+              }
+            })}
+            disabled={certified}
           />
-          <button>send code</button>
+          {errors.email && <small role="alert">{errors.email.message}</small>}
+          <button
+            onClick={() =>
+              postSendCode(getValues('email'), setToken, setIsLoading)
+            }
+            disabled={certified}
+          >
+            send code
+          </button>
+          {isLoading === true
+            ? 'Sending...'
+            : isLoading === false
+              ? 'Successfully Sent'
+              : ''}
         </EmailContainer>
 
         <CertifyCodeContainer $certified={certified}>
           <p>Code</p>
-          <input type="text" onChange={(e) => setCode(e.target.value)} />
-          <button onClick={onClickSubmit}>submit</button>
+          <input
+            type="text"
+            onChange={(e) => setCode(e.target.value)}
+            disabled={certified}
+          />
+          <button
+            onClick={() => postSubmitCode(token, code, setCertified)}
+            disabled={certified}
+          >
+            submit
+          </button>
           <span>{certified ? 'completed' : 'uncompleted'}</span>
         </CertifyCodeContainer>
 
@@ -82,7 +120,7 @@ export default function NoEmailForm({
           </p>
 
           <ImgBox>
-            {imgFile === '' ? (
+            {imgFile === null ? (
               <>
                 <label htmlFor="file">
                   <span style={{ fontSize: '1.4rem' }}>+ Attach File</span>
@@ -94,10 +132,10 @@ export default function NoEmailForm({
               </>
             ) : (
               <>
-                <img src={imgFile} alt="proving-source" />
+                <img src={preview} alt="proving-source" />
                 <div>
                   <button onClick={onClickReupload}>reupload</button>
-                  <button onClick={() => setImgFile('')}>delete</button>
+                  <button onClick={() => setPreview('')}>delete</button>
                 </div>
               </>
             )}
@@ -116,8 +154,8 @@ export default function NoEmailForm({
 
       <ButtonBox>
         <NextButton
-          $certified={certified && imgFile !== ''}
-          disabled={!(certified && imgFile !== '')}
+          $certified={certified && preview !== ''}
+          disabled={!(certified && preview !== '')}
           onClick={onClickNextButton}
         >
           Next

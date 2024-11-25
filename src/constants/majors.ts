@@ -1,45 +1,45 @@
 export const majors = [
   // Humanities
-  'Korean Language & Literature',
-  'History',
-  'Philosophy',
-  'Religious Studies',
-  'Division of English',
-  'European Languages and Cultures',
-  'Chinese Culture',
+  { name: 'Korean Language & Literature', code: 'KLL' },
+  { name: 'History', code: 'HIS' },
+  { name: 'Philosophy', code: 'PHI' },
+  { name: 'Religious Studies', code: 'REL' },
+  { name: 'Division of English', code: 'ENG' },
+  { name: 'European Languages and Cultures', code: 'ELC' },
+  { name: 'Chinese Culture', code: 'CHC' },
 
-  //Social Sciences
-  'Sociology',
-  'Political Science',
-  'Psychology',
+  // Social Sciences
+  { name: 'Sociology', code: 'SOC' },
+  { name: 'Political Science', code: 'POL' },
+  { name: 'Psychology', code: 'PSY' },
 
-  //Arts ans Sciences
-  'Communications',
-  'Media & Entertainment',
-  'Art & Technology',
+  // Arts and Sciences
+  { name: 'Communications', code: 'COM' },
+  { name: 'Media & Entertainment', code: 'MED' },
+  { name: 'Art & Technology', code: 'ART' },
 
-  //Natural Sciences
-  'Mathematics',
-  'Physics',
-  'Chemistry',
-  'Life Science',
+  // Natural Sciences
+  { name: 'Mathematics', code: 'MAT' },
+  { name: 'Physics', code: 'PHY' },
+  { name: 'Chemistry', code: 'CHE' },
+  { name: 'Life Science', code: 'LSC' },
 
-  //Engineering
-  'Electronic Engineering',
-  'Chemical & Biomolecular Engineering',
-  'Computer Science and Engineering',
-  'Mechanical Engineering',
-  'Artificial Intelligence',
-  'System Semiconductor Engineering',
+  // Engineering
+  { name: 'Electronic Engineering', code: 'ELE' },
+  { name: 'Chemical & Biomolecular Engineering', code: 'CBE' },
+  { name: 'Computer Science and Engineering', code: 'CSE' },
+  { name: 'Mechanical Engineering', code: 'MCE' },
+  { name: 'Artificial Intelligence', code: 'AIN' },
+  { name: 'System Semiconductor Engineering', code: 'SSE' },
 
-  //Economics
-  'Economics',
+  // Economics
+  { name: 'Economics', code: 'ECO' },
 
-  //Business School
-  'Business Administration',
+  // Business School
+  { name: 'Business Administration', code: 'BBA' },
 
-  //Loyola International College
-  'Division of Global Korean Studies',
-  'Geppert School of International Studies',
-  'Division of Global Interdisciplinary Studies'
+  // Loyola International College
+  { name: 'Division of Global Korean Studies', code: 'GKS' },
+  { name: 'Geppert School of International Studies', code: 'GIS' },
+  { name: 'Division of Global Interdisciplinary Studies', code: 'GDS' }
 ];
