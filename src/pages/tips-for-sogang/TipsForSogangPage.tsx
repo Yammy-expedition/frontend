@@ -25,7 +25,9 @@ export default function TipsForSogangPage() {
         </div>
         <div onClick={() => handleCategoryChange('sogang-map')}>Sogang Map</div>
       </Nav>
-      {category === 'sogang-map' ? <SogangMap /> : <Restaurants />}
+      <div style={{ height: '100%' }}>
+        {category === 'sogang-map' ? <SogangMap /> : <Restaurants />}
+      </div>
     </Wrapper>
   );
 }
@@ -34,6 +36,8 @@ const Wrapper = styled.main`
   width: 100%;
   height: 100vh;
   padding-left: 3rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Header = styled.header`
