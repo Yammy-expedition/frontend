@@ -25,6 +25,14 @@ export default App;
 const AppContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #eeeeee;
+
+  > *:not(:first-child) {
+    margin-left: 28rem;
+
+    @media screen and (min-width: 1024px) {
+      margin-left: 34rem;
+    }
+  }
 `;

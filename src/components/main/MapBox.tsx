@@ -23,6 +23,7 @@ export default function MapBox() {
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
+  const [scale, setScale] = useState<number>(1);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const mapBoxRef = useRef<HTMLDivElement>(null);
@@ -84,6 +85,7 @@ export default function MapBox() {
         return null;
       });
     }
+    setScale(1);
   };
 
   const handleMapBoxClick: React.MouseEventHandler<HTMLDivElement> = (
@@ -110,6 +112,9 @@ export default function MapBox() {
           .geoMercator()
           .scale(100)
           .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
+        console.log(svgRect.width, svgRect.height);
+
+        // 이 위에 150이랑 200 svgRect 비율로 따져서 바꾸기
 
         const projectionScaled = d3
           .geoMercator()
@@ -119,6 +124,7 @@ export default function MapBox() {
         const countryData = countries.find(
           (country) => country.name === selectedCountryName
         );
+        setScale(1.5);
 
         const countryPath = svgRef.current.querySelector(
           `.country[title="${selectedCountryName}"]`
@@ -134,8 +140,6 @@ export default function MapBox() {
             beforeSelectedCountryRef.current === null
               ? projection([countryData.longitude, countryData.latitude])
               : projectionScaled([countryData.longitude, countryData.latitude]);
-          console.log(projectedCoordinates);
-          console.log(beforeSelectedCountryRef.current);
 
           if (projectedCoordinates) {
             const [x, y] = projectedCoordinates;

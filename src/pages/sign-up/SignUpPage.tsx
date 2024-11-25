@@ -102,6 +102,7 @@ export default function SignUpPage() {
       {step === 1 ? <TermsAndConditions setStep={setStep} /> : null}
       {step === 2 ? (
         <SelfCertification
+          setValue={setValue}
           getValues={getValues}
           register={register}
           setStep={setStep}

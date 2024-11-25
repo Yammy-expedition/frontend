@@ -1,45 +1,134 @@
 export const majors = [
   // Humanities
-  { name: 'Korean Language & Literature', code: 'KLL' },
-  { name: 'History', code: 'HIS' },
-  { name: 'Philosophy', code: 'PHI' },
-  { name: 'Religious Studies', code: 'REL' },
-  { name: 'Division of English', code: 'ENG' },
-  { name: 'European Languages and Cultures', code: 'ELC' },
-  { name: 'Chinese Culture', code: 'CHC' },
+  {
+    name: 'Korean Language & Literature',
+    code: 'KOR'
+  }, //국문과
+  {
+    name: 'History',
+    code: 'HIS'
+  }, //사학과
+  {
+    name: 'Philosophy',
+    code: 'PHI'
+  }, //철학과
+  {
+    name: 'Religious Studies',
+    code: 'REL'
+  }, //종교학과
+  {
+    name: 'English Literature and Linguistics',
+    code: 'ENG'
+  }, //영문과
+  {
+    name: 'American Culture',
+    code: 'AMC'
+  }, //미국문화
+  {
+    name: 'European Languages and Cultures',
+    code: 'EUR'
+  }, //유럽문화
+  {
+    name: 'Chinese Culture',
+    code: 'CHI'
+  }, //중국문화
 
   // Social Sciences
-  { name: 'Sociology', code: 'SOC' },
-  { name: 'Political Science', code: 'POL' },
-  { name: 'Psychology', code: 'PSY' },
+  {
+    name: 'Sociology',
+    code: 'SOC'
+  }, //사회학과
+  {
+    name: 'Political Science',
+    code: 'POL'
+  }, //정치외교학과
+  {
+    name: 'Psychology',
+    code: 'PSY'
+  }, //심리학과
 
-  // Arts and Sciences
-  { name: 'Communications', code: 'COM' },
-  { name: 'Media & Entertainment', code: 'MED' },
-  { name: 'Art & Technology', code: 'ART' },
+  //지융미
+  {
+    name: 'Journalism & Strategic Communication',
+    code: 'JAS'
+  }, //신문방송학과
+  {
+    name: 'Global Korean Studies',
+    code: 'GKS'
+  }, //글로벌한국학과
+  {
+    name: 'Media & Entertainment',
+    code: 'MAE'
+  }, //미디어앤엔터테인먼트
+  {
+    name: 'Art & Technology',
+    code: 'AAT'
+  }, //아트앤테크놀로지
 
   // Natural Sciences
-  { name: 'Mathematics', code: 'MAT' },
-  { name: 'Physics', code: 'PHY' },
-  { name: 'Chemistry', code: 'CHE' },
-  { name: 'Life Science', code: 'LSC' },
+  {
+    name: 'Mathematics',
+    code: 'MAT'
+  }, //수학과
+  {
+    name: 'Physics',
+    code: 'PHY'
+  }, //물리학과
+  {
+    name: 'Chemistry',
+    code: 'CHM'
+  }, //화학과
+  {
+    name: 'Life Sciences',
+    code: 'BIO'
+  }, //생명과학과
 
-  // Engineering
-  { name: 'Electronic Engineering', code: 'ELE' },
-  { name: 'Chemical & Biomolecular Engineering', code: 'CBE' },
-  { name: 'Computer Science and Engineering', code: 'CSE' },
-  { name: 'Mechanical Engineering', code: 'MCE' },
-  { name: 'Artificial Intelligence', code: 'AIN' },
-  { name: 'System Semiconductor Engineering', code: 'SSE' },
+  {
+    name: 'Electronic Engineering',
+    code: 'EEE'
+  }, //전자공학과
+  {
+    name: 'Chemical & Biomolecular Engineering',
+    code: 'CBE'
+  }, //화공생명공학과
+  {
+    name: 'Computer Science & Engineering',
+    code: 'CSE'
+  }, //컴퓨터공학과
+  {
+    name: 'Mechanical Engineering',
+    code: 'MEE'
+  }, //기계공학과
+  {
+    name: 'Artificial Intelligence',
+    code: 'AIE'
+  }, //인공지능학과
+  {
+    name: 'System Semiconductor Engineering',
+    code: 'SSE'
+  }, //시스템반도체공학과
 
-  // Economics
-  { name: 'Economics', code: 'ECO' },
+  {
+    name: 'Economics',
+    code: 'EC'
+  }, //Economics
 
-  // Business School
-  { name: 'Business Administration', code: 'BBA' },
+  {
+    name: 'Business Administration',
+    code: 'MGT'
+  }, //Business Administration
 
   // Loyola International College
-  { name: 'Division of Global Korean Studies', code: 'GKS' },
-  { name: 'Geppert School of International Studies', code: 'GIS' },
-  { name: 'Division of Global Interdisciplinary Studies', code: 'GDS' }
+  {
+    name: 'Division of Global Korean Studies',
+    code: 'GKE'
+  }, //글로벌한국학부
+  {
+    name: 'Geppert School of International Studies',
+    code: 'AAS'
+  }, //게페르트국제학부
+  {
+    name: 'Division of Global Interdisciplinary Studies',
+    code: 'GIS'
+  } //글로벌 융합학부
 ];
