@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import {
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue
+} from 'react-hook-form';
 import styled from 'styled-components';
 import { User } from 'types/user';
 import { postSendCode } from 'utils/postSendCode';
 import { postSubmitCode } from 'utils/postSubmitCode';
 
 interface YesEmailFormProps {
+  setValue: UseFormSetValue<User>;
   getValues: UseFormGetValues<User>;
   register: UseFormRegister<User>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function YesEmailForm({
+  setValue,
   getValues,
   register,
   setStep
@@ -24,6 +30,17 @@ export default function YesEmailForm({
   const onClickNextButton = () => {
     setStep((prev) => prev + 1);
   };
+
+  const onClickSendCode = () => {
+    postSendCode(getValues('email') + '@sogang.ac.kr', setToken, setIsLoading);
+  };
+
+  useEffect(() => {
+    return () => {
+      const value = getValues('email');
+      setValue('email', `${value}@sogang.ac.kr`);
+    };
+  }, []);
 
   return (
     <YesEmailFormContainer>
@@ -38,17 +55,7 @@ export default function YesEmailForm({
             disabled={certified}
           />
           <span> @sogang.ac.kr </span>
-          <button
-            onClick={() =>
-              postSendCode(
-                getValues('email') + '@sogang.ac.kr',
-                setToken,
-                setIsLoading
-              )
-            }
-          >
-            send code
-          </button>
+          <button onClick={onClickSendCode}>send code</button>
           {isLoading === true
             ? 'Sending...'
             : isLoading === false
