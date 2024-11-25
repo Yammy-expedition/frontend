@@ -33,6 +33,14 @@ export default function WorldMap({
 }
 
 const StyledWorldSVG = styled(WorldSVG)`
+  position: absolute;
+  transform-origin: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  clip-path: inset(0);
+  height: 100%;
   padding: 3rem;
   transform-origin: center;
   transition: transform 0.3s ease;

@@ -1,9 +1,20 @@
 import { postings } from 'constants/posting';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
+import { useNavigate } from 'react-router-dom';
+import { Posting } from 'types/posting';
+import { getPostingList } from 'utils/getPostingList';
 
 export default function MarketRestaurantBox() {
+  const navigate = useNavigate();
+  const [restaurantPostings, setRestaurantPostings] = useState<Posting[]>();
+  const [marketPostings, setMarketPostings] = useState<Posting[]>();
+
+  useEffect(() => {
+    getPostingList('restaurant', setRestaurantPostings);
+    getPostingList('market', setMarketPostings);
+  }, []);
   return (
     <MarketRestaurant>
       <Restaurent>
@@ -13,22 +24,22 @@ export default function MarketRestaurantBox() {
               <Square></Square>
               <p>Restaurant</p>
             </div>
-            <Plus>
+            <Plus onClick={() => navigate('/menu/restaurants')}>
               <PlusSVG />
             </Plus>
           </SquareRestaurantPlus>
         </div>
 
         <List>
-          {postings
-            .filter((item, index1) => index1 <= 4)
+          {restaurantPostings
+            ?.filter((item, index1) => index1 <= 4)
             .map((post, index2) => (
               <CircleTitleCreatedAt key={index2}>
                 <CircleTitle>
                   <Circle></Circle>
                   <Title>{post.title}</Title>
                 </CircleTitle>
-                <CreatedAt>{`${post.created_at.getMonth() + 1} / ${post.created_at.getDate()}`}</CreatedAt>
+                <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
               </CircleTitleCreatedAt>
             ))}
         </List>
@@ -40,7 +51,7 @@ export default function MarketRestaurantBox() {
               <Square></Square>
               <p>Market</p>
             </div>
-            <Plus>
+            <Plus onClick={() => navigate('/menu/markets')}>
               <PlusSVG />
             </Plus>
           </SquareRestaurantPlus>
@@ -78,7 +89,7 @@ const Restaurent = styled.div`
   min-width: 23rem;
   display: flex;
   flex-direction: column;
-  padding: 0 2rem;
+  padding: 0 1rem 0 2rem;
 `;
 
 const Market = styled.div`
@@ -86,7 +97,7 @@ const Market = styled.div`
   min-width: 23rem;
   display: flex;
   flex-direction: column;
-  padding: 0 2rem;
+  padding: 0 2rem 0 1rem;
 `;
 
 const SquareRestaurantPlus = styled.div`
