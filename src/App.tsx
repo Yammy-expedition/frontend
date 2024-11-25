@@ -25,7 +25,7 @@ export default App;
 const AppContainer = styled.div`
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #eeeeee;
 
   > *:not(:first-child) {

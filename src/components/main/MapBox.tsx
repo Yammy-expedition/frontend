@@ -133,10 +133,10 @@ export default function MapBox() {
         }
 
         if (countryData) {
-          const projectedCoordinates =
-            beforeSelectedCountryRef.current === null
-              ? projection([countryData.longitude, countryData.latitude])
-              : projectionScaled([countryData.longitude, countryData.latitude]);
+          const projectedCoordinates = projection([
+            countryData.longitude,
+            countryData.latitude
+          ]);
 
           if (projectedCoordinates) {
             const [x, y] = projectedCoordinates;
@@ -180,6 +180,7 @@ export default function MapBox() {
       ></WorldMap>
 
       <Search
+        beforeSelectedCountryRef={beforeSelectedCountryRef}
         svgRef={svgRef}
         mapBoxRef={mapBoxRef}
         selectedCountryName={selectedCountryName}
