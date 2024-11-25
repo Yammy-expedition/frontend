@@ -112,6 +112,9 @@ export default function MapBox() {
           .geoMercator()
           .scale(100)
           .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
+        console.log(svgRect.width, svgRect.height);
+
+        // 이 위에 150이랑 200 svgRect 비율로 따져서 바꾸기
 
         const projectionScaled = d3
           .geoMercator()

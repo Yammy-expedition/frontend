@@ -40,7 +40,11 @@ export default function YesEmailForm({
           <span> @sogang.ac.kr </span>
           <button
             onClick={() =>
-              postSendCode(getValues('email'), setToken, setIsLoading)
+              postSendCode(
+                getValues('email') + '@sogang.ac.kr',
+                setToken,
+                setIsLoading
+              )
             }
           >
             send code
