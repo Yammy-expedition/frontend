@@ -1,9 +1,21 @@
 import { postings } from 'constants/posting';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
+import { useNavigate } from 'react-router-dom';
+import { Posting } from 'types/posting';
+import { getPostingList } from 'utils/getPostingList';
 
 export default function MarketRestaurantBox() {
+  const navigate = useNavigate();
+  const [restaurantPostings, setRestaurantPostings] = useState<Posting[]>([]);
+  const [marketPostings, setMarketPostings] = useState<Posting[]>();
+
+  useEffect(() => {
+    getPostingList('restaurant', setRestaurantPostings, 1);
+    getPostingList('market', setMarketPostings, 1);
+    console.log(restaurantPostings);
+  }, []);
   return (
     <MarketRestaurant>
       <Restaurent>
@@ -20,17 +32,15 @@ export default function MarketRestaurantBox() {
         </div>
 
         <List>
-          {postings
-            .filter((item, index1) => index1 <= 4)
-            .map((post, index2) => (
-              <CircleTitleCreatedAt key={index2}>
-                <CircleTitle>
-                  <Circle></Circle>
-                  <Title>{post.title}</Title>
-                </CircleTitle>
-                <CreatedAt>{`${post.created_at.getMonth() + 1} / ${post.created_at.getDate()}`}</CreatedAt>
-              </CircleTitleCreatedAt>
-            ))}
+          {restaurantPostings.map((post, index2) => (
+            <CircleTitleCreatedAt key={index2}>
+              <CircleTitle>
+                <Circle></Circle>
+                <Title>{post.title}</Title>
+              </CircleTitle>
+              <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
+            </CircleTitleCreatedAt>
+          ))}
         </List>
       </Restaurent>
       <Market>
