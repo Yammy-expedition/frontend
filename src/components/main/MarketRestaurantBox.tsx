@@ -8,12 +8,13 @@ import { getPostingList } from 'utils/getPostingList';
 
 export default function MarketRestaurantBox() {
   const navigate = useNavigate();
-  const [restaurantPostings, setRestaurantPostings] = useState<Posting[]>();
+  const [restaurantPostings, setRestaurantPostings] = useState<Posting[]>([]);
   const [marketPostings, setMarketPostings] = useState<Posting[]>();
 
   useEffect(() => {
-    getPostingList('restaurant', setRestaurantPostings);
-    getPostingList('market', setMarketPostings);
+    getPostingList('restaurant', setRestaurantPostings, 1);
+    getPostingList('market', setMarketPostings, 1);
+    console.log(restaurantPostings);
   }, []);
   return (
     <MarketRestaurant>
@@ -31,17 +32,15 @@ export default function MarketRestaurantBox() {
         </div>
 
         <List>
-          {restaurantPostings
-            ?.filter((item, index1) => index1 <= 4)
-            .map((post, index2) => (
-              <CircleTitleCreatedAt key={index2}>
-                <CircleTitle>
-                  <Circle></Circle>
-                  <Title>{post.title}</Title>
-                </CircleTitle>
-                <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
-              </CircleTitleCreatedAt>
-            ))}
+          {restaurantPostings.map((post, index2) => (
+            <CircleTitleCreatedAt key={index2}>
+              <CircleTitle>
+                <Circle></Circle>
+                <Title>{post.title}</Title>
+              </CircleTitle>
+              <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
+            </CircleTitleCreatedAt>
+          ))}
         </List>
       </Restaurent>
       <Market>

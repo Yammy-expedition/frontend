@@ -15,7 +15,7 @@ export default function GeneralDiscussionPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getPostingList('general', setPostings);
+    getPostingList('general', setPostings, 1);
   }, [orderType]);
 
   const getWindowHeight = () => {
