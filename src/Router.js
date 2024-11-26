@@ -12,6 +12,7 @@ import MarketsPage from 'pages/menu/MarketsPage';
 import GeneralDiscussion from 'pages/menu/GeneralDiscussionPage';
 import PostingDetailPage from 'pages/menu/PostingDetailPage';
 import WritingPostPage from 'pages/menu/WritingPostPage';
+import AuthRoute from 'AuthRoute';
 
 function Router() {
   return (
@@ -20,14 +21,19 @@ function Router() {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/menu" element={<MenuPage />}>
-        <Route path="restaurant" element={<RestaurantsPage />}></Route>
-        <Route path="market" element={<MarketsPage />}></Route>
-        <Route path="general" element={<GeneralDiscussion />}></Route>
+        <Route element={<AuthRoute />}>
+          <Route path="restaurant" element={<RestaurantsPage />}></Route>
+          <Route path="market" element={<MarketsPage />}></Route>
+          <Route path="general" element={<GeneralDiscussion />}></Route>
+        </Route>
       </Route>
-      <Route
-        path="/posting-detail/:postingId"
-        element={<PostingDetailPage />}
-      />
+      <Route element={<AuthRoute />}>
+        <Route
+          path="/posting-detail/:postingId"
+          element={<PostingDetailPage />}
+        />
+      </Route>
+
       <Route path="/my-page" element={<MyPage />} />
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/tips-for-sogang" element={<TipsForSogangPage />} />
