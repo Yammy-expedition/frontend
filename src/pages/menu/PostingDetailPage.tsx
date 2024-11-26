@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
 import { getPostingDetail } from 'utils/getPostingDetail';
@@ -10,19 +10,92 @@ import { postPostingViewCount } from 'utils/postPostingViewCount';
 import { postPostingLike } from 'utils/postPostingLike';
 import '../../../node_modules/react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
+import { patchPosting } from 'utils/patchPosting';
+import { postComment } from 'utils/postComment';
+import { deletePosting } from 'utils/deletePosting';
 
 export default function PostingDetailPage() {
   const location = useLocation();
   const state = location.state as { boardType: string; posting: Posting };
+  console.log(state.boardType);
+
   const { postingId } = useParams();
   const [posting, setPosting] = useState<Posting>();
   const [like, setLike] = useState<boolean>(false);
+  const [likeCount, setLikeCount] = useState<number>(0);
+
+  const [more, setMore] = useState<boolean>(false);
+  const moreRef = useRef<HTMLDivElement>(null);
+
+  const [editting, setEditting] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+
+  const textarea = useRef<HTMLTextAreaElement>(null);
+  const [comment, setComment] = useState<string>('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getPostingDetail(postingId, setPosting);
+    getPostingDetail(postingId, setPosting).then((result) => {
+      console.log(result);
+      setLike(result.is_liked),
+        setLikeCount(result.like_count),
+        setTitle(result.title);
+      setContent(result.content);
+    });
     postPostingViewCount(postingId);
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(event.target as Node)) {
+        setMore(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
+  const onclickLikeButton = () => {
+    postPostingLike(postingId, setLike);
+    if (like) {
+      setLikeCount((prev) => prev - 1);
+    } else setLikeCount((prev) => prev + 1);
+  };
+
+  const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (textarea.current) {
+      textarea.current.style.height = 'auto';
+      textarea.current.style.height = textarea.current.scrollHeight + 'px';
+    }
+    setComment(e.target.value);
+  };
+
+  const onClickDelete = () => {
+    deletePosting(postingId);
+    window.location.href = `/menu/${posting?.board_type}`;
+  };
+
+  const onClickSave = () => {
+    patchPosting(postingId, title, content, price).then((_) =>
+      window.location.reload()
+    );
+  };
+
+  const onClickCancle = () => {
+    setEditting(false);
+    if (posting) {
+      setContent(posting.content);
+    }
+  };
+
+  const onClickSubmit = () => {
+    postComment(postingId, comment);
+    setComment('');
+  };
   if (!posting) {
     return <></>;
   }
@@ -33,51 +106,92 @@ export default function PostingDetailPage() {
       </PageNameBox>
 
       <PostHeader>
-        <PostTitle>{posting.title}</PostTitle>
+        <PostTitle>
+          {editting ? (
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          ) : (
+            <span>{posting.title}</span>
+          )}
+        </PostTitle>
 
-        <PostInfo>
-          <div>
-            <span>{posting.writer_nickname}</span>
-            <span>{posting.created_at.split('T')[0]}</span>
-            <span>
-              <EyeSVG></EyeSVG> {posting.view_count}
-            </span>
-          </div>
-          <div>
-            <span style={{ cursor: 'pointer' }}>
-              <MoreSVG></MoreSVG>
-            </span>
-          </div>
-        </PostInfo>
+        {!editting && (
+          <PostInfo>
+            <div>
+              <span>{posting.writer_nickname}</span>
+              <span>{posting.created_at.split('T')[0]}</span>
+              <span>
+                <EyeSVG></EyeSVG> {posting.view_count}
+              </span>
+            </div>
+            <MoreDiv ref={moreRef} onClick={() => setMore((prev) => !prev)}>
+              <span style={{ cursor: 'pointer' }}>
+                <MoreSVG></MoreSVG>
+              </span>
+              {more && (
+                <div>
+                  <div onClick={() => setEditting(true)}>Edit</div>
+                  <div onClick={onClickDelete}>Delete</div>
+                </div>
+              )}
+            </MoreDiv>
+          </PostInfo>
+        )}
       </PostHeader>
 
-      <LineGradient></LineGradient>
+      {!editting && <LineGradient></LineGradient>}
 
       <PostContentBox>
         <Content>
           <CustomReactQuill
-            value={posting.content}
-            readOnly={true}
+            $editting={editting}
+            value={editting ? content : posting.content}
+            readOnly={!editting}
             theme="snow"
-            modules={{ toolbar: false }}
-            style={{ border: 'none' }}
+            modules={{ toolbar: true }}
+            onChange={(value) => editting && setContent(value)}
           />
         </Content>
-        <LikeWrapper>
-          <div onClick={() => postPostingLike(postingId, setLike)}>
-            <LikeSVG></LikeSVG>
-          </div>
-          <p>{posting.like_count}</p>
-        </LikeWrapper>
+        {!editting && (
+          <LikeWrapper $like={like}>
+            <div onClick={onclickLikeButton}>
+              <LikeSVG></LikeSVG>
+            </div>
+            <p>{likeCount}</p>
+          </LikeWrapper>
+        )}
+        {editting && (
+          <ButtonWrapper>
+            <Button onClick={onClickCancle}>Cancel</Button>
+            <Button onClick={onClickSave}>Save</Button>
+          </ButtonWrapper>
+        )}
       </PostContentBox>
 
-      <LineGradient></LineGradient>
+      {!editting ? (
+        <>
+          <LineGradient></LineGradient>
 
-      <PostCommentBox>
-        <p>
-          Comment <span>{posting.comment_count}</span>
-        </p>
-      </PostCommentBox>
+          <PostCommentBox>
+            <p>
+              Comment <span>{posting.comment_count}</span>
+            </p>
+            <div>
+              <textarea
+                ref={textarea}
+                value={comment}
+                onChange={onChangeTextArea}
+              />
+              <SubmitButton onClick={onClickSubmit}>Submit</SubmitButton>
+            </div>
+          </PostCommentBox>
+        </>
+      ) : (
+        ''
+      )}
     </PostingDetailContainer>
   );
 }
@@ -85,7 +199,7 @@ export default function PostingDetailPage() {
 const PostingDetailContainer = styled.div`
   position: relative;
   width: 100%;
-  padding: 6.5rem 4.5rem;
+  padding: 5.5rem 4.5rem;
 `;
 
 const PageNameBox = styled.div`
@@ -102,12 +216,18 @@ const PostHeader = styled.div`
   flex-direction: column;
   gap: 2rem;
   margin-top: 6rem;
-  margin-bottom: 3rem;
 `;
 
 const PostTitle = styled.p`
   font-size: 2.5rem;
   font-weight: 500;
+
+  > input {
+    font-size: 2.5rem;
+    width: 100%;
+    height: 5rem;
+    padding: 1.3rem;
+  }
 `;
 
 const PostInfo = styled.div`
@@ -126,7 +246,37 @@ const PostInfo = styled.div`
   }
 `;
 
+const MoreDiv = styled.div`
+  position: relative;
+
+  > div {
+    background: white;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    top: 2.5rem;
+    right: 0;
+    width: 5rem;
+
+    > div {
+      &:hover {
+        background: var(--main-gray);
+      }
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      display: flex;
+
+      align-items: center;
+      height: 100%;
+      padding: 0.75rem;
+    }
+  }
+`;
+
 const LineGradient = styled.div`
+  margin-top: 5rem;
   height: 0.1rem;
   background-image: var(--line-gradient);
   transform: rotate(180deg);
@@ -134,7 +284,7 @@ const LineGradient = styled.div`
 
 const PostContentBox = styled.div`
   margin-top: 3.5rem;
-  margin-bottom: 3.5rem;
+
   font-size: 3rem;
 `;
 
@@ -142,7 +292,7 @@ const Content = styled.div`
   margin-bottom: 6rem;
 `;
 
-const LikeWrapper = styled.div`
+const LikeWrapper = styled.div<{ $like: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -155,7 +305,8 @@ const LikeWrapper = styled.div`
     justify-content: center;
     width: 7.5rem;
     height: 7.5rem;
-    background: #979797;
+    background: ${(props) =>
+      props.$like ? 'var(--vertical-gradient)' : '#979797'};
     border-radius: 100%;
   }
 
@@ -177,11 +328,30 @@ const PostCommentBox = styled.div`
       font-weight: 400;
     }
   }
+
+  > div {
+    display: flex;
+    > textarea {
+      overflow-y: hidden;
+      font-size: 1.6rem;
+      padding: 1rem;
+      width: 100%;
+      height: 8.9rem;
+      resize: none;
+    }
+  }
 `;
 
-const CustomReactQuill = styled(ReactQuill)`
+const CustomReactQuill = styled(ReactQuill)<{ $editting: boolean }>`
   & .ql-container {
-    border: none;
+    ${(props) =>
+      props.$editting
+        ? 'background: white; min-height: 26rem;'
+        : 'border: none;'}
+  }
+
+  & .ql-toolbar {
+    ${(props) => (props.$editting ? 'background: white;' : 'display: none;')}
   }
 
   & .ql-editor strong {
@@ -191,4 +361,40 @@ const CustomReactQuill = styled(ReactQuill)`
   & .ql-editor em {
     font-style: italic;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 0rem;
+  display: flex;
+  justify-content: end;
+  gap: 4rem;
+`;
+
+const Button = styled.button`
+  width: 12rem;
+  height: 5rem;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  background: var(
+    --vertical-gradient,
+    linear-gradient(180deg, #b21f7c 22.5%, #4c0d0f 100%)
+  );
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+const SubmitButton = styled.button`
+  color: white;
+  width: 10rem;
+  height: 9rem;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  background: var(
+    --vertical-gradient,
+    linear-gradient(180deg, #b21f7c 22.5%, #4c0d0f 100%)
+  );
 `;

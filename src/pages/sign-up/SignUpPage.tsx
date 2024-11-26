@@ -44,8 +44,7 @@ export default function SignUpPage() {
 
   const submit = async (data: User) => {
     const dataToSend = data;
-    console.log(localStorage.getItem);
-    console.log(dataToSend);
+
     try {
       const response1 = await instance.post('user/register', dataToSend);
       console.log(response1);
