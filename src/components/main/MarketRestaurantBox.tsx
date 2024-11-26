@@ -25,7 +25,7 @@ export default function MarketRestaurantBox() {
               <Square></Square>
               <p>Restaurant</p>
             </div>
-            <Plus>
+            <Plus onClick={() => navigate('/menu/restaurant')}>
               <PlusSVG />
             </Plus>
           </SquareRestaurantPlus>
@@ -50,7 +50,7 @@ export default function MarketRestaurantBox() {
               <Square></Square>
               <p>Market</p>
             </div>
-            <Plus>
+            <Plus onClick={() => navigate('/menu/market')}>
               <PlusSVG />
             </Plus>
           </SquareRestaurantPlus>

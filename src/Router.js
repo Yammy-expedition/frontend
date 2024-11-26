@@ -20,12 +20,9 @@ function Router() {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/menu" element={<MenuPage />}>
-        <Route path="restaurants" element={<RestaurantsPage />}></Route>
-        <Route path="markets" element={<MarketsPage />}></Route>
-        <Route
-          path="general-discussion"
-          element={<GeneralDiscussion />}
-        ></Route>
+        <Route path="restaurant" element={<RestaurantsPage />}></Route>
+        <Route path="market" element={<MarketsPage />}></Route>
+        <Route path="general" element={<GeneralDiscussion />}></Route>
       </Route>
       <Route
         path="/posting-detail/:postingId"
