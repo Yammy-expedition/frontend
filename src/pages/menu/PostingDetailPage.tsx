@@ -16,7 +16,11 @@ import { deletePosting } from 'utils/deletePosting';
 
 export default function PostingDetailPage() {
   const location = useLocation();
-  const state = location.state as { boardType: string; posting: Posting };
+  const state = location.state as {
+    posting: Posting;
+    boardType: string;
+    pageName: string;
+  };
   console.log(state.boardType);
 
   const { postingId } = useParams();
@@ -317,9 +321,13 @@ const LikeWrapper = styled.div<{ $like: boolean }>`
 `;
 
 const PostCommentBox = styled.div`
+  diaplay: flex;
+
+  margin-top: 3rem;
   padding: 1.5rem 2.5rem;
 
   > p {
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: 300;
 
