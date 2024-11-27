@@ -18,7 +18,6 @@ function Router() {
       <Route path="/" element={<MainPage />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/login" element={<LoginPage />} />
-<<<<<<< HEAD
       <Route path="/menu">
         <Route
           path="restaurant"
@@ -32,14 +31,6 @@ function Router() {
           path="general"
           element={<EachMenuPage boardType="general" />}
         ></Route>
-=======
-      <Route path="/menu" element={<MenuPage />}>
-        <Route element={<AuthRoute />}>
-          <Route path="restaurant" element={<RestaurantsPage />}></Route>
-          <Route path="market" element={<MarketsPage />}></Route>
-          <Route path="general" element={<GeneralDiscussion />}></Route>
-        </Route>
->>>>>>> 42c67b64227e34d426fa13a220700a29296bcfe6
       </Route>
       <Route element={<AuthRoute />}>
         <Route
