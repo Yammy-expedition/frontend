@@ -13,12 +13,15 @@ import ReactQuill from 'react-quill-new';
 import { patchPosting } from 'utils/menu/patchPosting';
 import { postComment } from 'utils/menu/postComment';
 import { deletePosting } from 'utils/menu/deletePosting';
-import Comment from 'components/menu/common/HeadComment';
 import HeadComment from 'components/menu/common/HeadComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
-  const state = location.state as { boardType: string; posting: Posting };
+  const state = location.state as {
+    posting: Posting;
+    boardType: string;
+    pageName: string;
+  };
   console.log(state.boardType);
 
   const { postingId } = useParams();
@@ -77,12 +80,13 @@ export default function PostingDetailPage() {
   };
 
   const onClickDelete = () => {
-    deletePosting(postingId);
-    window.location.href = `/menu/${posting?.board_type}`;
+    deletePosting(postingId).then(() => {
+      navigate(`/menu/${state.boardType}`, { replace: true });
+    });
   };
 
   const onClickSave = () => {
-    patchPosting(postingId, title, content, price).then((_) =>
+    patchPosting(postingId, title, content, price).then(() =>
       window.location.reload()
     );
   };
@@ -104,7 +108,7 @@ export default function PostingDetailPage() {
   return (
     <PostingDetailContainer>
       <PageNameBox>
-        <p>{state.boardType}</p>
+        <p>{state.pageName}</p>
       </PageNameBox>
 
       <PostHeader>

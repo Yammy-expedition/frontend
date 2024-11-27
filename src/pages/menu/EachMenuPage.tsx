@@ -89,9 +89,15 @@ export default function RestaurantsPage({ boardType }: RestaurantsPageProps) {
 
       <LineGradient />
 
-      <PostingList postings={postings}></PostingList>
+      <PostingList
+        postings={postings}
+        boardType={boardType}
+        pageName={pageName}
+      ></PostingList>
 
       <PageNation
+        boardType={boardType}
+        pageName={pageName}
         lastPage={lastPage}
         currentPage={currentPage}
         startPage={startPage}

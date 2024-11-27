@@ -8,9 +8,15 @@ import { Posting } from 'types/posting';
 
 interface PostingListProps {
   postings: Posting[] | undefined;
+  boardType: string;
+  pageName: string;
 }
 
-export default function PostingList({ postings }: PostingListProps) {
+export default function PostingList({
+  postings,
+  boardType,
+  pageName
+}: PostingListProps) {
   const navigate = useNavigate();
   return (
     <PostingContainer>
@@ -19,7 +25,11 @@ export default function PostingList({ postings }: PostingListProps) {
           key={index}
           onClick={() =>
             navigate(`/posting-detail/${posting.id}`, {
-              state: { boardType: 'General Dicsussion', posting: posting }
+              state: {
+                posting: posting,
+                boardType: boardType,
+                pageName: pageName
+              }
             })
           }
         >

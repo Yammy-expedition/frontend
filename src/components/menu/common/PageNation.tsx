@@ -1,8 +1,11 @@
+import { hover } from '@testing-library/user-event/dist/hover';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface PageNationProps {
+  boardType: string;
+  pageName: string;
   lastPage: number;
   currentPage: number;
   startPage: number;
@@ -13,6 +16,8 @@ interface PageNationProps {
 }
 
 export default function PageNation({
+  boardType,
+  pageName,
   lastPage,
   currentPage,
   startPage,
@@ -27,7 +32,12 @@ export default function PageNation({
     <BottomBox>
       <div></div>
       <PageNationContainer>
-        {startPage > 1 && <div onClick={handlePrevGroup}>{`<`}</div>}
+        {startPage > 1 && (
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={handlePrevGroup}
+          >{`<`}</div>
+        )}
 
         {Array.from(
           { length: pageLength },
@@ -37,6 +47,7 @@ export default function PageNation({
             key={page}
             onClick={() => handlePageChange(page)}
             style={{
+              color: currentPage === page ? 'var(--primary-color)' : 'gray',
               fontWeight: currentPage === page ? 'bold' : 'normal',
               cursor: 'pointer'
             }}
@@ -45,12 +56,17 @@ export default function PageNation({
           </div>
         ))}
 
-        {endPage < lastPage && <div onClick={handleNextGroup}>{`>`}</div>}
+        {endPage < lastPage && (
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={handleNextGroup}
+          >{`>`}</div>
+        )}
       </PageNationContainer>
       <WriteButton
         onClick={() =>
           navigate('/writing-post', {
-            state: { boardType: { name: 'Restaurant', code: 'restaurant' } }
+            state: { boardType: boardType, pageName: pageName }
           })
         }
       >
@@ -70,9 +86,11 @@ const BottomBox = styled.div`
 `;
 
 const PageNationContainer = styled.div`
+  color: gray;
   display: flex;
+  align-items: center;
   gap: 2rem;
-  background: pink;
+  font-size: 1.3rem;
 `;
 
 const WriteButton = styled.button`
