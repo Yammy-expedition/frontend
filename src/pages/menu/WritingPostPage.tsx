@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
 import 'react-quill/dist/quill.snow.css';
-import { postPosting } from 'utils/postPosting';
+import { postPosting } from 'utils/menu/postPosting';
 import { ImageResize } from 'quill-image-resize-module-ts';
 import imageCompression from 'browser-image-compression';
 import { dataURLToFile } from 'utils/dataURLToFile';

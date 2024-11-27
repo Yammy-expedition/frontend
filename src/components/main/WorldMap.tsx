@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as WorldSVG } from '../../assets/icons/world.svg';
+import { ReactComponent as WorldSVG } from '../../assets/icons/main/world.svg';
 import styled from 'styled-components';
 
 interface WorldMapProps {
