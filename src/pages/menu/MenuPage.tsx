@@ -10,9 +10,9 @@ export default function MenuPage() {
 
   return (
     <>
-      {currentPath.includes('/restaurants') && <RestaurantsPage />}
-      {currentPath.includes('/markets') && <MarketsPage />}
-      {currentPath.includes('/general-discussion') && <GeneralDiscussion />}
+      {currentPath.includes('/restaurant') && <RestaurantsPage />}
+      {currentPath.includes('/market') && <MarketsPage />}
+      {currentPath.includes('/general') && <GeneralDiscussion />}
     </>
   );
 }

@@ -16,7 +16,7 @@ export const postComment = async (
   try {
     const response = await instance.post(
       `/posting/${postingId}/comment`,
-      { dataToSend },
+      dataToSend,
       { headers }
     );
 
