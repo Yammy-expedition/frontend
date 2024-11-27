@@ -1,3 +1,5 @@
+import { instance } from 'api/instance';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const locationList = [
@@ -34,6 +36,43 @@ const testData = [
 ];
 
 export default function Restaurants() {
+  const [restaurantList, setRestaurantList] = useState([]);
+
+  //레스토랑 데이터 가져오기
+  useEffect(() => {
+    const getPostList = async () => {
+      try {
+        const response = await instance.get('/tips/tips-restaurants');
+        if (response.status === 200) {
+          console.log(response);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const postList = async () => {
+      try {
+        const response = await instance.post('/tips/tips-restaurants', {
+          content: {
+            name: 'Gonzaga Plaza',
+            short_intro: 'variety of food in buffet style',
+            google_map_link:
+              'https://www.google.com/maps/place/%EB%AF%B8%EB%B6%84%EB%8B%B9+%EC%8B%A0%EC%B4%8C%EB%B3%B8%EC%A0%90/data=!4m6!3m5!1s0x357c98945223bab5:0x3b573ef273d68b85!8m2!3d37.5566641!4d126.9352292!16s%2Fg%2F11bzscl43j?entry=ttu&g_ep=EgoyMDI0MTEyNC4xIKXMDSoASAFQAw%3D%3D',
+            naver_map_link:
+              'https://map.naver.com/p/search/%EB%AF%B8%EB%B6%84%EB%8B%B9/place/38301992?c=15.00,0,0,0,dh',
+            location: 'Sinchon',
+            photo:
+              'https://lh5.googleusercontent.com/p/AF1QipPRo8jylwfQFLqj0S9f6MzcQaXRfKWoRVrgwkw6=w408-h544-k-no'
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    postList();
+  }, []);
+
   return (
     <Section>
       <LocationTab>

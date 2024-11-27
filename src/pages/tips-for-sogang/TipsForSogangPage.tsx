@@ -31,10 +31,18 @@ export default function TipsForSogangPage() {
         </p>
       </Header>
       <Nav>
-        <div onClick={() => handleCategoryChange('restaurants')}>
+        <NavBtn
+          $current={selectedCategory === 'restaurants'}
+          onClick={() => handleCategoryChange('restaurants')}
+        >
           Restaurants
-        </div>
-        <div onClick={() => handleCategoryChange('sogang-map')}>Sogang Map</div>
+        </NavBtn>
+        <NavBtn
+          $current={selectedCategory === 'sogang-map'}
+          onClick={() => handleCategoryChange('sogang-map')}
+        >
+          Sogang Map
+        </NavBtn>
       </Nav>
       <div style={{ height: '100%' }}>
         {selectedCategory === 'sogang-map' ? <SogangMap /> : <Restaurants />}
@@ -70,28 +78,31 @@ const Header = styled.header`
   }
 `;
 
+const NavBtn = styled.div<{ $current: boolean }>`
+  width: fit-content;
+  background-color: ${({ $current }) =>
+    $current ? 'var(--hover-bg)' : 'var(--main-gray)'};
+  color: ${({ $current }) =>
+    $current ? 'var(--hover-text)' : 'var(--secondary-text)'};
+  border-radius: 6.5rem;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition:
+    color 0.3s,
+    background-color 0.3s;
+  &:hover {
+    background-color: var(--hover-bg);
+    color: var(--hover-text);
+  }
+`;
+
 const Nav = styled.nav`
   padding: 2rem 0;
   display: flex;
   gap: 2rem;
   letter-spacing: -0.5px;
-  div {
-    width: fit-content;
-    background-color: var(--main-gray);
-    color: var(--secondary-text);
-    border-radius: 6.5rem;
-    padding: 1.5rem 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.6rem;
-    cursor: pointer;
-    transition:
-      color 0.3s,
-      background-color 0.3s;
-    &:hover {
-      background-color: var(--hover-bg);
-      color: var(--hover-text);
-    }
-  }
 `;
