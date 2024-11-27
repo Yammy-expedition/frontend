@@ -101,6 +101,7 @@ export default function PostingDetailPage() {
   const onClickSubmit = () => {
     postComment(postingId, comment);
     setComment('');
+    window.location.reload();
   };
   if (!posting) {
     return <></>;
