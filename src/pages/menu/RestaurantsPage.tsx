@@ -1,22 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchSVG } from '../../assets/icons/search.svg';
-import { ReactComponent as HeartSVG } from '../../assets/icons/heart.svg';
-import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
-import { ReactComponent as CommentSVG } from '../../assets/icons/coment.svg';
+import { ReactComponent as HeartSVG } from '../../assets/icons/menu/heart.svg';
+import { ReactComponent as EyeSVG } from '../../assets/icons/menu/eye.svg';
+import { ReactComponent as CommentSVG } from '../../assets/icons/menu/comment.svg';
 import { Posting } from 'types/posting';
-import { getPostingList } from 'utils/getPostingList';
-import { useNavigate } from 'react-router-dom';
+import { getPostingList } from 'utils/common/getPostingList';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function RestaurantsPage() {
   const [postings, setPostings] = useState<Posting[]>();
   const [searchType, setSearchType] = useState<string>();
   const [orderType, setOrderType] = useState<string>();
+
+  const [lastPage, setLastPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = Number(searchParams.get('page')) || 1;
+
+  const [startPage, setStartPage] = useState(1);
+  const [endPage, setEndPage] = useState(5);
+
   const navigate = useNavigate();
+  const mountRef = useRef<boolean>(false);
 
   useEffect(() => {
-    getPostingList('restaurant', setPostings);
+    if (!mountRef.current) {
+      return;
+    }
+    getPostingList('restaurant', setPostings, 1);
   }, [orderType]);
+
+  useEffect(() => {
+    getPostingList('restaurant', setPostings, currentPage).then((result) =>
+      setLastPage(Math.ceil(result / 5))
+    );
+  }, [currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page: page.toString() });
+  };
+
+  // 다음 페이지 그룹으로 이동
+  const handleNextGroup = () => {
+    if (endPage < lastPage) {
+      setStartPage(startPage + 5);
+      setEndPage(Math.min(endPage + 5, lastPage));
+      handlePageChange(startPage + 5);
+    }
+  };
+
+  // 이전 페이지 그룹으로 이동
+  const handlePrevGroup = () => {
+    if (startPage > 1) {
+      setStartPage(startPage - 5);
+      setEndPage(startPage - 1);
+      handlePageChange(startPage - 5);
+    }
+  };
 
   return (
     <RestaurantsPageContainer>
@@ -37,7 +78,7 @@ export default function RestaurantsPage() {
           <SearchBar>
             <input value="" readOnly />
             <button>
-              <SearchSVG></SearchSVG>
+              <SearchSVG />
             </button>
           </SearchBar>
         </SearchBox>
@@ -52,7 +93,7 @@ export default function RestaurantsPage() {
         </FilteringBox>
       </SearchContainer>
 
-      <LineGradient></LineGradient>
+      <LineGradient />
 
       <PostingContainer>
         {postings?.map((posting, index) => (
@@ -69,13 +110,13 @@ export default function RestaurantsPage() {
               <span>{posting.writer_nickname}</span>
               <span>{posting.created_at.split('T')[0]}</span>
               <span>
-                <HeartSVG></HeartSVG> {posting.like_count}
+                <HeartSVG /> {posting.like_count}
               </span>
               <span>
-                <EyeSVG></EyeSVG> {posting.view_count}
+                <EyeSVG /> {posting.view_count}
               </span>
               <span>
-                <CommentSVG></CommentSVG> {posting.comment_count}
+                <CommentSVG /> {posting.comment_count}
               </span>
             </PostInfo>
           </EachPost>
@@ -84,7 +125,27 @@ export default function RestaurantsPage() {
 
       <BottomBox>
         <div></div>
-        <PageNation>페이지 네이션 위치</PageNation>
+        <PageNation>
+          {startPage > 1 && <div onClick={handlePrevGroup}>{`<`}</div>}
+
+          {Array.from(
+            { length: endPage - startPage + 1 },
+            (value, index) => startPage + index
+          ).map((page) => (
+            <div
+              key={page}
+              onClick={() => handlePageChange(page)}
+              style={{
+                fontWeight: currentPage === page ? 'bold' : 'normal',
+                cursor: 'pointer'
+              }}
+            >
+              {page}
+            </div>
+          ))}
+
+          {endPage < lastPage && <div onClick={handleNextGroup}>{`>`}</div>}
+        </PageNation>
         <WriteButton
           onClick={() =>
             navigate('/writing-post', {
@@ -200,11 +261,13 @@ const BottomBox = styled.div`
   justify-content: space-between;
   left: 0;
   width: 100%;
-  bottom: 4rem;
+  bottom: 2.5rem;
   display: flex;
 `;
 
 const PageNation = styled.div`
+  display: flex;
+  gap: 2rem;
   background: pink;
 `;
 

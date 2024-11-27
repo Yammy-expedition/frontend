@@ -1,5 +1,4 @@
-import React from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import AdminPage from 'pages/admin-page/AdminPage';
 import LoginPage from 'pages/login/LoginPage';
 import MainPage from 'pages/main/MainPage';
@@ -20,12 +19,9 @@ function Router() {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/menu" element={<MenuPage />}>
-        <Route path="restaurants" element={<RestaurantsPage />}></Route>
-        <Route path="markets" element={<MarketsPage />}></Route>
-        <Route
-          path="general-discussion"
-          element={<GeneralDiscussion />}
-        ></Route>
+        <Route path="restaurant" element={<RestaurantsPage />}></Route>
+        <Route path="market" element={<MarketsPage />}></Route>
+        <Route path="general" element={<GeneralDiscussion />}></Route>
       </Route>
       <Route
         path="/posting-detail/:postingId"
@@ -37,6 +33,7 @@ function Router() {
         <Route path=":category" element={<TipsForSogangPage />} />
       </Route>
       <Route path="/writing-post" element={<WritingPostPage />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }

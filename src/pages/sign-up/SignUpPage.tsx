@@ -44,8 +44,7 @@ export default function SignUpPage() {
 
   const submit = async (data: User) => {
     const dataToSend = data;
-    console.log(localStorage.getItem);
-    console.log(dataToSend);
+
     try {
       const response1 = await instance.post('user/register', dataToSend);
       console.log(response1);
@@ -102,6 +101,7 @@ export default function SignUpPage() {
       {step === 1 ? <TermsAndConditions setStep={setStep} /> : null}
       {step === 2 ? (
         <SelfCertification
+          setValue={setValue}
           getValues={getValues}
           register={register}
           setStep={setStep}

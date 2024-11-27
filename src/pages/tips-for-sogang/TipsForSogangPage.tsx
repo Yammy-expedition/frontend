@@ -63,17 +63,17 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding-top: 5rem;
+  padding-top: 2.5rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid;
   border-image: var(--line-gradient) 1;
   font-family: var(--sub-font);
   letter-spacing: -1px;
   div {
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
   p {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: var(--secondary-text);
   }
 `;
@@ -103,6 +103,6 @@ const NavBtn = styled.div<{ $current: boolean }>`
 const Nav = styled.nav`
   padding: 2rem 0;
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   letter-spacing: -0.5px;
 `;

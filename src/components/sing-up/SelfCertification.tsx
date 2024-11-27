@@ -6,10 +6,12 @@ import { User } from 'types/user';
 import {
   FieldErrors,
   UseFormGetValues,
-  UseFormRegister
+  UseFormRegister,
+  UseFormSetValue
 } from 'react-hook-form';
 
 interface SelfCertificationProps {
+  setValue: UseFormSetValue<User>;
   getValues: UseFormGetValues<User>;
   register: UseFormRegister<User>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -19,6 +21,7 @@ interface SelfCertificationProps {
 }
 
 export default function SelfCertification({
+  setValue,
   getValues,
   register,
   setStep,
@@ -43,6 +46,7 @@ export default function SelfCertification({
         </>
       ) : haveEmail === true ? (
         <YesEmailForm
+          setValue={setValue}
           getValues={getValues}
           register={register}
           setStep={setStep}

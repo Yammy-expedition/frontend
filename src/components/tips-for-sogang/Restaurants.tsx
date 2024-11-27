@@ -1,42 +1,39 @@
 import { instance } from 'api/instance';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+
+interface Restaurant {
+  name: string;
+  location: string;
+  short_intro: string;
+  photo: string;
+  naver_map_link: string;
+  google_map_link: string;
+}
 
 const locationList = [
   'All',
-  'In Sogang',
-  'Main Gate',
-  'Back Gate',
-  'West Gate',
-  'Sinchon'
-];
-
-const testData = [
-  {
-    name: 'Gonzaga Plaza',
-    desc: 'variety of food in buffet style',
-    imgLink: '/images/tips-for-sogang/res1.jpg',
-    naverLink: 'https://naver.com',
-    googleLink: 'https://google.com'
-  },
-  {
-    name: 'Mibundang',
-    desc: 'Vietnamese rice noodles',
-    imgLink: '/images/tips-for-sogang/res2.jpg',
-    naverLink: 'https://naver.com',
-    googleLink: 'https://google.com'
-  },
-  {
-    name: 'The TOL',
-    desc: 'Japanese food',
-    imgLink: '/images/tips-for-sogang/res2.jpg',
-    naverLink: 'https://naver.com',
-    googleLink: 'https://google.com'
-  }
+  'IN_SOGANG',
+  'MAIN_GATE',
+  'BACK_GATE',
+  'WEST_GATE',
+  'SINCHON'
 ];
 
 export default function Restaurants() {
-  const [restaurantList, setRestaurantList] = useState([]);
+  //기본 데이터
+  const [restaurantList, setRestaurantList] = useState<Restaurant[]>([]);
+  //필터링된 데이터
+  const [filteredRestaurantList, setFilteredRestaurantList] =
+    useState<Restaurant[]>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [location, setLocation] = useState<string>('All');
+
+  const handleTabClick = (location: string) => {
+    setSearchParams({ location: location });
+    setLocation(location);
+  };
 
   //레스토랑 데이터 가져오기
   useEffect(() => {
@@ -44,56 +41,70 @@ export default function Restaurants() {
       try {
         const response = await instance.get('/tips/tips-restaurants');
         if (response.status === 200) {
-          console.log(response);
+          setRestaurantList(response.data);
+          console.log(response.data);
         }
       } catch (e) {
         console.error(e);
       }
     };
-
-    const postList = async () => {
-      try {
-        const response = await instance.post('/tips/tips-restaurants', {
-          content: {
-            name: 'Gonzaga Plaza',
-            short_intro: 'variety of food in buffet style',
-            google_map_link:
-              'https://www.google.com/maps/place/%EB%AF%B8%EB%B6%84%EB%8B%B9+%EC%8B%A0%EC%B4%8C%EB%B3%B8%EC%A0%90/data=!4m6!3m5!1s0x357c98945223bab5:0x3b573ef273d68b85!8m2!3d37.5566641!4d126.9352292!16s%2Fg%2F11bzscl43j?entry=ttu&g_ep=EgoyMDI0MTEyNC4xIKXMDSoASAFQAw%3D%3D',
-            naver_map_link:
-              'https://map.naver.com/p/search/%EB%AF%B8%EB%B6%84%EB%8B%B9/place/38301992?c=15.00,0,0,0,dh',
-            location: 'Sinchon',
-            photo:
-              'https://lh5.googleusercontent.com/p/AF1QipPRo8jylwfQFLqj0S9f6MzcQaXRfKWoRVrgwkw6=w408-h544-k-no'
-          }
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    postList();
+    getPostList();
   }, []);
+
+  useEffect(() => {
+    if (searchParams.has('location')) {
+      const selectedLocation = searchParams.get('location');
+      if (selectedLocation) setLocation(selectedLocation);
+      const filtered =
+        selectedLocation === 'All'
+          ? restaurantList
+          : restaurantList?.filter(
+              (restaurant) => restaurant.location === selectedLocation
+            );
+      setFilteredRestaurantList(filtered);
+    } else {
+      setLocation('All');
+      setFilteredRestaurantList(restaurantList);
+    }
+  }, [searchParams]);
 
   return (
     <Section>
       <LocationTab>
         {locationList.map((el, key) => (
-          <li key={key}>{el}</li>
+          <li
+            className={location === el ? 'selected' : ''}
+            onClick={() => handleTabClick(el)}
+            key={key}
+          >
+            {el}
+          </li>
         ))}
       </LocationTab>
       <PostList>
-        {testData.map((el, key) => (
+        {filteredRestaurantList?.map((el, key) => (
           <li key={key}>
             <figure>
-              <img src={`${el.imgLink}`} alt="restaurant img" />
+              <img src={`${el.photo}`} alt="restaurant img" />
             </figure>
             <figcaption>
               <div>
                 <h1>{el.name}</h1>
-                <h3>{el.desc}</h3>
+                <h3>{el.short_intro}</h3>
               </div>
               <div>
-                <img src={`${el.naverLink}`} alt="naver" />
-                <img src={`${el.googleLink}`} alt="google" />
+                <a target="blank" href={`${el.naver_map_link}`}>
+                  <img
+                    src="../../assets/images/tips-for-sogang/naver-map.png"
+                    alt="naver"
+                  />
+                </a>
+                <a target="blank" href={`${el.google_map_link}`}>
+                  <img
+                    src="../../assets/images/tips-for-sogang/google-map.png"
+                    alt="google"
+                  />
+                </a>
               </div>
             </figcaption>
           </li>
@@ -117,7 +128,7 @@ const LocationTab = styled.ul`
   li {
     width: 10vw;
     background-color: var(--main-gray);
-    color: var(--main-text);
+    color: var(--secondary-text);
     border-radius: 6.5rem;
     padding: 1.2rem 3rem;
     display: flex;
@@ -130,6 +141,10 @@ const LocationTab = styled.ul`
       background-color 0.3s;
     &:hover {
       color: var(--hover-text);
+      background-color: var(--primary-color);
+    }
+    &.selected {
+      color: white;
       background-color: var(--primary-color);
     }
   }
