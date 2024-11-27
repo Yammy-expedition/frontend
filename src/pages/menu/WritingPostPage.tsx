@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactQuill, { Quill } from 'react-quill-new';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { replace, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Posting } from 'types/posting';
 import 'react-quill/dist/quill.snow.css';
-import { postPosting } from 'utils/postPosting';
+import { postPosting } from 'utils/menu/postPosting';
 import { ImageResize } from 'quill-image-resize-module-ts';
 import imageCompression from 'browser-image-compression';
 import { dataURLToFile } from 'utils/dataURLToFile';
@@ -15,8 +14,8 @@ Quill.register('modules/ImageResize', ImageResize);
 export default function WritingPostPage() {
   const location = useLocation();
   const state = location.state as {
-    boardType: { name: string; code: string };
-    posting: Posting;
+    boardType: string;
+    pageName: string;
   };
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -89,13 +88,16 @@ export default function WritingPostPage() {
 
   useEffect(() => {
     if (isContentUpdated) {
-      postPosting(title, content, state.boardType.code, price).then(
-        (result) => {
-          navigate(`/posting-detail/${result.id}`, {
-            state: { boardType: state.boardType.name, posting: result }
-          });
-        }
-      );
+      postPosting(title, content, state.boardType, price).then((result) => {
+        navigate(`/posting-detail/${result.id}`, {
+          replace: true,
+          state: {
+            boardType: state.boardType,
+            pageName: state.pageName,
+            posting: result
+          }
+        });
+      });
       setIsContentUpdated(false); // 플래그 초기화
     }
   }, [isContentUpdated]);
@@ -124,7 +126,7 @@ export default function WritingPostPage() {
   return (
     <WritingPostPageContainer>
       <PageNameBox>
-        <p>{state.boardType.name}</p>
+        <p>{state.pageName}</p>
       </PageNameBox>
 
       <TitleBox>

@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
-import { getPostingDetail } from 'utils/getPostingDetail';
-import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
-import { ReactComponent as MoreSVG } from '../../assets/icons/more.svg';
-import { ReactComponent as LikeSVG } from '../../assets/icons/like.svg';
-import { postPostingViewCount } from 'utils/postPostingViewCount';
-import { postPostingLike } from 'utils/postPostingLike';
+import { getPostingDetail } from 'utils/menu/getPostingDetail';
+import { ReactComponent as EyeSVG } from '../../assets/icons/menu/eye.svg';
+import { ReactComponent as MoreSVG } from '../../assets/icons/menu/more.svg';
+import { ReactComponent as LikeSVG } from '../../assets/icons/menu/like.svg';
+import { postPostingViewCount } from 'utils/menu/postPostingViewCount';
+import { postPostingLike } from 'utils/menu/postPostingLike';
 import '../../../node_modules/react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
-import { patchPosting } from 'utils/patchPosting';
-import { postComment } from 'utils/postComment';
-import { deletePosting } from 'utils/deletePosting';
+import { patchPosting } from 'utils/menu/patchPosting';
+import { postComment } from 'utils/menu/postComment';
+import { deletePosting } from 'utils/menu/deletePosting';
+import HeadComment from 'components/menu/common/HeadComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -79,12 +80,13 @@ export default function PostingDetailPage() {
   };
 
   const onClickDelete = () => {
-    deletePosting(postingId);
-    window.location.href = `/menu/${posting?.board_type}`;
+    deletePosting(postingId).then(() => {
+      navigate(`/menu/${state.boardType}`, { replace: true });
+    });
   };
 
   const onClickSave = () => {
-    patchPosting(postingId, title, content, price).then((_) =>
+    patchPosting(postingId, title, content, price).then(() =>
       window.location.reload()
     );
   };
@@ -106,7 +108,7 @@ export default function PostingDetailPage() {
   return (
     <PostingDetailContainer>
       <PageNameBox>
-        <p>{state.boardType}</p>
+        <p>{state.pageName}</p>
       </PageNameBox>
 
       <PostHeader>
@@ -183,6 +185,10 @@ export default function PostingDetailPage() {
             <p>
               Comment <span>{posting.comment_count}</span>
             </p>
+            <>{console.log(posting.comments)}</>
+            {posting.comments.map((comment, index) => (
+              <HeadComment key={index} comment={comment}></HeadComment>
+            ))}
             <div>
               <textarea
                 ref={textarea}
