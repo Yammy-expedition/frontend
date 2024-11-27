@@ -30,6 +30,7 @@ const AppContainer = styled.div`
 
   > *:not(:first-child) {
     margin-left: 28rem;
+    overflow: hidden;
 
     @media screen and (min-width: 1024px) {
       margin-left: 34rem;

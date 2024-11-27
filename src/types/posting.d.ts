@@ -1,3 +1,5 @@
+import { Comment } from './comment';
+
 export interface Posting {
   id: number;
   writer_nickname: string;
@@ -7,7 +9,7 @@ export interface Posting {
   images: File[];
   created_at: string;
   like_count: number;
-  comments: string[];
+  comments: Comment[];
   comment_count: number;
   view_count: number;
 }
