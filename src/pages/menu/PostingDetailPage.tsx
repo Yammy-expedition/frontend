@@ -13,6 +13,8 @@ import ReactQuill from 'react-quill-new';
 import { patchPosting } from 'utils/menu/patchPosting';
 import { postComment } from 'utils/menu/postComment';
 import { deletePosting } from 'utils/menu/deletePosting';
+import Comment from 'components/menu/HeadComment';
+import HeadComment from 'components/menu/HeadComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -180,6 +182,9 @@ export default function PostingDetailPage() {
               Comment <span>{posting.comment_count}</span>
             </p>
             <>{console.log(posting.comments)}</>
+            {posting.comments.map((comment, index) => (
+              <HeadComment key={index} comment={comment}></HeadComment>
+            ))}
             <div>
               <textarea
                 ref={textarea}
