@@ -10,6 +10,7 @@ import TipsForSogangPage from 'pages/tips-for-sogang/TipsForSogangPage';
 import EachMenuPage from 'pages/menu/EachMenuPage';
 import PostingDetailPage from 'pages/menu/PostingDetailPage';
 import WritingPostPage from 'pages/menu/WritingPostPage';
+import AuthRoute from 'AuthRoute';
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/" element={<MainPage />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/login" element={<LoginPage />} />
+<<<<<<< HEAD
       <Route path="/menu">
         <Route
           path="restaurant"
@@ -30,11 +32,22 @@ function Router() {
           path="general"
           element={<EachMenuPage boardType="general" />}
         ></Route>
+=======
+      <Route path="/menu" element={<MenuPage />}>
+        <Route element={<AuthRoute />}>
+          <Route path="restaurant" element={<RestaurantsPage />}></Route>
+          <Route path="market" element={<MarketsPage />}></Route>
+          <Route path="general" element={<GeneralDiscussion />}></Route>
+        </Route>
+>>>>>>> 42c67b64227e34d426fa13a220700a29296bcfe6
       </Route>
-      <Route
-        path="/posting-detail/:postingId"
-        element={<PostingDetailPage />}
-      />
+      <Route element={<AuthRoute />}>
+        <Route
+          path="/posting-detail/:postingId"
+          element={<PostingDetailPage />}
+        />
+      </Route>
+
       <Route path="/my-page" element={<MyPage />} />
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/tips-for-sogang" element={<TipsForSogangPage />} />

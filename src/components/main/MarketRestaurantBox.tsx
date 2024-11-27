@@ -88,7 +88,7 @@ const Restaurent = styled.div`
   min-width: 23rem;
   display: flex;
   flex-direction: column;
-  padding: 0 2rem;
+  padding: 0 1rem 0 2rem;
 `;
 
 const Market = styled.div`
@@ -96,7 +96,7 @@ const Market = styled.div`
   min-width: 23rem;
   display: flex;
   flex-direction: column;
-  padding: 0 2rem;
+  padding: 0 2rem 0 1rem;
 `;
 
 const SquareRestaurantPlus = styled.div`

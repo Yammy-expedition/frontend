@@ -10,6 +10,7 @@ import { postPostingViewCount } from 'utils/menu/postPostingViewCount';
 import { postPostingLike } from 'utils/menu/postPostingLike';
 import '../../../node_modules/react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
+<<<<<<< HEAD
 import { patchPosting } from 'utils/menu/patchPosting';
 import { postComment } from 'utils/menu/postComment';
 import { deletePosting } from 'utils/menu/deletePosting';
@@ -22,6 +23,15 @@ export default function PostingDetailPage() {
     boardType: string;
     pageName: string;
   };
+=======
+import { patchPosting } from 'utils/patchPosting';
+import { postComment } from 'utils/postComment';
+import { deletePosting } from 'utils/deletePosting';
+
+export default function PostingDetailPage() {
+  const location = useLocation();
+  const state = location.state as { boardType: string; posting: Posting };
+>>>>>>> 42c67b64227e34d426fa13a220700a29296bcfe6
   console.log(state.boardType);
 
   const { postingId } = useParams();
@@ -80,6 +90,7 @@ export default function PostingDetailPage() {
   };
 
   const onClickDelete = () => {
+<<<<<<< HEAD
     deletePosting(postingId).then(() => {
       navigate(`/menu/${state.boardType}`, { replace: true });
     });
@@ -87,6 +98,14 @@ export default function PostingDetailPage() {
 
   const onClickSave = () => {
     patchPosting(postingId, title, content, price).then(() =>
+=======
+    deletePosting(postingId);
+    window.location.href = `/menu/${posting?.board_type}`;
+  };
+
+  const onClickSave = () => {
+    patchPosting(postingId, title, content, price).then((_) =>
+>>>>>>> 42c67b64227e34d426fa13a220700a29296bcfe6
       window.location.reload()
     );
   };
@@ -185,10 +204,13 @@ export default function PostingDetailPage() {
             <p>
               Comment <span>{posting.comment_count}</span>
             </p>
+<<<<<<< HEAD
             <>{console.log(posting.comments)}</>
             {posting.comments.map((comment, index) => (
               <HeadComment key={index} comment={comment}></HeadComment>
             ))}
+=======
+>>>>>>> 42c67b64227e34d426fa13a220700a29296bcfe6
             <div>
               <textarea
                 ref={textarea}
