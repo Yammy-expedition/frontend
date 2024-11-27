@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Comment } from 'types/comment';
-import { ReactComponent as EmptyLikeSVG } from '../../assets/icons/menu/emptyLike.svg';
-import { ReactComponent as FilledLikeSVG } from '../../assets/icons/menu/filledLike.svg';
-import { ReactComponent as CommentSVG } from '../../assets/icons/menu/comment.svg';
-import { ReactComponent as SmallMoreSVG } from '../../assets/icons/menu/smallMore.svg';
+import { ReactComponent as EmptyLikeSVG } from '../../../assets/icons/menu/emptyLike.svg';
+import { ReactComponent as FilledLikeSVG } from '../../../assets/icons/menu/filledLike.svg';
+import { ReactComponent as CommentSVG } from '../../../assets/icons/menu/comment.svg';
+import { ReactComponent as SmallMoreSVG } from '../../../assets/icons/menu/smallMore.svg';
 import { postCommentLike } from 'utils/menu/postCommentLike';
 
 interface HeadCommentProps {

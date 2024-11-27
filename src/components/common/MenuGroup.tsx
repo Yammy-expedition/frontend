@@ -153,7 +153,7 @@ const ChildList = styled.div<{ $isVisible: boolean }>`
   gap: 0.7rem;
 `;
 
-const ChildItem = styled.p`
+const ChildItem = styled.a`
   display: inline-flex;
   align-items: center;
   font-size: 1.8rem;

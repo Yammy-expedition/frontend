@@ -13,8 +13,8 @@ import ReactQuill from 'react-quill-new';
 import { patchPosting } from 'utils/menu/patchPosting';
 import { postComment } from 'utils/menu/postComment';
 import { deletePosting } from 'utils/menu/deletePosting';
-import Comment from 'components/menu/HeadComment';
-import HeadComment from 'components/menu/HeadComment';
+import Comment from 'components/menu/common/HeadComment';
+import HeadComment from 'components/menu/common/HeadComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -323,9 +323,13 @@ const LikeWrapper = styled.div<{ $like: boolean }>`
 `;
 
 const PostCommentBox = styled.div`
+  diaplay: flex;
+
+  margin-top: 3rem;
   padding: 1.5rem 2.5rem;
 
   > p {
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: 300;
 
