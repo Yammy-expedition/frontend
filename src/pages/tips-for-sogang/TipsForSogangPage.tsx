@@ -1,15 +1,26 @@
 import Restaurants from 'components/tips-for-sogang/Restaurants';
 import SogangMap from 'components/tips-for-sogang/SogangMap';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function TipsForSogangPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const category = searchParams.get('category');
+  const [selectedCategory, setSelectedCategory] = useState('restaurants');
+  const { category } = useParams();
+  const navigate = useNavigate();
 
-  const handleCategoryChange = (category: string) => {
-    setSearchParams({ category });
-  };
+  useEffect(() => {
+    if (!category) {
+      navigate('/tips-for-sogang/restaurants');
+    } else {
+      setSelectedCategory(category);
+    }
+  }, [category]);
+
+  function handleCategoryChange(category: string) {
+    setSelectedCategory(category);
+    navigate(`/tips-for-sogang/${category}`);
+  }
 
   return (
     <Wrapper>
@@ -26,7 +37,7 @@ export default function TipsForSogangPage() {
         <div onClick={() => handleCategoryChange('sogang-map')}>Sogang Map</div>
       </Nav>
       <div style={{ height: '100%' }}>
-        {category === 'sogang-map' ? <SogangMap /> : <Restaurants />}
+        {selectedCategory === 'sogang-map' ? <SogangMap /> : <Restaurants />}
       </div>
     </Wrapper>
   );
