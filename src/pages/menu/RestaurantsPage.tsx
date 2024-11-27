@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchSVG } from '../../assets/icons/search.svg';
-import { ReactComponent as HeartSVG } from '../../assets/icons/heart.svg';
-import { ReactComponent as EyeSVG } from '../../assets/icons/eye.svg';
-import { ReactComponent as CommentSVG } from '../../assets/icons/coment.svg';
+import { ReactComponent as HeartSVG } from '../../assets/icons/menu/heart.svg';
+import { ReactComponent as EyeSVG } from '../../assets/icons/menu/eye.svg';
+import { ReactComponent as CommentSVG } from '../../assets/icons/menu/comment.svg';
 import { Posting } from 'types/posting';
-import { getPostingList } from 'utils/getPostingList';
+import { getPostingList } from 'utils/common/getPostingList';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function RestaurantsPage() {

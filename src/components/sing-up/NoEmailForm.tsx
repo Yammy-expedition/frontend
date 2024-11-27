@@ -6,8 +6,8 @@ import {
 } from 'react-hook-form';
 import styled from 'styled-components';
 import { User } from 'types/user';
-import { postSendCode } from 'utils/postSendCode';
-import { postSubmitCode } from 'utils/postSubmitCode';
+import { postSendCode } from 'utils/sign-up/postSendCode';
+import { postSubmitCode } from 'utils/sign-up/postSubmitCode';
 
 interface NoEmailFormProps {
   getValues: UseFormGetValues<User>;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
 import { useNavigate } from 'react-router-dom';
 import { Posting } from 'types/posting';
-import { getPostingList } from 'utils/getPostingList';
+import { getPostingList } from 'utils/common/getPostingList';
 
 export default function MarketRestaurantBox() {
   const navigate = useNavigate();
