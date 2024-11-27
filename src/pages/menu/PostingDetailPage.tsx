@@ -13,10 +13,15 @@ import ReactQuill from 'react-quill-new';
 import { patchPosting } from 'utils/menu/patchPosting';
 import { postComment } from 'utils/menu/postComment';
 import { deletePosting } from 'utils/menu/deletePosting';
+import HeadComment from 'components/menu/common/HeadComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
-  const state = location.state as { boardType: string; posting: Posting };
+  const state = location.state as {
+    posting: Posting;
+    boardType: string;
+    pageName: string;
+  };
   console.log(state.boardType);
 
   const { postingId } = useParams();
@@ -75,12 +80,13 @@ export default function PostingDetailPage() {
   };
 
   const onClickDelete = () => {
-    deletePosting(postingId);
-    window.location.href = `/menu/${posting?.board_type}`;
+    deletePosting(postingId).then(() => {
+      navigate(`/menu/${state.boardType}`, { replace: true });
+    });
   };
 
   const onClickSave = () => {
-    patchPosting(postingId, title, content, price).then((_) =>
+    patchPosting(postingId, title, content, price).then(() =>
       window.location.reload()
     );
   };
@@ -95,6 +101,7 @@ export default function PostingDetailPage() {
   const onClickSubmit = () => {
     postComment(postingId, comment);
     setComment('');
+    window.location.reload();
   };
   if (!posting) {
     return <></>;
@@ -102,7 +109,7 @@ export default function PostingDetailPage() {
   return (
     <PostingDetailContainer>
       <PageNameBox>
-        <p>{state.boardType}</p>
+        <p>{state.pageName}</p>
       </PageNameBox>
 
       <PostHeader>
@@ -180,6 +187,9 @@ export default function PostingDetailPage() {
               Comment <span>{posting.comment_count}</span>
             </p>
             <>{console.log(posting.comments)}</>
+            {posting.comments.map((comment, index) => (
+              <HeadComment key={index} comment={comment}></HeadComment>
+            ))}
             <div>
               <textarea
                 ref={textarea}
@@ -318,9 +328,13 @@ const LikeWrapper = styled.div<{ $like: boolean }>`
 `;
 
 const PostCommentBox = styled.div`
+  diaplay: flex;
+
+  margin-top: 3rem;
   padding: 1.5rem 2.5rem;
 
   > p {
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: 300;
 

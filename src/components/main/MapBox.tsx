@@ -23,7 +23,6 @@ export default function MapBox() {
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
-  const [scale, setScale] = useState<number>(1);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const mapBoxRef = useRef<HTMLDivElement>(null);
@@ -54,6 +53,7 @@ export default function MapBox() {
 
   const onSelectedCountry: EventListener = (event) => {
     //event.stopPropagation();
+    console.log(window.innerWidth, window.innerHeight);
     const target = event.currentTarget as SVGPathElement;
     const countryName = target.getAttribute('title');
 
@@ -85,7 +85,6 @@ export default function MapBox() {
         return null;
       });
     }
-    setScale(1);
   };
 
   const handleMapBoxClick: React.MouseEventHandler<HTMLDivElement> = (
@@ -108,23 +107,10 @@ export default function MapBox() {
       if (mapBoxRef.current && svgRef.current) {
         const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
         const svgRect = svgRef.current.getBoundingClientRect();
-        const projection = d3
-          .geoMercator()
-          .scale(100)
-          .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
-        console.log(svgRect.width, svgRect.height);
-
-        // 이 위에 150이랑 200 svgRect 비율로 따져서 바꾸기
-
-        const projectionScaled = d3
-          .geoMercator()
-          .scale(100)
-          .translate([svgRect.width / 2, (svgRect.height * 1.1) / 2]);
 
         const countryData = countries.find(
           (country) => country.name === selectedCountryName
         );
-        setScale(1.5);
 
         const countryPath = svgRef.current.querySelector(
           `.country[title="${selectedCountryName}"]`
@@ -135,16 +121,34 @@ export default function MapBox() {
           setSelectedCountry(countryPath);
         }
 
+        const projection = d3
+          .geoMercator()
+          .scale(100)
+          .translate([svgRect.width / 2, svgRect.height / 2]);
+        // 이 위에 150이랑 200 svgRect 비율로 따져서 바꾸기
+        console.log(svgRect.width, svgRect.height);
+
+        const projectionScaled = d3
+          .geoMercator()
+          .scale(100)
+          .translate([svgRect.width / 3, svgRect.height / 3]);
+
         if (countryData) {
           const projectedCoordinates =
             beforeSelectedCountryRef.current === null
               ? projection([countryData.longitude, countryData.latitude])
               : projectionScaled([countryData.longitude, countryData.latitude]);
 
+          const offsetX = window.innerWidth * 0.08;
+          const offsetY = window.innerHeight * 0.01;
+
+          const desiredX = mapBoxRect.width / 2 + offsetX;
+          const desiredY = mapBoxRect.height / 2 + offsetY;
+
           if (projectedCoordinates) {
             const [x, y] = projectedCoordinates;
-            const translateX = mapBoxRect.width / 2 - x;
-            const translateY = mapBoxRect.height / 2 - y;
+            const translateX = (desiredX - x * 1.5) / 1.5;
+            const translateY = (desiredY - y * 1.5) / 1.5;
             setTransform(
               `scale(1.5) translate(${translateX}px, ${translateY}px)`
             );
@@ -198,9 +202,8 @@ export default function MapBox() {
 }
 
 const MapContainer = styled.div`
-  background: #f3f3f3;
   width: 100%;
-  min-height: 100%;
-  overflow: hidden;
   position: relative;
+  height: 0;
+  padding-top: calc(210 / 400 * 100%);
 `;

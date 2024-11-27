@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ReactComponent as CloseSVG } from '../../assets/icons/plus.svg';
 import { instance } from 'api/instance';
 import { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 const LoginModal = ({ onClose }: any) => {
   const [email, setEmail] = useState<string>('');
@@ -17,7 +18,9 @@ const LoginModal = ({ onClose }: any) => {
 
       if (response.status === 200) {
         const accessToken = response.data.access;
+        const refreshToken = response.data.refresh;
         window.localStorage.setItem('accessToken', accessToken);
+        Cookies.set('refreshToken', refreshToken);
         console.log('Loginned Success');
         onClose();
         window.location.reload();
