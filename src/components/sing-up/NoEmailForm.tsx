@@ -42,6 +42,7 @@ export default function NoEmailForm({
 
     if (imgFileRef.current?.files) {
       const file = imgFileRef.current.files[0];
+      console.log(file);
       setImgFile(file);
 
       if (file) {

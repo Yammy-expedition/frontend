@@ -41,7 +41,7 @@ export default function RestaurantsPage({ boardType }: RestaurantsPageProps) {
     if (!mountRef.current) {
       return;
     }
-    getPostingList(boardType, setPostings, 1);
+    getPostingList(boardType, setPostings, 1, orderType);
   }, [orderType]);
 
   useEffect(() => {

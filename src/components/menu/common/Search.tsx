@@ -46,8 +46,9 @@ export default function Search({
           value={orderType}
           onChange={(e) => setOrderType(e.target.value)}
         >
-          <option value="">Recent</option>
-          <option value="">Popular</option>
+          <option value="latest">Recent</option>
+          <option value="likes">Popular</option>
+          <option value="comments">Popular</option>
         </select>
       </FilteringBox>
     </SearchContainer>

@@ -11,9 +11,10 @@ import { postPostingLike } from 'utils/menu/postPostingLike';
 import '../../../node_modules/react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
 import { patchPosting } from 'utils/menu/patchPosting';
-import { postComment } from 'utils/menu/postComment';
+import { postCommentReply } from 'utils/menu/postCommentReply';
 import { deletePosting } from 'utils/menu/deletePosting';
 import HeadComment from 'components/menu/common/HeadComment';
+import ReplyComment from 'components/menu/common/ReplyComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -26,6 +27,7 @@ export default function PostingDetailPage() {
 
   const { postingId } = useParams();
   const [posting, setPosting] = useState<Posting>();
+  const [comments, setComments] = useState<Posting['comments']>([]);
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
@@ -45,6 +47,7 @@ export default function PostingDetailPage() {
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
       console.log(result);
+      setComments(result.comments);
       setLike(result.is_liked),
         setLikeCount(result.like_count),
         setTitle(result.title);
@@ -99,9 +102,11 @@ export default function PostingDetailPage() {
   };
 
   const onClickSubmit = () => {
-    postComment(postingId, comment);
+    postCommentReply(postingId, comment).then((newComment) => {
+      setComments((prevComments) => [...prevComments, newComment]); // 새 댓글 추가
+      setComment('');
+    });
     setComment('');
-    window.location.reload();
   };
   if (!posting) {
     return <></>;
@@ -186,9 +191,14 @@ export default function PostingDetailPage() {
             <p>
               Comment <span>{posting.comment_count}</span>
             </p>
-            <>{console.log(posting.comments)}</>
-            {posting.comments.map((comment, index) => (
-              <HeadComment key={index} comment={comment}></HeadComment>
+            {comments.map((comment, index) => (
+              <React.Fragment key={index}>
+                <HeadComment
+                  key={comment.id}
+                  comment={comment}
+                  postingId={postingId}
+                ></HeadComment>
+              </React.Fragment>
             ))}
             <div>
               <textarea

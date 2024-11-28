@@ -7,14 +7,18 @@ import { ReactComponent as CommentSVG } from '../../../assets/icons/menu/comment
 import { ReactComponent as SmallMoreSVG } from '../../../assets/icons/menu/smallMore.svg';
 import { postCommentLike } from 'utils/menu/postCommentLike';
 import { postCommentReply } from 'utils/menu/postCommentReply';
-import ReplyComment from './ReplyComment';
 
-interface HeadCommentProps {
-  comment: Comment;
+interface ReplayCommentProps {
   postingId: string | undefined;
+  parentId: number;
+  comment: Comment;
 }
 
-export default function HeadComment({ comment, postingId }: HeadCommentProps) {
+export default function ReplyComment({
+  postingId,
+  comment,
+  parentId
+}: ReplayCommentProps) {
   const [like, setLike] = useState<boolean>(false);
   const [likeCont, setLikeCount] = useState<number>(comment.like_count);
   const [showReplyBox, setShowReplyBox] = useState<boolean>(false);
@@ -30,7 +34,11 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
     postCommentLike(comment.id);
   };
 
-  const onClickSubmitComment = () => {
+  useEffect(() => {
+    setLike(comment.is_liked);
+  }, []);
+
+  const onClickSubmitReply = () => {
     postCommentReply(postingId, reply, comment.id).then((newReply) => {
       setReplies((prevReplies) => [...prevReplies, newReply]);
       setReply('');
@@ -38,9 +46,6 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
     });
   };
 
-  useEffect(() => {
-    setLike(comment.is_liked);
-  }, []);
   return (
     <CommentContainer>
       <div>
@@ -76,16 +81,16 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
                 />
-                <button onClick={onClickSubmitComment}>submit</button>
+                <button onClick={onClickSubmitReply}>submit</button>
               </ReplyBox>
             </ReplyBoxWrapper>
           )}
-          {replies.map((replaycomment) => (
+          {replies.map((reply) => (
             <ReplyComment
-              key={replaycomment.id}
+              key={reply.id}
               postingId={postingId}
               parentId={comment.id}
-              comment={replaycomment}
+              comment={reply}
             ></ReplyComment>
           ))}
         </div>
