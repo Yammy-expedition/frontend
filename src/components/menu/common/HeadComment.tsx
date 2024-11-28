@@ -8,6 +8,7 @@ import { ReactComponent as SmallMoreSVG } from '../../../assets/icons/menu/small
 import { postCommentLike } from 'utils/menu/postCommentLike';
 import { postCommentReply } from 'utils/menu/postCommentReply';
 import ReplyComment from './ReplyComment';
+import { ReactComponent as ReplySVG } from '../../../assets/icons/menu/reply.svg';
 
 interface HeadCommentProps {
   comment: Comment;
@@ -44,7 +45,15 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
   return (
     <CommentContainer>
       <div>
-        <ProfileBox>프로필 이미지</ProfileBox>
+        <ProfileBox>
+          <figure>
+            <div>
+              <img
+                src={`${process.env.REACT_APP_API_URL}${comment.profile_image}`}
+              />
+            </div>
+          </figure>
+        </ProfileBox>
         <div>
           <CommentInfoBox>
             <UserName>{comment.user_name}</UserName>
@@ -99,10 +108,36 @@ const CommentContainer = styled.div`
   margin-bottom: 1rem;
   > div {
     display: flex;
+    gap: 1rem;
   }
 `;
 
-const ProfileBox = styled.div``;
+const ProfileBox = styled.div`
+  > figure {
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 5rem;
+      > img {
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+        border-radius: 100%;
+      }
+    }
+
+    border-radius: 5rem;
+    border: 1.5px solid transparent;
+    background: linear-gradient(to top, black, green) border-box;
+  }
+`;
 
 const CommentInfoBox = styled.div``;
 
@@ -110,6 +145,7 @@ const InteractingBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin-bottom: 1.5rem;
 `;
 
 const UserName = styled.p`

@@ -5,6 +5,7 @@ import { ReactComponent as EmptyLikeSVG } from '../../../assets/icons/menu/empty
 import { ReactComponent as FilledLikeSVG } from '../../../assets/icons/menu/filledLike.svg';
 import { ReactComponent as CommentSVG } from '../../../assets/icons/menu/comment.svg';
 import { ReactComponent as SmallMoreSVG } from '../../../assets/icons/menu/smallMore.svg';
+import { ReactComponent as ReplySVG } from '../../../assets/icons/menu/reply.svg';
 import { postCommentLike } from 'utils/menu/postCommentLike';
 import { postCommentReply } from 'utils/menu/postCommentReply';
 
@@ -49,7 +50,16 @@ export default function ReplyComment({
   return (
     <CommentContainer>
       <div>
-        <ProfileBox>프로필 이미지</ProfileBox>
+        <ReplySVG></ReplySVG>
+        <ProfileBox>
+          <figure>
+            <div>
+              <img
+                src={`${process.env.REACT_APP_API_URL}${comment.profile_image}`}
+              />
+            </div>
+          </figure>
+        </ProfileBox>
         <div>
           <CommentInfoBox>
             <UserName>{comment.user_name}</UserName>
@@ -104,10 +114,36 @@ const CommentContainer = styled.div`
   margin-bottom: 1rem;
   > div {
     display: flex;
+    gap: 1rem;
   }
 `;
 
-const ProfileBox = styled.div``;
+const ProfileBox = styled.div`
+  > figure {
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 5rem;
+      > img {
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+        border-radius: 100%;
+      }
+    }
+
+    border-radius: 5rem;
+    border: 1.5px solid transparent;
+    background: linear-gradient(to top, black, green) border-box;
+  }
+`;
 
 const CommentInfoBox = styled.div``;
 
@@ -115,6 +151,7 @@ const InteractingBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin-bottom: 1.5rem;
 `;
 
 const UserName = styled.p`
