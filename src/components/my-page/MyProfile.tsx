@@ -61,6 +61,8 @@ export default function MyProfile(profileData: ProfileProps) {
     return arr.join(', ');
   }
 
+  console.log('');
+
   return (
     <Section>
       <header>
