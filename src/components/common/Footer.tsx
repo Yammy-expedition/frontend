@@ -30,7 +30,7 @@ export default function Footer() {
         <>
           <div>chat</div>
           <p>|</p>
-          <div>mypage</div>
+          <div onClick={() => navigate('/my-page')}>mypage</div>
           <p>|</p>
           <div onClick={onClickLogout}>logout</div>
         </>

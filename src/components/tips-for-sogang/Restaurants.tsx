@@ -1,4 +1,5 @@
 import { instance } from 'api/instance';
+import Loading from 'components/common/Loading';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -48,7 +49,7 @@ export default function Restaurants() {
       }
     };
     getPostList();
-  }, []);
+  }, [restaurantList]);
 
   useEffect(() => {
     if (searchParams.has('location')) {
@@ -65,7 +66,7 @@ export default function Restaurants() {
       setLocation('All');
       setFilteredRestaurantList(restaurantList);
     }
-  }, [searchParams]);
+  }, [searchParams, location, filteredRestaurantList, restaurantList]);
 
   return (
     <Section>
@@ -81,37 +82,57 @@ export default function Restaurants() {
         ))}
       </LocationTab>
       <PostList>
-        {filteredRestaurantList?.map((el, key) => (
-          <li key={key}>
-            <figure>
-              <img src={`${el.photo}`} alt="restaurant img" />
-            </figure>
-            <figcaption>
-              <div>
-                <h1>{el.name}</h1>
-                <h3>{el.short_intro}</h3>
-              </div>
-              <div>
-                <a target="blank" href={`${el.naver_map_link}`}>
-                  <img
-                    src="../../assets/images/tips-for-sogang/naver-map.png"
-                    alt="naver"
-                  />
-                </a>
-                <a target="blank" href={`${el.google_map_link}`}>
-                  <img
-                    src="../../assets/images/tips-for-sogang/google-map.png"
-                    alt="google"
-                  />
-                </a>
-              </div>
-            </figcaption>
-          </li>
-        ))}
+        {filteredRestaurantList ? (
+          filteredRestaurantList?.map((el, key) => (
+            <li key={key}>
+              <figure>
+                <img src={`${el.photo}`} alt="restaurant img" />
+              </figure>
+              <figcaption>
+                <div>
+                  <h1>{el.name}</h1>
+                  <h3>{el.short_intro}</h3>
+                </div>
+                <div>
+                  <MapLink target="blank" href={`${el.naver_map_link}`}>
+                    <img
+                      className="mapImg"
+                      src="/images/tips-for-sogang/naver-map.png"
+                      alt="naver"
+                    />
+                  </MapLink>
+                  <MapLink target="blank" href={`${el.google_map_link}`}>
+                    <img
+                      className="mapImg"
+                      src="/images/tips-for-sogang/google-map.png"
+                      alt="google"
+                    />
+                  </MapLink>
+                </div>
+              </figcaption>
+            </li>
+          ))
+        ) : (
+          <Loading />
+        )}
       </PostList>
     </Section>
   );
 }
+
+const MapLink = styled.a`
+  img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    filter: hue-rotate(120deg);
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
 
 const Section = styled.section`
   overflow-x: hidden;

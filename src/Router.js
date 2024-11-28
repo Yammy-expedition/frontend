@@ -16,6 +16,7 @@ function Router() {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/admin" element={<AdminPage />} />
+
       <Route path="/login" element={<LoginPage />} />
       <Route path="/menu">
         <Route
@@ -44,7 +45,6 @@ function Router() {
         <Route path=":category" element={<TipsForSogangPage />} />
       </Route>
       <Route path="/writing-post" element={<WritingPostPage />} />
-      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }
