@@ -1,6 +1,6 @@
-import { ReactComponent as CafeIcon } from '../../assets/icons/cafe.svg';
-import { ReactComponent as PrinterIcon } from '../../assets/icons/printer.svg';
-import { ReactComponent as BookIcon } from '../../assets/icons/book.svg';
+import { ReactComponent as CafeIcon } from '../../assets/icons/tips-for-sogang/cafe.svg';
+import { ReactComponent as PrinterIcon } from '../../assets/icons/tips-for-sogang/printer.svg';
+import { ReactComponent as BookIcon } from '../../assets/icons/tips-for-sogang/book.svg';
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg';
 import styled from 'styled-components';
 import KakaoMap from './KakaoMap';
