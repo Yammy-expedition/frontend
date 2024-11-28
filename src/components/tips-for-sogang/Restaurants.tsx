@@ -41,8 +41,7 @@ export default function Restaurants() {
       try {
         const response = await instance.get('/tips/tips-restaurants');
         if (response.status === 200) {
-          setRestaurantList(response.data);
-          console.log(response.data);
+          setRestaurantList(response.data.reverse());
         }
       } catch (e) {
         console.error(e);
