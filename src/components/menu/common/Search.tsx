@@ -4,11 +4,12 @@ import { ReactComponent as SearchSVG } from '../../../assets/icons/search.svg';
 
 interface SearchProps {
   searchType: string | undefined;
-  setSearchType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSearchType: React.Dispatch<React.SetStateAction<string>>;
   orderType: string | undefined;
-  setOrderType: React.Dispatch<React.SetStateAction<string | undefined>>;
-  searchContent: string | undefined;
-  setSearchContent: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setOrderType: React.Dispatch<React.SetStateAction<string>>;
+  searchContent: string;
+  setSearchContent: React.Dispatch<React.SetStateAction<string>>;
+  onClickSearch: () => void;
 }
 
 export default function Search({
@@ -17,7 +18,8 @@ export default function Search({
   orderType,
   setOrderType,
   searchContent,
-  setSearchContent
+  setSearchContent,
+  onClickSearch
 }: SearchProps) {
   return (
     <SearchContainer>
@@ -34,9 +36,12 @@ export default function Search({
           <input
             type="text"
             value={searchContent}
-            onChange={(e) => setSearchContent(e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setSearchContent(e.target.value);
+            }}
           />
-          <button>
+          <button onClick={onClickSearch}>
             <SearchSVG></SearchSVG>
           </button>
         </SearchBar>
@@ -44,11 +49,13 @@ export default function Search({
       <FilteringBox>
         <select
           value={orderType}
-          onChange={(e) => setOrderType(e.target.value)}
+          onChange={(e) => {
+            setOrderType(e.target.value);
+          }}
         >
-          <option value="latest">Recent</option>
-          <option value="likes">Popular</option>
-          <option value="comments">Popular</option>
+          <option value="latest">Latest</option>
+          <option value="likes">Likes</option>
+          <option value="comments">Comments</option>
         </select>
       </FilteringBox>
     </SearchContainer>

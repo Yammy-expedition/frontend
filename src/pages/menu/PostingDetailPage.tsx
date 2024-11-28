@@ -15,6 +15,7 @@ import { postCommentReply } from 'utils/menu/postCommentReply';
 import { deletePosting } from 'utils/menu/deletePosting';
 import HeadComment from 'components/menu/common/HeadComment';
 import ReplyComment from 'components/menu/common/ReplyComment';
+import ReportModalPortal from 'components/portal/ReportModalPortal';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -23,7 +24,6 @@ export default function PostingDetailPage() {
     boardType: string;
     pageName: string;
   };
-  console.log(state.boardType);
 
   const { postingId } = useParams();
   const [posting, setPosting] = useState<Posting>();
@@ -42,7 +42,23 @@ export default function PostingDetailPage() {
   const textarea = useRef<HTMLTextAreaElement>(null);
   const [comment, setComment] = useState<string>('');
 
+  const [openReport, setOpenReport] = useState<boolean>(false);
+  const [reportType, setReportType] = useState<string>('');
+  const [reportReason, setReportReason] = useState<string>('');
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (openReport) {
+      document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+    } else {
+      document.body.style.overflow = 'auto'; // 스크롤 활성화
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'; // 컴포넌트 언마운트 시 스크롤 복원
+    };
+  }, [openReport]);
 
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
@@ -101,12 +117,17 @@ export default function PostingDetailPage() {
     }
   };
 
-  const onClickSubmit = () => {
+  const onClickSubmitComment = () => {
     postCommentReply(postingId, comment).then((newComment) => {
       setComments((prevComments) => [...prevComments, newComment]); // 새 댓글 추가
       setComment('');
     });
     setComment('');
+  };
+
+  const onClickReportInMore = () => {
+    setOpenReport((prev) => !prev);
+    setMore(false);
   };
 
   const modules = {
@@ -169,7 +190,7 @@ export default function PostingDetailPage() {
                   </div>
                 ) : (
                   <div>
-                    <div>Report</div>
+                    <div onClick={onClickReportInMore}>Report</div>
                   </div>
                 ))}
             </MoreDiv>
@@ -230,12 +251,84 @@ export default function PostingDetailPage() {
                 value={comment}
                 onChange={onChangeTextArea}
               />
-              <SubmitButton onClick={onClickSubmit}>Submit</SubmitButton>
+              <SubmitButton onClick={onClickSubmitComment}>Submit</SubmitButton>
             </div>
           </PostCommentBox>
         </>
       ) : (
         ''
+      )}
+
+      {openReport && (
+        <ReportModalPortal>
+          <ReportModal onClick={() => setOpenReport(false)}>
+            <div onClick={(e) => e.stopPropagation()}>
+              <p>Report</p>
+              <div>
+                <div>Please select report type</div>
+                <RadioWrapper>
+                  <label>
+                    <input
+                      type="radio"
+                      name="report_type"
+                      value="SPAM"
+                      onChange={(e) => setReportType(e.target.value)}
+                    />
+                    <span>Spam</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="report_type"
+                      value="ABUSE"
+                      onChange={(e) => setReportType(e.target.value)}
+                    />
+                    <span>Abuse</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="report_type"
+                      value="ADULT"
+                      onChange={(e) => setReportType(e.target.value)}
+                    />
+                    <span>Adult</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="report_type"
+                      value="ILLEGAL"
+                      onChange={(e) => setReportType(e.target.value)}
+                    />
+                    <span>Illegal</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="report_type"
+                      value="OTHER"
+                      onChange={(e) => setReportType(e.target.value)}
+                    />
+                    <span>Other</span>
+                  </label>
+                </RadioWrapper>
+
+                <WriteReason>
+                  <p>Reason</p>
+                  <textarea
+                    value={reportReason}
+                    onChange={(e) => setReportReason(e.target.value)}
+                  ></textarea>
+                </WriteReason>
+              </div>
+
+              <ReportButtonWrapper>
+                <ReportButton>Submit</ReportButton>
+              </ReportButtonWrapper>
+            </div>
+          </ReportModal>
+        </ReportModalPortal>
       )}
     </PostingDetailContainer>
   );
@@ -362,8 +455,6 @@ const LikeWrapper = styled.div<{ $like: boolean }>`
 `;
 
 const PostCommentBox = styled.div`
-  diaplay: flex;
-
   margin-top: 3rem;
   padding: 1.5rem 2.5rem;
 
@@ -446,4 +537,86 @@ const SubmitButton = styled.button`
     --vertical-gradient,
     linear-gradient(180deg, #b21f7c 22.5%, #4c0d0f 100%)
   );
+`;
+
+const ReportModal = styled.div`
+  position: fixed;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  height: 100vh;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.5rem;
+    width: 40rem;
+    height: 50rem;
+    padding: 3rem;
+    background: white;
+
+    > p {
+      font-family: var(--sub-font);
+      color: var(--primary-color);
+      font-size: 4rem;
+      font-weight: 600;
+      margin-bottom: 4rem;
+    }
+
+    > div {
+      width: 100%;
+      font-size: 2.5rem;
+      > div {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+`;
+
+const RadioWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  font-size: 1.5rem;
+  > label {
+    display: block;
+  }
+`;
+
+const WriteReason = styled.div`
+  > p {
+    margin-bottom: 1rem;
+  }
+  > textarea {
+    resize: none;
+    width: 100%;
+    height: 7rem;
+  }
+`;
+
+const ReportButtonWrapper = styled.div`
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+`;
+
+const ReportButton = styled.button`
+  width: 12rem;
+  height: 5rem;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #d6d6d6;
+  background: var(
+    --vertical-gradient,
+    linear-gradient(180deg, #b21f7c 22.5%, #4c0d0f 100%)
+  );
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
 `;
