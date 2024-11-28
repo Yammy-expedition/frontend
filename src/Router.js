@@ -1,5 +1,4 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import AdminPage from 'pages/admin-page/AdminPage';
 import LoginPage from 'pages/login/LoginPage';
 import MainPage from 'pages/main/MainPage';
@@ -17,6 +16,7 @@ function Router() {
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/admin" element={<AdminPage />} />
+
       <Route path="/login" element={<LoginPage />} />
       <Route path="/menu">
         <Route
@@ -41,7 +41,9 @@ function Router() {
 
       <Route path="/my-page" element={<MyPage />} />
       <Route path="/sign-up" element={<SignUpPage />} />
-      <Route path="/tips-for-sogang" element={<TipsForSogangPage />} />
+      <Route path="/tips-for-sogang" element={<TipsForSogangPage />}>
+        <Route path=":category" element={<TipsForSogangPage />} />
+      </Route>
       <Route path="/writing-post" element={<WritingPostPage />} />
     </Routes>
   );

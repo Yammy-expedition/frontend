@@ -20,7 +20,7 @@ export const postPosting = async (
   };
 
   try {
-    const response = await instance.post('/posting', dataToSend, { headers });
+    const response = await instance.post('/posting', dataToSend);
 
     if (response.status === 201) {
       return response.data;
