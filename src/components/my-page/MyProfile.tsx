@@ -1,5 +1,3 @@
-import { countries } from 'constants/countries';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CakeIcon } from 'assets/icons/my-page/cake.svg';
 import { ReactComponent as EmailIcon } from 'assets/icons/my-page/email.svg';
@@ -7,8 +5,12 @@ import { ReactComponent as PersonIcon } from 'assets/icons/my-page/person.svg';
 import { ReactComponent as MajorIcon } from 'assets/icons/my-page/major.svg';
 import { ReactComponent as MBTIIcon } from 'assets/icons/my-page/mbti.svg';
 import { ReactComponent as LanguageIcon } from 'assets/icons/my-page/language.svg';
-import { majors } from 'constants/majors';
-import { languages } from 'constants/languages';
+import {
+  changeSex,
+  findCountryname,
+  findLanguage,
+  findMajor
+} from 'utils/my-page/findInfos';
 
 export interface ProfileProps {
   birth: string;
@@ -30,39 +32,6 @@ export interface ProfileProps {
 }
 
 export default function MyProfile(profileData: ProfileProps) {
-  console.dir(profileData);
-  console.log(profileData.languages);
-
-  function findCountryname(nationality: string) {
-    const country = countries.find((country) => country.code === nationality);
-    if (country) return country.name;
-    else return 'Unknown';
-  }
-
-  function changeSex(sex: string) {
-    if (sex === 'M') return 'Male';
-    else if (sex === 'F') return 'Female';
-    else return 'Unknown';
-  }
-
-  function findMajor(code: string) {
-    const major = majors.find((major) => major.code === code);
-    if (major) return major.name;
-    else return 'Unknown';
-  }
-
-  function findLanguage(code: string) {
-    const arr: string[] = [];
-    code.split(',').map((lang) => {
-      const language = languages.find((language) => language.code === lang);
-      if (language) arr.push(language.name);
-      else arr.push('Unknown');
-    });
-    return arr.join(', ');
-  }
-
-  console.log('');
-
   return (
     <Section>
       <header>
@@ -89,7 +58,7 @@ export default function MyProfile(profileData: ProfileProps) {
         <div>
           <span>
             <CakeIcon />
-            {profileData.birth}
+            {profileData.birth ? profileData.birth : 'Unknown'}
           </span>
           <span>
             <EmailIcon />
@@ -140,7 +109,6 @@ const DetailInfo = styled.div`
     gap: 2rem;
     font-size: 1.7rem;
     font-weight: 200;
-    max-width: 50%;
     color: var(--secondary-text);
     &.marginTop {
       margin-top: 1rem;
@@ -150,6 +118,7 @@ const DetailInfo = styled.div`
       align-items: center;
       gap: 1rem;
       color: var(--main-text);
+      max-width: 50%;
       svg {
         color: var(--secondary-text);
         stroke-width: 1.5px;
@@ -217,7 +186,7 @@ const HeaderProfileBox = styled.div`
 
 const Section = styled.section`
   width: 100%;
-  height: 40%;
+  height: 100%;
   padding: 3rem 5rem;
   letter-spacing: -0.5px;
   header {
