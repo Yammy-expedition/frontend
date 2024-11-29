@@ -34,7 +34,17 @@ export default function PostingList({
             })
           }
         >
-          {boardType === 'market' && <RepresentImage></RepresentImage>}
+          {boardType === 'market' && (
+            <RepresentImage>
+              {posting.images.length !== 0 ? (
+                <div>
+                  <img src={posting.images[0].image} />
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </RepresentImage>
+          )}
 
           <EachPost>
             <div>
@@ -145,7 +155,14 @@ const PriceBox = styled.div`
 `;
 
 const RepresentImage = styled.div`
-  min-width: 13rem;
+  width: 13rem;
   height: 13rem;
-  background: pink;
+  background: lightGray;
+  > div {
+    > img {
+      object-fit: cover;
+      width: 13rem;
+      height: 13rem;
+    }
+  }
 `;

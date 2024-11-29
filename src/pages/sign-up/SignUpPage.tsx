@@ -58,6 +58,7 @@ export default function SignUpPage() {
           if (response2.status === 200) {
             const accessToken = response2.data.access;
             window.localStorage.setItem('accessToken', accessToken);
+            console.log(response2.data);
 
             if (!dataToSend.email.includes('sogang.ac.kr')) {
               const formData = new FormData();

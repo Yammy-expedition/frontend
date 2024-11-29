@@ -13,6 +13,8 @@ interface PostInfoTitleProps {
   editting: boolean;
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
+  price: string;
+  setPrice: React.Dispatch<React.SetStateAction<string>>;
   setEditting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -21,6 +23,8 @@ export default function PostInfoTitle({
   editting,
   title,
   setTitle,
+  price,
+  setPrice,
   setEditting
 }: PostInfoTitleProps) {
   const [more, setMore] = useState<boolean>(false);
@@ -82,14 +86,28 @@ export default function PostInfoTitle({
         )}
       </PostTitle>
 
-      {posting.board_type === 'market' && (
-        <PriceBox>
-          <div>
-            <span>&#8361;</span>
-            {Number(posting.price).toLocaleString('ko-KR')}
-          </div>
-          <ExchangeBox></ExchangeBox>
-        </PriceBox>
+      {editting ? (
+        <PriceSettingBox>
+          <span>Price</span>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="&#8361;"
+          />
+          <ExchangeBox>exchange</ExchangeBox>
+        </PriceSettingBox>
+      ) : (
+        <>
+          {posting.board_type === 'market' && (
+            <PriceSettingBox>
+              <span>&#8361;</span>
+              {Number(posting.price).toLocaleString('ko-KR')}
+
+              <ExchangeBox>exchange</ExchangeBox>
+            </PriceSettingBox>
+          )}
+        </>
       )}
 
       {!editting && (
@@ -364,4 +382,41 @@ const PriceBox = styled.div`
   }
 `;
 
-const ExchangeBox = styled.div``;
+const ExchangeBox = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.84);
+  width: 10rem;
+  height: 3rem;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+`;
+
+const PriceSettingBox = styled.div`
+  display: flex;
+  margin-top: 1.75rem;
+  align-items: center;
+  font-size: 2.7rem;
+  gap: 1rem;
+  > span {
+    font-family: Inter;
+    margin-right: 1rem;
+  }
+
+  > input {
+    padding: 0.5rem;
+    width: 30%;
+    margin-right: 1rem;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;

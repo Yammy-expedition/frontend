@@ -17,6 +17,12 @@ export default function PostingDetailPage() {
     pageName: string;
   };
 
+  interface ImagesResponse {
+    id: number;
+    image: string;
+    post: number;
+  }
+
   const { postingId } = useParams();
 
   const [posting, setPosting] = useState<Posting>();
@@ -36,9 +42,10 @@ export default function PostingDetailPage() {
 
   const [comment, setComment] = useState<string>('');
 
+  const [images, setImages] = useState<ImagesResponse[]>([]);
+
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
-      console.log(result);
       setComments(result.comments);
       setLike(result.is_liked);
       setLikeCount(result.like_count);
@@ -46,6 +53,8 @@ export default function PostingDetailPage() {
       setContent(result.content);
       setIsOnSale(result.status);
       setBookmark(result.is_bookmarked);
+      setPrice(result.price);
+      setImages(result.images);
     });
     postPostingViewCount(postingId);
   }, []);
@@ -78,10 +87,24 @@ export default function PostingDetailPage() {
         editting={editting}
         title={title}
         setTitle={setTitle}
+        price={price}
+        setPrice={setPrice}
         setEditting={setEditting}
       ></PostInfoTitle>
 
       {!editting && <LineGradient></LineGradient>}
+
+      <ImgBox>
+        {state.boardType === 'market' && (
+          <>
+            {images.map((item, index) => (
+              <div key={index}>
+                <img src={item.image} />
+              </div>
+            ))}
+          </>
+        )}
+      </ImgBox>
 
       <PostContent
         posting={posting}
@@ -151,4 +174,38 @@ const LineGradient = styled.div`
   height: 0.1rem;
   background-image: var(--line-gradient);
   transform: rotate(180deg);
+`;
+
+const ImgBox = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: gray;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+  }
+
+  /* 스크롤바 핸들 호버 시 */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(178, 31, 124, 0.7);
+  }
+  > div {
+    > img {
+      object-fit: cover;
+      width: 12rem;
+      height: 12rem;
+    }
+  }
 `;
