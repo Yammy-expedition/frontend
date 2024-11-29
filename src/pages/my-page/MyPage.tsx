@@ -96,7 +96,7 @@ export default function MyPage() {
         const filterdCategoryData = categoryKeys.reduce(
           (acc: Partial<MyCagegoryDatasProps>, key) => {
             if (key in response.data) {
-              acc[key] = response.data[key];
+              acc[key] = response.data[key].reverse();
             }
             return acc;
           },

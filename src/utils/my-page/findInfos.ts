@@ -3,9 +3,13 @@ import { languages } from 'constants/languages';
 import { majors } from 'constants/majors';
 
 export function findCountryname(nationality: string) {
-  const country = countries.find((country) => country.code === nationality);
-  if (country) return country.name;
-  else return 'Unknown';
+  const arr: string[] = [];
+  nationality.split(',').map((nat) => {
+    const country = countries.find((country) => country.code === nat.trim());
+    if (country) arr.push(country.name);
+    else arr.push('Unknown');
+  });
+  return arr.join(', ');
 }
 
 export function changeSex(sex: string) {
@@ -15,15 +19,21 @@ export function changeSex(sex: string) {
 }
 
 export function findMajor(code: string) {
-  const major = majors.find((major) => major.code === code);
-  if (major) return major.name;
-  else return 'Unknown';
+  const arr: string[] = [];
+  code.split(',').map((maj) => {
+    const major = majors.find((major) => major.code === maj.trim());
+    if (major) arr.push(major.name);
+    else arr.push('Unknown');
+  });
+  return arr.join(', ');
 }
 
 export function findLanguage(code: string) {
   const arr: string[] = [];
   code.split(',').map((lang) => {
-    const language = languages.find((language) => language.code === lang);
+    const language = languages.find(
+      (language) => language.code === lang.trim()
+    );
     if (language) arr.push(language.name);
     else arr.push('Unknown');
   });
