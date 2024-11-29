@@ -41,7 +41,7 @@ export default function PostComment({
       <p>
         Comment <span>{posting.comment_count}</span>
       </p>
-      <>{console.log(posting.comments)}</>
+
       {comments.map((comment, index) => (
         <React.Fragment key={index}>
           <HeadComment

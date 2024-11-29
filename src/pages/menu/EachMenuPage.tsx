@@ -42,8 +42,6 @@ export default function RestaurantsPage({ boardType }: RestaurantsPageProps) {
   const [endPage, setEndPage] = useState(5);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [refresh, setRefresh] = useState<boolean>(false);
-
   const mountRef = useRef<boolean>(false);
 
   // URL 변경에 따른 상태 복원
