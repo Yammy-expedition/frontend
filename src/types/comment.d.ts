@@ -10,4 +10,6 @@ export interface Comment {
   like_count: number;
   is_deleted: boolean;
   is_liked: boolean;
+  profile_image: string;
+  is_mine: boolean;
 }

@@ -12,4 +12,5 @@ export interface Posting {
   comments: Comment[];
   comment_count: number;
   view_count: number;
+  is_mine: boolean;
 }

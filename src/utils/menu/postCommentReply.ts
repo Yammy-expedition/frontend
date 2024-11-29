@@ -1,12 +1,15 @@
 import { instance } from 'api/instance';
 
-export const postComment = async (
+export const postCommentReply = async (
   postingId: string | undefined,
-  comment: string
+  comment: string,
+  parentId?: number
 ) => {
-  const dataToSend = { content: comment };
-
-  console.log(dataToSend);
+  const formData = new FormData();
+  formData.append('content', comment);
+  if (parentId) {
+    formData.append('parent_id', parentId.toString());
+  }
 
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -16,7 +19,7 @@ export const postComment = async (
   try {
     const response = await instance.post(
       `/posting/${postingId}/comment`,
-      dataToSend,
+      formData,
       { headers }
     );
 
