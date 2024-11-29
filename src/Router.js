@@ -39,7 +39,9 @@ function Router() {
         />
       </Route>
 
-      <Route path="/my-page" element={<MyPage />} />
+      <Route path="/my-page" element={<MyPage />}>
+        <Route path=":category" element={<MyPage />} />
+      </Route>
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/tips-for-sogang" element={<TipsForSogangPage />}>
         <Route path=":category" element={<TipsForSogangPage />} />
