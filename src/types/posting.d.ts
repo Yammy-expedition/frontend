@@ -13,4 +13,6 @@ export interface Posting {
   comment_count: number;
   view_count: number;
   is_mine: boolean;
+  status: string;
+  price: string;
 }

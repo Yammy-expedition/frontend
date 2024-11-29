@@ -4,8 +4,10 @@ import ReactQuill from 'react-quill-new';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
 import { postPostingLike } from 'utils/menu/postPostingLike';
-import { ReactComponent as LikeSVG } from '../../assets/icons/menu/like.svg';
-import '../../../node_modules/react-quill-new/dist/quill.snow.css';
+import { ReactComponent as LikeSVG } from '../../../assets/icons/menu/like.svg';
+import { ReactComponent as BookmarkSVG } from '../../../assets/icons/menu/bookmark.svg';
+import '../../../../node_modules/react-quill-new/dist/quill.snow.css';
+import { postBookmark } from 'utils/menu/postBookmark';
 
 interface PostContentProps {
   posting: Posting;
@@ -14,8 +16,12 @@ interface PostContentProps {
   setContent: React.Dispatch<React.SetStateAction<string>>;
   like: boolean;
   setLike: React.Dispatch<React.SetStateAction<boolean>>;
+  bookmark: boolean;
+  setBookmark: React.Dispatch<React.SetStateAction<boolean>>;
   likeCount: number;
   setLikeCount: React.Dispatch<React.SetStateAction<number>>;
+  bookmarkCount: number;
+  setBookmarkCount: React.Dispatch<React.SetStateAction<number>>;
   setEditting: React.Dispatch<React.SetStateAction<boolean>>;
   onClickSave: () => void;
 }
@@ -27,8 +33,12 @@ export default function PostContent({
   setContent,
   like,
   setLike,
+  bookmark,
+  setBookmark,
   likeCount,
   setLikeCount,
+  bookmarkCount,
+  setBookmarkCount,
   setEditting,
   onClickSave
 }: PostContentProps) {
@@ -38,12 +48,21 @@ export default function PostContent({
       setLikeCount((prev) => prev - 1);
     } else setLikeCount((prev) => prev + 1);
   };
+
   const onClickCancle = () => {
     setEditting(false);
     if (posting) {
       setContent(posting.content);
     }
   };
+
+  const onClickBookmarkButton = () => {
+    postBookmark(posting.id.toString(), setBookmark);
+    if (bookmark) {
+      setBookmarkCount((prev) => prev - 1);
+    } else setBookmarkCount((prev) => prev + 1);
+  };
+
   return (
     <PostContentBox>
       <Content>
@@ -56,14 +75,30 @@ export default function PostContent({
           onChange={(value) => editting && setContent(value)}
         />
       </Content>
-      {!editting && (
-        <LikeWrapper $like={like}>
-          <div onClick={onclickLikeButton}>
-            <LikeSVG></LikeSVG>
-          </div>
-          <p>{likeCount}</p>
-        </LikeWrapper>
+      {posting.board_type === 'market' ? (
+        <>
+          {!editting && (
+            <SaveWrapper $bookmark={bookmark}>
+              <div onClick={onClickBookmarkButton}>
+                <BookmarkSVG></BookmarkSVG>
+              </div>
+              <p>{bookmarkCount}</p>
+            </SaveWrapper>
+          )}
+        </>
+      ) : (
+        <>
+          {!editting && (
+            <LikeWrapper $like={like}>
+              <div onClick={onclickLikeButton}>
+                <LikeSVG></LikeSVG>
+              </div>
+              <p>{likeCount}</p>
+            </LikeWrapper>
+          )}
+        </>
       )}
+
       {editting && (
         <ButtonWrapper>
           <Button onClick={onClickCancle}>Cancel</Button>
@@ -150,4 +185,26 @@ const Button = styled.button`
   font-size: 1.6rem;
   font-weight: 600;
   cursor: pointer;
+`;
+
+const SaveWrapper = styled.div<{ $bookmark: boolean }>`
+  position: fixed;
+  right: 3rem;
+  bottom: 4rem;
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: ${(props) =>
+      props.$bookmark ? 'var(--vertical-gradient)' : '#979797'};
+    border-radius: 100%;
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 1rem;
+  }
+  > p {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
 `;

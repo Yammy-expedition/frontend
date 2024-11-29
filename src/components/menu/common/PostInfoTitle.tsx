@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
-import { ReactComponent as EyeSVG } from '../../assets/icons/menu/eye.svg';
-import { ReactComponent as MoreSVG } from '../../assets/icons/menu/more.svg';
+import { ReactComponent as EyeSVG } from '../../../assets/icons/menu/eye.svg';
+import { ReactComponent as MoreSVG } from '../../../assets/icons/menu/more.svg';
 import ReportModalPortal from 'components/portal/ReportModalPortal';
 import { deletePosting } from 'utils/menu/deletePosting';
 import { useNavigate } from 'react-router-dom';
@@ -82,15 +82,28 @@ export default function PostInfoTitle({
         )}
       </PostTitle>
 
+      {posting.board_type === 'market' && (
+        <PriceBox>
+          <div>
+            <span>&#8361;</span>
+            {Number(posting.price).toLocaleString('ko-KR')}
+          </div>
+          <ExchangeBox></ExchangeBox>
+        </PriceBox>
+      )}
+
       {!editting && (
         <PostInfo>
           <div>
             <span>{posting.writer_nickname}</span>
             <span>{posting.created_at.split('T')[0]}</span>
-            <span>
-              <EyeSVG></EyeSVG> {posting.view_count}
-            </span>
+            {posting.board_type !== 'market' && (
+              <span>
+                <EyeSVG></EyeSVG> {posting.view_count}
+              </span>
+            )}
           </div>
+
           <MoreDiv ref={moreRef} onClick={() => setMore((prev) => !prev)}>
             <span style={{ cursor: 'pointer' }}>
               <MoreSVG></MoreSVG>
@@ -201,7 +214,7 @@ const PostHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 6rem;
+  margin-top: 3rem;
 `;
 
 const PostTitle = styled.p`
@@ -342,3 +355,13 @@ const ReportButton = styled.button`
   font-weight: 600;
   cursor: pointer;
 `;
+
+const PriceBox = styled.div`
+  > div {
+    color: #2b2b2b;
+    font-weight: 300;
+    font-size: 3rem;
+  }
+`;
+
+const ExchangeBox = styled.div``;
