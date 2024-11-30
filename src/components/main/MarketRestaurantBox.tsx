@@ -112,27 +112,33 @@ export default function MarketRestaurantBox() {
 
 const MarketRestaurant = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+
   position: absolute;
   width: 100%;
   bottom: 0;
   height: 25rem;
+  padding: 0 3rem;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    align-items: stretch;
+    margin: 0;
+  }
 `;
 
 const Restaurent = styled.div`
-  width: 48rem;
-  min-width: 23rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 0 2rem;
 `;
 
 const Market = styled.div`
-  width: 48rem;
-  min-width: 23rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 2rem 0 1rem;
 `;
 
 const SquareRestaurantPlus = styled.div`

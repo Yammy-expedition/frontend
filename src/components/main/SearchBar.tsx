@@ -38,49 +38,53 @@ export default function SearchBar({
   };
 
   return (
-    <div>
-      <select
-        name="countries"
-        id=""
-        value={selectedCountryName || ''}
-        onChange={(e) => setSelectedCountryName(e.target.value)}
-      >
-        <option disabled hidden value="">
-          Select Country
-        </option>
-        {countries.map((item, index) => (
-          <option key={index} value={item.name}>
-            {item.name}
+    <>
+      <div>
+        <select
+          name="countries"
+          id=""
+          value={selectedCountryName || ''}
+          onChange={(e) => setSelectedCountryName(e.target.value)}
+        >
+          <option disabled hidden value="">
+            Select Country
           </option>
-        ))}
-      </select>
-      <select
-        name="major"
-        id=""
-        value={selectedMajorName || ''}
-        onChange={onChangeSelectedMajorName}
-      >
-        <option disabled hidden value="">
-          Select Major
-        </option>
-        {majors.map((item, index) => (
-          <option key={index}>{item.name}</option>
-        ))}
-      </select>
-      <SearchButton onClick={onClickSearchButton}>Search</SearchButton>
-      {showUserList && (
-        <SearchResult $isEmpty={filteredUser.length === 0}>
-          {filteredUser.length === 0 ? (
-            <div>No User Exists OTL</div>
-          ) : (
-            filteredUser.map((item, index) => {
-              return <EachUserBox key={index} user={item}></EachUserBox>;
-            })
-          )}
-          {}
-        </SearchResult>
-      )}
-    </div>
+          {countries.map((item, index) => (
+            <option key={index} value={item.name}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+        <select
+          name="major"
+          id=""
+          value={selectedMajorName || ''}
+          onChange={onChangeSelectedMajorName}
+        >
+          <option disabled hidden value="">
+            Select Major
+          </option>
+          {majors.map((item, index) => (
+            <option key={index}>{item.name}</option>
+          ))}
+        </select>
+        <SearchButton onClick={onClickSearchButton}>Search</SearchButton>
+      </div>
+
+      <div>
+        {showUserList && (
+          <SearchResult $isEmpty={filteredUser.length === 0}>
+            {filteredUser.length === 0 ? (
+              <div>No User Exists OTL</div>
+            ) : (
+              filteredUser.map((item, index) => {
+                return <EachUserBox key={index} user={item}></EachUserBox>;
+              })
+            )}
+          </SearchResult>
+        )}
+      </div>
+    </>
   );
 }
 
