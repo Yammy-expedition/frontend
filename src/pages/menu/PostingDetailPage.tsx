@@ -185,6 +185,7 @@ const ImgBox = styled.div`
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
+    margin: 4px;
   }
 
   &::-webkit-scrollbar-track {
@@ -197,11 +198,11 @@ const ImgBox = styled.div`
     border-radius: 10px;
   }
 
-  /* 스크롤바 핸들 호버 시 */
   &::-webkit-scrollbar-thumb:hover {
     background: rgba(178, 31, 124, 0.7);
   }
   > div {
+    margin-bottom: 0.5rem;
     > img {
       object-fit: cover;
       width: 12rem;

@@ -17,5 +17,5 @@ const MainPageContainer = styled.div`
   position: relative;
   flex-direction: column;
   width: 100%;
-  overflow-y: hidden;
+  height: 100vh;
 `;

@@ -181,45 +181,51 @@ export default function WritingPostPage() {
             />
           </TitleBox>
 
-          <PriceSettingBox>
-            <span>Price</span>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="&#8361;"
-            />
-            <ExchangeBox>
-              exchange
-              <div>
-                <Search></Search>
-                <CountryList></CountryList>
-              </div>
-            </ExchangeBox>
-          </PriceSettingBox>
-
-          <ImgBox>
-            {previews.map((preview, index) => (
-              <div key={index}>
-                {preview ? (
-                  <img src={preview} alt={`preview-${index}`} />
-                ) : (
-                  <label htmlFor={`file-${index}`}>
-                    <EachImage>+</EachImage>
-                  </label>
-                )}
+          {state.boardType === 'market' && (
+            <>
+              <PriceSettingBox>
+                <span>Price</span>
                 <input
-                  type="file"
-                  accept="image/*"
-                  id={`file-${index}`}
-                  ref={imgFileRef}
-                  onChange={(e) => handleFileChange(e, index)}
-                  style={{ display: 'none' }}
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="&#8361;"
                 />
-              </div>
-            ))}
-          </ImgBox>
-          <AddImageButton onClick={addNewImageSlot}>Add Images</AddImageButton>
+                <ExchangeBox>
+                  exchange
+                  <div>
+                    <Search></Search>
+                    <CountryList></CountryList>
+                  </div>
+                </ExchangeBox>
+              </PriceSettingBox>
+
+              <ImgBox>
+                {previews.map((preview, index) => (
+                  <div key={index}>
+                    {preview ? (
+                      <img src={preview} alt={`preview-${index}`} />
+                    ) : (
+                      <label htmlFor={`file-${index}`}>
+                        <EachImage>+</EachImage>
+                      </label>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id={`file-${index}`}
+                      ref={imgFileRef}
+                      onChange={(e) => handleFileChange(e, index)}
+                      style={{ display: 'none' }}
+                    />
+                  </div>
+                ))}
+              </ImgBox>
+              <AddImageButton onClick={addNewImageSlot}>
+                Add Images
+              </AddImageButton>
+            </>
+          )}
 
           <CustomReactQuill
             $boardType={state.boardType}
