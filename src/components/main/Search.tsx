@@ -110,12 +110,18 @@ const SearchContainer = styled.div`
     left: 0;
     right: 0;
   }
+  @media screen and (min-width: 768px) {
+    margin-top: 0;
+    font-size: 2.4rem;
+    top: 4rem;
+    right: 1rem;
+  }
 
   @media screen and (min-width: 1024px) {
     margin-top: 0;
     font-size: 2.4rem;
-    top: 5rem;
-    right: 7.5rem;
+    top: 4rem;
+    right: 1rem;
   }
 
   font-weight: 600;

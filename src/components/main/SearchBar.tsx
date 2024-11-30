@@ -112,8 +112,11 @@ const SearchResult = styled.div<{ $isEmpty: boolean }>`
   background: white;
   border-radius: 0.5rem;
   margin-top: 1.5rem;
+  width: 29rem;
 
-  width: 100%;
+  @media screen and (min-width: 768px) {
+    width: 100%;
+  }
   overflow: auto;
   border: 2.5px solid green;
   display: flex;

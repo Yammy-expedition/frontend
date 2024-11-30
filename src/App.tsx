@@ -32,6 +32,7 @@ function App() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
+        window.innerWidth < 768 &&
         sideBarRef.current &&
         !sideBarRef.current.contains(event.target as Node)
       ) {
@@ -74,8 +75,6 @@ const AppContainer = styled.div`
   background-color: #eeeeee;
 
   > *:not(:first-child) {
-    overflow: hidden;
-
     @media screen and (min-width: 768px) {
       margin-left: 25.4rem;
     }

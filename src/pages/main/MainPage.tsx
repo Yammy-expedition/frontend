@@ -17,5 +17,7 @@ const MainPageContainer = styled.div`
   position: relative;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh; /* 부모 요소가 자식을 감쌀 수 있도록 설정 */
+  overflow: visible; /* 잘림 방지 */
 `;
