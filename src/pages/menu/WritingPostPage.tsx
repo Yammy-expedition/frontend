@@ -256,7 +256,12 @@ const PageNameBox = styled.div`
     font-family: var(--sub-font);
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 5rem;
+
+    font-size: 4rem;
+
+    @media screen and (min-width: 768px) {
+      font-size: 5rem;
+    }
   }
 `;
 
