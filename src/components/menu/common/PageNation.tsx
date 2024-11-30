@@ -76,13 +76,21 @@ export default function PageNation({
   );
 }
 const BottomBox = styled.div`
+  > div {
+    width: 8rem;
+  }
   position: absolute;
-  padding: 0 4.5rem;
+  padding: 0 2rem;
   justify-content: space-between;
   left: 0;
   width: 100%;
-  bottom: 2.5rem;
+  bottom: 0.5rem;
   display: flex;
+
+  @media screen and (min-width: 768px) {
+    bottom: 1.5rem;
+    padding: 0 4.5rem;
+  }
 `;
 
 const PageNationContainer = styled.div`

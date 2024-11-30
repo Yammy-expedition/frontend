@@ -61,15 +61,16 @@ export default function PostingList({
                 <span>{posting.writer_nickname}</span>
                 <span>{posting.created_at.split('T')[0]}</span>
                 <span>
-                  <HeartSVG></HeartSVG> {posting.like_count}
+                  <StyledHeartSVG></StyledHeartSVG> {posting.like_count}
                 </span>
                 {boardType !== 'market' && (
                   <>
                     <span>
-                      <EyeSVG></EyeSVG> {posting.view_count}
+                      <StyledEyeSVG></StyledEyeSVG> {posting.view_count}
                     </span>
                     <span>
-                      <CommentSVG></CommentSVG> {posting.comment_count}
+                      <StyledCommentSVG></StyledCommentSVG>
+                      {posting.comment_count}
                     </span>
                   </>
                 )}
@@ -93,8 +94,12 @@ const PostingContainer = styled.div`
     border-bottom: 1px solid var(--secondary-text);
     gap: 1.5rem;
     padding: 1rem 0;
-    min-height: 9rem;
+    min-height: 8rem;
     cursor: pointer;
+
+    @media screen and (min-width: 768px) {
+      min-height: 9rem;
+    }
   }
 `;
 
@@ -116,8 +121,23 @@ const EachPost = styled.div`
 
       gap: 1rem;
       > p {
-        font-size: 2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 10rem;
         font-weight: 500;
+        font-size: 1.6rem;
+        @media screen and (min-width: 330px) {
+          width: 12rem;
+        }
+        @media screen and (min-width: 768px) {
+          font-size: 2rem;
+          width: 15rem;
+        }
+
+        @media screen and (min-width: 1024px) {
+          width: auto;
+        }
       }
 
       > div {
@@ -126,10 +146,18 @@ const EachPost = styled.div`
         align-items: center;
         background: var(--primary-color);
         color: white;
-        width: 7rem;
-        height: 2rem;
-        font-size: 1.5rem;
+
+        width: 5rem;
+        height: 1.75rem;
+        font-size: 1.2rem;
+
         border-radius: 40rem;
+
+        @media screen and (min-width: 768px) {
+          width: 7rem;
+          height: 2rem;
+          font-size: 1.5rem;
+        }
       }
     }
   }
@@ -141,28 +169,68 @@ const PostInfo = styled.div`
   align-items: center;
   gap: 1rem;
   > span {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    @media screen and (min-width: 768px) {
+      font-size: 1.6rem;
+    }
   }
 `;
 
 const PriceBox = styled.div`
   color: #2b2b2b;
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 500;
+
+  @media screen and (min-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const RepresentImage = styled.div`
-  width: 13rem;
-  height: 13rem;
+  width: 10rem;
+  height: 10rem;
+  @media screen and (min-width: 768px) {
+    width: 13rem;
+    height: 13rem;
+  }
   background: lightGray;
   > div {
     > img {
       object-fit: cover;
-      width: 13rem;
-      height: 13rem;
+      width: 10rem;
+      height: 10rem;
+      @media screen and (min-width: 768px) {
+        width: 13rem;
+        height: 13rem;
+      }
     }
+  }
+`;
+
+const StyledHeartSVG = styled(HeartSVG)`
+  width: 1.6rem;
+
+  @media screen and (min-width: 768px) {
+    width: 2rem;
+  }
+`;
+
+const StyledEyeSVG = styled(EyeSVG)`
+  width: 1.6rem;
+
+  @media screen and (min-width: 768px) {
+    width: 2rem;
+  }
+`;
+
+const StyledCommentSVG = styled(CommentSVG)`
+  width: 1.6rem;
+
+  @media screen and (min-width: 768px) {
+    width: 2rem;
   }
 `;
