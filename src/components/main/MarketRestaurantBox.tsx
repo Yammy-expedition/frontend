@@ -5,15 +5,17 @@ import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
 import { useNavigate } from 'react-router-dom';
 import { Posting } from 'types/posting';
 import { getPostingList } from 'utils/common/getPostingList';
+import Loading from 'components/common/Loading';
 
 export default function MarketRestaurantBox() {
   const navigate = useNavigate();
   const [restaurantPostings, setRestaurantPostings] = useState<Posting[]>([]);
-  const [marketPostings, setMarketPostings] = useState<Posting[]>();
+  const [marketPostings, setMarketPostings] = useState<Posting[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getPostingList('restaurant', setRestaurantPostings, 1);
-    getPostingList('market', setMarketPostings, 1);
+    getPostingList('restaurant', setRestaurantPostings, 1, setLoading);
+    getPostingList('market', setMarketPostings, 1, setLoading);
     console.log(restaurantPostings);
   }, []);
   return (
@@ -32,15 +34,33 @@ export default function MarketRestaurantBox() {
         </div>
 
         <List>
-          {restaurantPostings.map((post, index2) => (
-            <CircleTitleCreatedAt key={index2}>
-              <CircleTitle>
-                <Circle></Circle>
-                <Title>{post.title}</Title>
-              </CircleTitle>
-              <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
-            </CircleTitleCreatedAt>
-          ))}
+          {loading ? (
+            <Loading></Loading>
+          ) : (
+            <>
+              {restaurantPostings.map((post, index2) => (
+                <CircleTitleCreatedAt key={index2}>
+                  <CircleTitle>
+                    <Circle></Circle>
+                    <Title
+                      onClick={() =>
+                        navigate(`/posting-detail/${post.id}`, {
+                          state: {
+                            posting: post,
+                            boardType: 'restaurant',
+                            pageName: 'Restaurants'
+                          }
+                        })
+                      }
+                    >
+                      {post.title}
+                    </Title>
+                  </CircleTitle>
+                  <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
+                </CircleTitleCreatedAt>
+              ))}
+            </>
+          )}
         </List>
       </Restaurent>
       <Market>
@@ -57,17 +77,33 @@ export default function MarketRestaurantBox() {
         </div>
 
         <List>
-          {postings
-            .filter((item, index1) => index1 <= 4)
-            .map((post, index2) => (
-              <CircleTitleCreatedAt key={index2}>
-                <CircleTitle>
-                  <Circle></Circle>
-                  <Title>{post.title}</Title>
-                </CircleTitle>
-                <CreatedAt>{`${post.created_at.getMonth() + 1} / ${post.created_at.getDate()}`}</CreatedAt>
-              </CircleTitleCreatedAt>
-            ))}
+          {loading ? (
+            <Loading></Loading>
+          ) : (
+            <>
+              {marketPostings.map((post, index2) => (
+                <CircleTitleCreatedAt key={index2}>
+                  <CircleTitle>
+                    <Circle></Circle>
+                    <Title
+                      onClick={() =>
+                        navigate(`/posting-detail/${post.id}`, {
+                          state: {
+                            posting: post,
+                            boardType: 'market',
+                            pageName: 'Markets'
+                          }
+                        })
+                      }
+                    >
+                      {post.title}
+                    </Title>
+                  </CircleTitle>
+                  <CreatedAt>{`${post.created_at.split('T')[0]}`}</CreatedAt>
+                </CircleTitleCreatedAt>
+              ))}
+            </>
+          )}
         </List>
       </Market>
     </MarketRestaurant>

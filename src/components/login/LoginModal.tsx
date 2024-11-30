@@ -30,6 +30,7 @@ const LoginModal = ({ onClose }: any) => {
       console.log(error);
     }
   };
+
   return (
     <LoginModalContainer onClick={onClose}>
       <LoginWindow onClick={(e) => e.stopPropagation()}>
@@ -75,7 +76,7 @@ const LoginModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
   width: 100vw;
   height: 100vh;
 `;

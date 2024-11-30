@@ -8,6 +8,8 @@ import { ImageResize } from 'quill-image-resize-module-ts';
 import imageCompression from 'browser-image-compression';
 import { dataURLToFile } from 'utils/dataURLToFile';
 import { fileToDataURL } from 'utils/fileToDataURL';
+import Loading from 'components/common/Loading';
+import { modules } from 'constants/quillModules';
 
 Quill.register('modules/ImageResize', ImageResize);
 
@@ -21,6 +23,7 @@ export default function WritingPostPage() {
   const [content, setContent] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [isContentUpdated, setIsContentUpdated] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   async function compressAndConvertToDataURL(file: File): Promise<string> {
@@ -64,6 +67,7 @@ export default function WritingPostPage() {
 
       if (originalSrc.startsWith('data:')) {
         // src가 데이터 URL인 경우에만 처리
+        setLoading(true);
         try {
           const file = await dataURLToFile(originalSrc, 'image.png'); // 데이터 URL을 파일로 변환
           const compressedDataURL = await compressAndConvertToDataURL(file); // 압축 후 데이터 URL로 변환
@@ -76,6 +80,8 @@ export default function WritingPostPage() {
           console.log('교체된 src:', compressedDataURL);
         } catch (error) {
           console.error('이미지 압축 또는 변환 중 오류:', error);
+        } finally {
+          setLoading(false);
         }
       }
     }
@@ -106,49 +112,38 @@ export default function WritingPostPage() {
   //   console.log(content);
   // }, [content]);
 
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }], // 헤더
-      [{ align: [] }], // 정렬
-      ['bold', 'italic', 'underline', 'strike'], // 텍스트 포맷
-      [{ list: 'ordered' }, { list: 'bullet' }], // 리스트
-      ['blockquote', 'code-block'], // 인용구, 코드 블록
-      [{ color: [] }, { background: [] }], // 텍스트 색상, 배경색
-      ['link', 'image'], // 링크, 이미지, 비디오
-      ['clean'] // 포맷 초기화
-    ],
-    ImageResize: {
-      parchment: Quill.import('parchment'),
-      modules: ['Resize', 'DisplaySize']
-    }
-  };
-
   return (
     <WritingPostPageContainer>
       <PageNameBox>
         <p>{state.pageName}</p>
       </PageNameBox>
 
-      <TitleBox>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Please write title"
-        />
-      </TitleBox>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <>
+          <TitleBox>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Please write title"
+            />
+          </TitleBox>
 
-      <CustomReactQuill
-        theme="snow"
-        value={content}
-        onChange={setContent}
-        modules={modules}
-        placeholder="Please write content"
-      />
+          <CustomReactQuill
+            theme="snow"
+            value={content}
+            onChange={setContent}
+            modules={modules}
+            placeholder="Please write content"
+          />
 
-      <SubmitButtonWrapper>
-        <SubmitButton onClick={onClickSubmit}>Submit</SubmitButton>
-      </SubmitButtonWrapper>
+          <SubmitButtonWrapper>
+            <SubmitButton onClick={onClickSubmit}>Submit</SubmitButton>
+          </SubmitButtonWrapper>
+        </>
+      )}
     </WritingPostPageContainer>
   );
 }

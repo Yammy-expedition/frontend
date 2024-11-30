@@ -128,7 +128,8 @@ html {
   font-size: 62.5%;
 }
 
-#login-modal {
+#login-modal,
+#report-modal {
   position: absolute;
   top: 0;
   z-index: 20;
