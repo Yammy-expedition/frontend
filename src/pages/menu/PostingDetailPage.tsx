@@ -93,18 +93,19 @@ export default function PostingDetailPage() {
       ></PostInfoTitle>
 
       {!editting && <LineGradient></LineGradient>}
-
-      <ImgBox>
-        {state.boardType === 'market' && (
-          <>
-            {images.map((item, index) => (
-              <div key={index}>
-                <img src={item.image} />
-              </div>
-            ))}
-          </>
-        )}
-      </ImgBox>
+      <ImgBoxWrapper>
+        <ImgBox>
+          {state.boardType === 'market' && (
+            <>
+              {images.map((item, index) => (
+                <div key={index}>
+                  <img src={item.image} />
+                </div>
+              ))}
+            </>
+          )}
+        </ImgBox>
+      </ImgBoxWrapper>
 
       <PostContent
         posting={posting}
@@ -145,6 +146,7 @@ const PostingDetailContainer = styled.div`
   position: relative;
   width: 100%;
   padding: 5.5rem 4.5rem;
+  overflow: hidden;
 `;
 
 const PageNameBox = styled.div`
@@ -175,6 +177,8 @@ const LineGradient = styled.div`
   background-image: var(--line-gradient);
   transform: rotate(180deg);
 `;
+
+const ImgBoxWrapper = styled.div``;
 
 const ImgBox = styled.div`
   margin-top: 2rem;
