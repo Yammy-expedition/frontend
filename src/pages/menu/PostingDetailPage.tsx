@@ -209,8 +209,8 @@ const ImgBox = styled.div`
     margin-bottom: 0.5rem;
     > img {
       object-fit: cover;
-      width: 12rem;
-      height: 12rem;
+      width: 20rem;
+      height: 20rem;
     }
   }
 `;
