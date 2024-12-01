@@ -15,6 +15,7 @@ export default function Hamburger({ setOpenHam }: HamburgerProps) {
 }
 
 const HamburgerWrapper = styled.div`
+  z-index: 5;
   position: relative;
   height: 0;
   width: 100%;
