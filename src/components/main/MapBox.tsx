@@ -4,6 +4,7 @@ import WorldMap from './WorldMap';
 import * as d3 from 'd3-geo';
 import { countries } from 'constants/countries';
 import Search from './Search';
+import { ReactComponent as WorldSVG } from '../../assets/icons/main/world.svg';
 
 export default function MapBox() {
   const [showUserList, setShowUserList] = useState<boolean>(false);
@@ -123,14 +124,14 @@ export default function MapBox() {
 
         const projection = d3
           .geoMercator()
-          .scale(100)
+          .scale(window.innerWidth / 11)
           .translate([svgRect.width / 2, svgRect.height / 2]);
         // 이 위에 150이랑 200 svgRect 비율로 따져서 바꾸기
         console.log(svgRect.width, svgRect.height);
 
         const projectionScaled = d3
           .geoMercator()
-          .scale(100)
+          .scale(window.innerWidth / 11)
           .translate([svgRect.width / 3, svgRect.height / 3]);
 
         if (countryData) {
@@ -204,6 +205,17 @@ export default function MapBox() {
 const MapContainer = styled.div`
   width: 100%;
   position: relative;
-  height: 0;
-  padding-top: calc(210 / 400 * 100%);
+  height: 80%;
+  padding-top: calc(200 / 400 * 100%);
+
+  > span {
+    pointer-events: none;
+    opacity: 0.3;
+
+    @media screen and (min-width: 768px) {
+      display: inline-block;
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
 `;

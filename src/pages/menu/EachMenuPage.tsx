@@ -109,7 +109,7 @@ export default function RestaurantsPage({ boardType }: RestaurantsPageProps) {
   };
 
   return (
-    <RestaurantsPageContainer>
+    <PageContainer>
       <PageNameBox>
         <p>{pageName}</p>
       </PageNameBox>
@@ -147,14 +147,18 @@ export default function RestaurantsPage({ boardType }: RestaurantsPageProps) {
         handlePrevGroup={handlePrevGroup}
         handlePageChange={handlePageChange}
       />
-    </RestaurantsPageContainer>
+    </PageContainer>
   );
 }
 
-const RestaurantsPageContainer = styled.div`
+const PageContainer = styled.div`
   position: relative;
   width: 100%;
-  padding: 6.5rem 4.5rem;
+  padding: 5rem 3rem;
+
+  @media screen and (min-width: 768px) {
+    padding: 6.5rem 4.5rem;
+  }
 `;
 
 const PageNameBox = styled.div`
@@ -162,7 +166,11 @@ const PageNameBox = styled.div`
     font-family: var(--sub-font);
     color: var(--primary-color);
     font-weight: 600;
-    font-size: 5rem;
+    font-size: 4rem;
+
+    @media screen and (min-width: 768px) {
+      font-size: 5rem;
+    }
   }
 `;
 

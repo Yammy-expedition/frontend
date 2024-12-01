@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
-import { ReactComponent as EyeSVG } from '../../assets/icons/menu/eye.svg';
-import { ReactComponent as MoreSVG } from '../../assets/icons/menu/more.svg';
+import { ReactComponent as EyeSVG } from '../../../assets/icons/menu/eye.svg';
+import { ReactComponent as MoreSVG } from '../../../assets/icons/menu/more.svg';
 import ReportModalPortal from 'components/portal/ReportModalPortal';
 import { deletePosting } from 'utils/menu/deletePosting';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,8 @@ interface PostInfoTitleProps {
   editting: boolean;
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
+  price: string;
+  setPrice: React.Dispatch<React.SetStateAction<string>>;
   setEditting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -21,6 +23,8 @@ export default function PostInfoTitle({
   editting,
   title,
   setTitle,
+  price,
+  setPrice,
   setEditting
 }: PostInfoTitleProps) {
   const [more, setMore] = useState<boolean>(false);
@@ -82,15 +86,42 @@ export default function PostInfoTitle({
         )}
       </PostTitle>
 
+      {editting ? (
+        <PriceSettingBox>
+          <span>Price</span>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="&#8361;"
+          />
+          <ExchangeBox>exchange</ExchangeBox>
+        </PriceSettingBox>
+      ) : (
+        <>
+          {posting.board_type === 'market' && (
+            <PriceSettingBox>
+              <span>&#8361;</span>
+              {Number(posting.price).toLocaleString('ko-KR')}
+
+              <ExchangeBox>exchange</ExchangeBox>
+            </PriceSettingBox>
+          )}
+        </>
+      )}
+
       {!editting && (
         <PostInfo>
           <div>
             <span>{posting.writer_nickname}</span>
             <span>{posting.created_at.split('T')[0]}</span>
-            <span>
-              <EyeSVG></EyeSVG> {posting.view_count}
-            </span>
+            {posting.board_type !== 'market' && (
+              <span>
+                <EyeSVG></EyeSVG> {posting.view_count}
+              </span>
+            )}
           </div>
+
           <MoreDiv ref={moreRef} onClick={() => setMore((prev) => !prev)}>
             <span style={{ cursor: 'pointer' }}>
               <MoreSVG></MoreSVG>
@@ -201,7 +232,7 @@ const PostHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: 6rem;
+  margin-top: 3rem;
 `;
 
 const PostTitle = styled.p`
@@ -341,4 +372,51 @@ const ReportButton = styled.button`
   font-size: 1.6rem;
   font-weight: 600;
   cursor: pointer;
+`;
+
+const PriceBox = styled.div`
+  > div {
+    color: #2b2b2b;
+    font-weight: 300;
+    font-size: 3rem;
+  }
+`;
+
+const ExchangeBox = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.84);
+  width: 10rem;
+  height: 3rem;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+`;
+
+const PriceSettingBox = styled.div`
+  display: flex;
+  margin-top: 1.75rem;
+  align-items: center;
+  font-size: 2.7rem;
+  gap: 1rem;
+  > span {
+    font-family: Inter;
+    margin-right: 1rem;
+  }
+
+  > input {
+    padding: 0.5rem;
+    width: 30%;
+    margin-right: 1rem;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;

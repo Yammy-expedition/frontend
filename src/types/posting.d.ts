@@ -6,11 +6,13 @@ export interface Posting {
   board_type: string;
   title: string;
   content: string;
-  images: File[];
   created_at: string;
   like_count: number;
   comments: Comment[];
   comment_count: number;
   view_count: number;
   is_mine: boolean;
+  status: string;
+  price: string;
+  images: { id: number; image: string; post: number }[];
 }

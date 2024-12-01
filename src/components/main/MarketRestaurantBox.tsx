@@ -112,27 +112,33 @@ export default function MarketRestaurantBox() {
 
 const MarketRestaurant = styled.div`
   display: flex;
-  justify-content: center;
-  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+
   width: 100%;
-  bottom: 0;
-  height: 25rem;
+  height: auto; /* 높이를 자식 요소에 따라 조정 */
+  padding: 0 3rem;
+
+  @media screen and (min-width: 768px) {
+    position: absolute;
+    bottom: 0;
+    flex-direction: row;
+    align-items: stretch;
+    margin: 0;
+  }
 `;
 
 const Restaurent = styled.div`
-  width: 48rem;
-  min-width: 23rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 0 2rem;
 `;
 
 const Market = styled.div`
-  width: 48rem;
-  min-width: 23rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 2rem 0 1rem;
 `;
 
 const SquareRestaurantPlus = styled.div`
@@ -205,8 +211,16 @@ const Title = styled.div`
   transition: 0.3s ease;
 
   width: 11rem;
+
+  @media screen and (min-width: 768px) {
+    width: 7rem;
+  }
+
+  @media screen and (min-width: 850px) {
+    width: 11rem;
+  }
   @media screen and (min-width: 1024px) {
-    width: 15rem;
+    width: 14rem;
   }
 
   @media screen and (min-width: 1280px) {
@@ -219,7 +233,9 @@ const Title = styled.div`
   }
 `;
 
-const CreatedAt = styled.div``;
+const CreatedAt = styled.div`
+  font-size: 1.1rem;
+`;
 
 const Circle = styled.div`
   width: 0.75rem;

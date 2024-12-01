@@ -19,7 +19,7 @@ export default function WorldMap({
   tooltipPosition
 }: WorldMapProps) {
   return (
-    <>
+    <span>
       <StyledWorldSVG ref={svgRef} style={{ transform }} />
       {hoveredCountry && tooltipPosition && (
         <Tooltip
@@ -28,7 +28,7 @@ export default function WorldMap({
           {hoveredCountry}
         </Tooltip>
       )}
-    </>
+    </span>
   );
 }
 
@@ -40,6 +40,7 @@ const StyledWorldSVG = styled(WorldSVG)`
   bottom: 0;
   right: 0;
   clip-path: inset(0);
+  width: 100%;
   height: 100%;
   padding: 3rem;
   transform-origin: center;

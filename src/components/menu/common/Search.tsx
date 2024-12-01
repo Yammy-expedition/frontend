@@ -65,6 +65,7 @@ export default function Search({
 const SearchContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   margin: 4rem 0 2rem 0;
   border-bottom: 1px solid var(--line-gradient);
   > div {
@@ -83,9 +84,11 @@ const SearchBox = styled.div`
 
 const SearchBar = styled.div`
   position: relative;
+
   > input {
-    width: 30rem;
+    width: 100%;
     height: 2.5rem;
+    padding-right: 3rem;
   }
 
   > button {

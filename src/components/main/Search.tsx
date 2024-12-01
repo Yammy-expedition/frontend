@@ -81,7 +81,7 @@ export default function Search({
 
   return (
     <SearchContainer>
-      {"Let's looking for friends in Sogang!"}
+      {"Let's look for friends in Sogang!"}
       <SearchBar
         showUserList={showUserList}
         selectedCountryName={selectedCountryName}
@@ -94,29 +94,61 @@ export default function Search({
 }
 
 const SearchContainer = styled.div`
+  margin-top: 2rem;
   position: absolute;
   top: 4rem;
-  right: 5rem;
-
+  right: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 2rem;
-  @media screen and (min-width: 1024px) {
-    font-size: 2.4rem;
-    top: 5rem;
-    right: 7.5rem;
+
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    margin-top: 0;
+    font-size: 2rem;
+    left: 0;
+    right: 0;
   }
+  @media screen and (min-width: 768px) {
+    margin-top: 0;
+    font-size: 2.4rem;
+    top: 4rem;
+    right: 1rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 0;
+    font-size: 2.4rem;
+    top: 4rem;
+    right: 1rem;
+  }
+
   font-weight: 600;
 
   > div {
+    width: 100%;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     margin-top: 1rem;
     > * {
-      margin-left: 0.5rem;
     }
 
     > select {
       padding: 0.5rem;
       border-radius: 0.5rem;
-      width: 13.3rem;
-      height: 3.5rem;
+      width: 11rem;
+      height: 3rem;
+      font-size: 1.1rem;
+
+      @media screen and (min-width: 768px) {
+        width: 14.3rem;
+        height: 3.5rem;
+        font-size: 1.6rem;
+      }
 
       @media screen and (min-width: 1024px) {
         width: 16rem;

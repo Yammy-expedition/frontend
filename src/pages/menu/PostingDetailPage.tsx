@@ -5,9 +5,9 @@ import { Posting } from 'types/posting';
 import { getPostingDetail } from 'utils/menu/getPostingDetail';
 import { postPostingViewCount } from 'utils/menu/postPostingViewCount';
 import { patchPosting } from 'utils/menu/patchPosting';
-import PostInfoTitle from './PostInfoTitle';
-import PostContent from './PostContent';
-import PostComment from './PostComment';
+import PostInfoTitle from 'components/menu/common/PostInfoTitle';
+import PostContent from 'components/menu/common/PostContent';
+import PostComment from 'components/menu/common/PostComment';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -17,7 +17,14 @@ export default function PostingDetailPage() {
     pageName: string;
   };
 
+  interface ImagesResponse {
+    id: number;
+    image: string;
+    post: number;
+  }
+
   const { postingId } = useParams();
+
   const [posting, setPosting] = useState<Posting>();
   const [comments, setComments] = useState<Posting['comments']>([]);
   const [like, setLike] = useState<boolean>(false);
@@ -26,21 +33,35 @@ export default function PostingDetailPage() {
   const [editting, setEditting] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+
   const [price, setPrice] = useState<string>('');
+  const [isOnSale, setIsOnSale] = useState<string>('');
+
+  const [bookmark, setBookmark] = useState<boolean>(false);
+  const [bookmarkCount, setBookmarkCount] = useState<number>(0);
 
   const [comment, setComment] = useState<string>('');
 
+  const [images, setImages] = useState<ImagesResponse[]>([]);
+
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
-      console.log(result);
       setComments(result.comments);
-      setLike(result.is_liked),
-        setLikeCount(result.like_count),
-        setTitle(result.title);
+      setLike(result.is_liked);
+      setLikeCount(result.like_count);
+      setTitle(result.title);
       setContent(result.content);
+      setIsOnSale(result.status);
+      setBookmark(result.is_bookmarked);
+      setPrice(result.price);
+      setImages(result.images);
     });
     postPostingViewCount(postingId);
   }, []);
+
+  useEffect(() => {
+    console.log(isOnSale);
+  }, [isOnSale]);
 
   const onClickSave = () => {
     patchPosting(postingId, title, content, price).then(() =>
@@ -57,15 +78,34 @@ export default function PostingDetailPage() {
         <p>{state.pageName}</p>
       </PageNameBox>
 
+      {state.boardType === 'market' && (
+        <SaleTag>{isOnSale === 'FOR_SALE' ? 'on sale' : 'sold out'}</SaleTag>
+      )}
+
       <PostInfoTitle
         posting={posting}
         editting={editting}
         title={title}
         setTitle={setTitle}
+        price={price}
+        setPrice={setPrice}
         setEditting={setEditting}
       ></PostInfoTitle>
 
       {!editting && <LineGradient></LineGradient>}
+      <ImgBoxWrapper>
+        <ImgBox>
+          {state.boardType === 'market' && (
+            <>
+              {images.map((item, index) => (
+                <div key={index}>
+                  <img src={item.image} />
+                </div>
+              ))}
+            </>
+          )}
+        </ImgBox>
+      </ImgBoxWrapper>
 
       <PostContent
         posting={posting}
@@ -76,19 +116,27 @@ export default function PostingDetailPage() {
         setLike={setLike}
         likeCount={likeCount}
         setLikeCount={setLikeCount}
+        bookmark={bookmark}
+        setBookmark={setBookmark}
+        bookmarkCount={bookmarkCount}
+        setBookmarkCount={setBookmarkCount}
         setEditting={setEditting}
         onClickSave={onClickSave}
       ></PostContent>
 
-      {!editting && <LineGradient></LineGradient>}
-      {!editting && (
-        <PostComment
-          posting={posting}
-          comments={comments}
-          comment={comment}
-          setComment={setComment}
-          setComments={setComments}
-        ></PostComment>
+      {state.boardType !== 'market' && (
+        <>
+          {!editting && <LineGradient></LineGradient>}
+          {!editting && (
+            <PostComment
+              posting={posting}
+              comments={comments}
+              comment={comment}
+              setComment={setComment}
+              setComments={setComments}
+            ></PostComment>
+          )}
+        </>
       )}
     </PostingDetailContainer>
   );
@@ -98,6 +146,7 @@ const PostingDetailContainer = styled.div`
   position: relative;
   width: 100%;
   padding: 5.5rem 4.5rem;
+  overflow: hidden;
 `;
 
 const PageNameBox = styled.div`
@@ -109,9 +158,59 @@ const PageNameBox = styled.div`
   }
 `;
 
+const SaleTag = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-color);
+  color: white;
+  width: 7rem;
+  height: 2rem;
+  font-size: 1.5rem;
+  border-radius: 40rem;
+`;
+
 const LineGradient = styled.div`
-  margin-top: 5rem;
+  margin-top: 3rem;
   height: 0.1rem;
   background-image: var(--line-gradient);
   transform: rotate(180deg);
+`;
+
+const ImgBoxWrapper = styled.div``;
+
+const ImgBox = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    margin: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: gray;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(178, 31, 124, 0.7);
+  }
+  > div {
+    margin-bottom: 0.5rem;
+    > img {
+      object-fit: cover;
+      width: 20rem;
+      height: 20rem;
+    }
+  }
 `;

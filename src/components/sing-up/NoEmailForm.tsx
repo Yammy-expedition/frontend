@@ -124,7 +124,9 @@ export default function NoEmailForm({
             {imgFile === null ? (
               <>
                 <label htmlFor="file">
-                  <span style={{ fontSize: '1.4rem' }}>+ Attach File</span>
+                  <span style={{ fontSize: '1.4rem', cursor: 'pointer' }}>
+                    + Attach File
+                  </span>
                   <br />
                   <span style={{ color: 'blue' }}>
                     Image files such as jpeg, gif, png
@@ -222,6 +224,7 @@ const ImgBox = styled.div`
   justify-content: center;
   align-items: center;
   margin: 3rem 0;
+
   > img {
     width: 20rem;
     object-fit: cover;
