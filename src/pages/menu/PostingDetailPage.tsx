@@ -8,6 +8,8 @@ import { patchPosting } from 'utils/menu/patchPosting';
 import PostInfoTitle from 'components/menu/common/PostInfoTitle';
 import PostContent from 'components/menu/common/PostContent';
 import PostComment from 'components/menu/common/PostComment';
+import MarketImagePortal from 'components/portal/MarketImagePortal';
+import MarketImageModal from 'components/menu/market/MarketImageModal';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -44,6 +46,10 @@ export default function PostingDetailPage() {
 
   const [images, setImages] = useState<ImagesResponse[]>([]);
 
+  const [openMarketImgageModal, setOpenMarketImgageModal] =
+    useState<boolean>(false);
+  const [openImageIndex, setOpenImageIndex] = useState<number>(0);
+
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
       setComments(result.comments);
@@ -60,6 +66,18 @@ export default function PostingDetailPage() {
   }, []);
 
   useEffect(() => {
+    if (openMarketImgageModal) {
+      document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+    } else {
+      document.body.style.overflow = 'auto'; // 스크롤 활성화
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'; // 컴포넌트 언마운트 시 스크롤 복원
+    };
+  }, [openMarketImgageModal]);
+
+  useEffect(() => {
     console.log(isOnSale);
   }, [isOnSale]);
 
@@ -67,6 +85,11 @@ export default function PostingDetailPage() {
     patchPosting(postingId, title, content, price).then(() =>
       window.location.reload()
     );
+  };
+
+  const onClickUniqueImage = (index: number) => {
+    setOpenImageIndex(index);
+    setOpenMarketImgageModal(true);
   };
 
   if (!posting) {
@@ -98,8 +121,8 @@ export default function PostingDetailPage() {
           {state.boardType === 'market' && (
             <>
               {images.map((item, index) => (
-                <div key={index}>
-                  <img src={item.image} />
+                <div key={index} onClick={() => onClickUniqueImage(index)}>
+                  <img src={item.image} alt="stuff-image" />
                 </div>
               ))}
             </>
@@ -137,6 +160,16 @@ export default function PostingDetailPage() {
             ></PostComment>
           )}
         </>
+      )}
+
+      {!editting && openMarketImgageModal && (
+        <MarketImagePortal>
+          <MarketImageModal
+            images={images}
+            openImageIndex={openImageIndex}
+            setOpenMarketImgageModal={setOpenMarketImgageModal}
+          ></MarketImageModal>
+        </MarketImagePortal>
       )}
     </PostingDetailContainer>
   );

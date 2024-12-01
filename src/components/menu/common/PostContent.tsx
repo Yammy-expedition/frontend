@@ -1,5 +1,5 @@
 import { modules } from 'constants/quillModules';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactQuill from 'react-quill-new';
 import styled from 'styled-components';
 import { Posting } from 'types/posting';
@@ -8,6 +8,8 @@ import { ReactComponent as LikeSVG } from '../../../assets/icons/menu/like.svg';
 import { ReactComponent as BookmarkSVG } from '../../../assets/icons/menu/bookmark.svg';
 import '../../../../node_modules/react-quill-new/dist/quill.snow.css';
 import { postBookmark } from 'utils/menu/postBookmark';
+import MarketImagePortal from 'components/portal/MarketImagePortal';
+import MarketImageModal from '../market/MarketImageModal';
 
 interface PostContentProps {
   posting: Posting;

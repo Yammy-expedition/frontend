@@ -30,7 +30,8 @@ export default function WritingPostPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(imgFiles.filter((item) => item != null));
+    console.log(imgFiles);
+    console.log(previews);
   }, [imgFiles]);
 
   async function compressAndConvertToDataURL(file: File): Promise<string> {
@@ -152,14 +153,32 @@ export default function WritingPostPage() {
     index: number
   ) => {
     const file = event.target.files?.[0];
+
     if (file) {
       onSaveImage(index, file);
+      console.log(index, file);
+      event.target.value = '';
     }
   };
 
   const addNewImageSlot = () => {
     setImgFiles((prevFiles) => [...prevFiles, null]);
     setPreviews((prevPreviews) => [...prevPreviews, '']);
+  };
+
+  const handleDeleteImage = (index: number) => {
+    // 이미지 삭제 로직
+    setImgFiles((prevFiles) => {
+      const updatedFiles = [...prevFiles];
+      updatedFiles[index] = null; // 해당 인덱스의 파일을 삭제
+      return updatedFiles;
+    });
+
+    setPreviews((prevPreviews) => {
+      const updatedPreviews = [...prevPreviews];
+      updatedPreviews[index] = ''; // 해당 인덱스의 미리보기 제거
+      return updatedPreviews;
+    });
   };
 
   return (
@@ -204,7 +223,9 @@ export default function WritingPostPage() {
                 {previews.map((preview, index) => (
                   <div key={index}>
                     {preview ? (
-                      <img src={preview} alt={`preview-${index}`} />
+                      <figure onClick={() => handleDeleteImage(index)}>
+                        <img src={preview} alt={`preview-${index}`} />
+                      </figure>
                     ) : (
                       <label htmlFor={`file-${index}`}>
                         <EachImage>+</EachImage>
@@ -249,6 +270,7 @@ const WritingPostPageContainer = styled.div`
   position: relative;
   width: 100%;
   padding: 6.5rem 4.5rem;
+  overflow: hidden;
 `;
 
 const PageNameBox = styled.div`
@@ -396,10 +418,47 @@ const ImgBox = styled.div`
   }
 
   > div {
-    > img {
-      object-fit: cover;
-      width: 12rem;
-      height: 12rem;
+    position: relative;
+    > figure {
+      img {
+        object-fit: cover;
+        width: 12rem;
+        height: 12rem;
+      }
+
+      &:hover img {
+        filter: brightness(0.7); /* 이미지만 흐려짐 */
+      }
+
+      &::after {
+        content: 'X'; /* 표시할 텍스트 */
+        color: white;
+        font-size: 2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.6); /* 반투명 배경 */
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0; /* 기본 숨김 */
+        transition: opacity 0.3s ease; /* 부드러운 전환 효과 */
+        z-index: 1; /* X 버튼이 이미지 위에 오도록 설정 */
+      }
+
+      /* 호버 시 X 표시 나타나기 */
+      &:hover::after {
+        opacity: 1;
+      }
+
+      /* X 버튼에 흐림 효과가 적용되지 않도록 */
+      &:hover::after {
+        filter: none; /* X 버튼은 흐려지지 않음 */
+      }
     }
   }
 `;
