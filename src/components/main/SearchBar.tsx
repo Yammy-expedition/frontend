@@ -1,9 +1,10 @@
 import { countries } from 'constants/countries';
 import { majors } from 'constants/majors';
-import { peopleData } from 'constants/peopleMockData';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import EachUserBox from './EachUserBox';
+import { User } from 'types/user';
+import Loading from 'components/common/Loading';
 
 interface SearchBarProps {
   showUserList: boolean;
@@ -11,6 +12,11 @@ interface SearchBarProps {
   setSelectedCountryName: React.Dispatch<React.SetStateAction<string | null>>;
   onClickSearchButton: () => void;
   setShowUserList: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedMajorName: string | null;
+  setSelectedMajorName: React.Dispatch<React.SetStateAction<string | null>>;
+  userList: User[];
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SearchBar({
@@ -18,18 +24,13 @@ export default function SearchBar({
   showUserList,
   selectedCountryName,
   setSelectedCountryName,
-  onClickSearchButton
+  onClickSearchButton,
+  selectedMajorName,
+  setSelectedMajorName,
+  userList,
+  loading,
+  setLoading
 }: SearchBarProps) {
-  const [selectedMajorName, setSelectedMajorName] = useState<string | null>(
-    null
-  );
-
-  const filteredUser = peopleData.filter(
-    (item) =>
-      item.nationality === selectedCountryName &&
-      item.major === selectedMajorName
-  );
-
   const onChangeSelectedMajorName = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -71,15 +72,22 @@ export default function SearchBar({
         <SearchButton onClick={onClickSearchButton}>Search</SearchButton>
       </div>
 
+      {}
       <div>
         {showUserList && (
-          <SearchResult $isEmpty={filteredUser.length === 0}>
-            {filteredUser.length === 0 ? (
-              <div>No User Exists OTL</div>
+          <SearchResult $isEmpty={userList.length === 0}>
+            {loading ? (
+              <Loading></Loading>
             ) : (
-              filteredUser.map((item, index) => {
-                return <EachUserBox key={index} user={item}></EachUserBox>;
-              })
+              <>
+                {userList.length === 0 ? (
+                  <div>No User Exists OTL</div>
+                ) : (
+                  userList.map((item, index) => {
+                    return <EachUserBox key={index} user={item}></EachUserBox>;
+                  })
+                )}
+              </>
             )}
           </SearchResult>
         )}
@@ -118,7 +126,7 @@ const SearchResult = styled.div<{ $isEmpty: boolean }>`
     width: 100%;
   }
   overflow: auto;
-  border: 2.5px solid green;
+  border: 2.5px solid var(--primary-color);
   display: flex;
   flex-direction: column;
   gap: 3.5rem;

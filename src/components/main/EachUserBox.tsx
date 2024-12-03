@@ -20,7 +20,7 @@ export default function EachUserBox({ user }: EachUserBox) {
       <div>
         <Nickname>{user.nickname}</Nickname>
         <Languages>languages {user.languages}</Languages>
-        <CreatedAt>created at {user.created_at}</CreatedAt>
+        <CreatedAt>created at {user.created_at.split('T')[0]}</CreatedAt>
       </div>
     </EachUserBoxContainer>
   );
@@ -70,5 +70,5 @@ const ProfileImage = styled.div`
   }
   border-radius: 5rem;
   border: 2.5px solid transparent;
-  background: linear-gradient(to top, black, green) border-box;
+  background: linear-gradient(to top, black, var(--primary-color)) border-box;
 `;
