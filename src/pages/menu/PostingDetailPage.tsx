@@ -8,6 +8,8 @@ import { patchPosting } from 'utils/menu/patchPosting';
 import PostInfoTitle from 'components/menu/common/PostInfoTitle';
 import PostContent from 'components/menu/common/PostContent';
 import PostComment from 'components/menu/common/PostComment';
+import MarketImagePortal from 'components/portal/MarketImagePortal';
+import MarketImageModal from 'components/menu/market/MarketImageModal';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -44,6 +46,13 @@ export default function PostingDetailPage() {
 
   const [images, setImages] = useState<ImagesResponse[]>([]);
 
+  const [openMarketImgageModal, setOpenMarketImgageModal] =
+    useState<boolean>(false);
+  const [openImageIndex, setOpenImageIndex] = useState<number>(0);
+
+  const [imgFiles, setImgFiles] = useState<(File | null)[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
       setComments(result.comments);
@@ -59,6 +68,20 @@ export default function PostingDetailPage() {
     postPostingViewCount(postingId);
   }, []);
 
+  console.log(imgFiles);
+
+  useEffect(() => {
+    if (openMarketImgageModal) {
+      document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+    } else {
+      document.body.style.overflow = 'auto'; // 스크롤 활성화
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'; // 컴포넌트 언마운트 시 스크롤 복원
+    };
+  }, [openMarketImgageModal]);
+
   useEffect(() => {
     console.log(isOnSale);
   }, [isOnSale]);
@@ -67,6 +90,20 @@ export default function PostingDetailPage() {
     patchPosting(postingId, title, content, price).then(() =>
       window.location.reload()
     );
+  };
+
+  const handleDeleteImage = (index: number) => {
+    // 선택한 이미지를 배열에서 제거
+    setImages((prevImages) =>
+      prevImages.filter((_, imgIndex) => imgIndex !== index)
+    );
+  };
+
+  const onClickUniqueImage = (index: number) => {
+    if (!editting) {
+      setOpenImageIndex(index);
+      setOpenMarketImgageModal(true);
+    }
   };
 
   if (!posting) {
@@ -98,8 +135,10 @@ export default function PostingDetailPage() {
           {state.boardType === 'market' && (
             <>
               {images.map((item, index) => (
-                <div key={index}>
-                  <img src={item.image} />
+                <div key={index} onClick={() => onClickUniqueImage(index)}>
+                  <figure>
+                    <img src={item.image} alt="stuff-image" />
+                  </figure>
                 </div>
               ))}
             </>
@@ -137,6 +176,16 @@ export default function PostingDetailPage() {
             ></PostComment>
           )}
         </>
+      )}
+
+      {!editting && openMarketImgageModal && (
+        <MarketImagePortal>
+          <MarketImageModal
+            images={images}
+            openImageIndex={openImageIndex}
+            setOpenMarketImgageModal={setOpenMarketImgageModal}
+          ></MarketImageModal>
+        </MarketImagePortal>
       )}
     </PostingDetailContainer>
   );
@@ -206,11 +255,13 @@ const ImgBox = styled.div`
     background: rgba(178, 31, 124, 0.7);
   }
   > div {
-    margin-bottom: 0.5rem;
-    > img {
-      object-fit: cover;
-      width: 20rem;
-      height: 20rem;
+    position: relative;
+    > figure {
+      img {
+        object-fit: cover;
+        width: 20rem;
+        height: 20rem;
+      }
     }
   }
 `;

@@ -68,28 +68,39 @@ export default function SelfCertification({
 const SelfCertificationContainer = styled.div`
   > p {
     font-family: var(--main-font);
-    font-size: 2rem;
+    font-size: 1.4rem;
     margin: 1rem 0;
+
+    @media screen and (min-width: 768px) {
+      font-size: 2rem;
+    }
   }
 `;
 
 const Form = styled.div`
   white-space: pre-wrap;
-  width: 50rem;
-  height: 30rem;
+  width: 30rem;
+  height: 35rem;
+
   background: white;
   overflow-y: auto;
   padding: 2rem;
-  font-size: 2rem;
+  font-size: 1.4rem;
   margin: 1rem 0;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align:center
+  text-align: center;
 
   border: 1px solid var(--border-color);
   color: var(--secondary-text);
+
+  @media screen and (min-width: 768px) {
+    width: 50rem;
+    height: 30rem;
+    font-size: 2rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -99,9 +110,9 @@ const ButtonContainer = styled.div`
   margin: 3rem 0;
 
   > button {
-    width: 10rem;
-    height: 5rem;
-    font-size: 2rem;
+    width: 8rem;
+    height: 4rem;
+    font-size: 1.6rem;
 
     border-radius: 0.5rem;
     border: 1px solid var(--border-color);
@@ -116,5 +127,11 @@ const ButtonContainer = styled.div`
     }
 
     transition: opacity 0.3s ease;
+
+    @media screen and (min-width: 768px) {
+      width: 10rem;
+      height: 5rem;
+      font-size: 2rem;
+    }
   }
 `;

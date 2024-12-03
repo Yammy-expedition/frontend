@@ -4,7 +4,7 @@ import WorldMap from './WorldMap';
 import * as d3 from 'd3-geo';
 import { countries } from 'constants/countries';
 import Search from './Search';
-import { ReactComponent as WorldSVG } from '../../assets/icons/main/world.svg';
+import { User } from 'types/user';
 
 export default function MapBox() {
   const [showUserList, setShowUserList] = useState<boolean>(false);
@@ -24,6 +24,9 @@ export default function MapBox() {
   const [selectedCountryName, setSelectedCountryName] = useState<string | null>(
     null
   );
+  const [userList, setUserList] = useState<User[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const mapBoxRef = useRef<HTMLDivElement>(null);
@@ -53,7 +56,6 @@ export default function MapBox() {
   };
 
   const onSelectedCountry: EventListener = (event) => {
-    //event.stopPropagation();
     console.log(window.innerWidth, window.innerHeight);
     const target = event.currentTarget as SVGPathElement;
     const countryName = target.getAttribute('title');
@@ -87,6 +89,10 @@ export default function MapBox() {
       });
     }
   };
+
+  useEffect(() => {
+    console.log(userList);
+  }, [userList]);
 
   const handleMapBoxClick: React.MouseEventHandler<HTMLDivElement> = (
     event
@@ -194,9 +200,12 @@ export default function MapBox() {
         selectedCountryName={selectedCountryName}
         setSelectedCountryName={setSelectedCountryName}
         showUserList={showUserList}
-        setTransform={setTransform}
         setSelectedCountry={setSelectedCountry}
         setShowUserList={setShowUserList}
+        userList={userList}
+        setUserList={setUserList}
+        loading={loading}
+        setLoading={setLoading}
       ></Search>
     </MapContainer>
   );

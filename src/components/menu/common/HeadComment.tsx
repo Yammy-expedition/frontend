@@ -135,7 +135,7 @@ const ProfileBox = styled.div`
 
     border-radius: 5rem;
     border: 1.5px solid transparent;
-    background: linear-gradient(to top, black, green) border-box;
+    background: linear-gradient(to top, black, var(--primary-color)) border-box;
   }
 `;
 

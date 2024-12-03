@@ -120,6 +120,10 @@ const MarketRestaurant = styled.div`
   height: auto; /* 높이를 자식 요소에 따라 조정 */
   padding: 0 3rem;
 
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin-top: 15rem;
+  }
+
   @media screen and (min-width: 768px) {
     position: absolute;
     bottom: 0;

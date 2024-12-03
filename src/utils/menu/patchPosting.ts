@@ -4,12 +4,19 @@ export const patchPosting = async (
   postingId: string | undefined,
   title: string,
   content: string,
-  price: string
+  price: string,
+  imgFiles?: File[]
 ) => {
   const dataToSend = new FormData();
   dataToSend.append('title', title);
   dataToSend.append('content', content);
   dataToSend.append('price', price);
+  if (imgFiles) {
+    const blobImgFiles = imgFiles.map((imgFile) => {
+      return new Blob([imgFile], { type: imgFile.type });
+    });
+    blobImgFiles.forEach((blob) => dataToSend.append('images', blob));
+  }
 
   const headers = {
     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

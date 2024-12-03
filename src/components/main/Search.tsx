@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import { countries } from 'constants/countries';
 import * as d3 from 'd3-geo';
 import SearchBar from './SearchBar';
+import { useEffect, useState } from 'react';
+import { User } from 'types/user';
+import { getUserList } from 'utils/main/getUserList';
+import { majors } from 'constants/majors';
 
 interface SearchBarProps {
   beforeSelectedCountryRef: React.MutableRefObject<SVGPathElement | null>;
@@ -10,11 +14,14 @@ interface SearchBarProps {
   setSelectedCountryName: React.Dispatch<React.SetStateAction<string | null>>;
   svgRef: React.RefObject<SVGSVGElement>;
   mapBoxRef: React.RefObject<HTMLDivElement>;
-  setTransform: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCountry: React.Dispatch<
     React.SetStateAction<SVGPathElement | null>
   >;
   setShowUserList: React.Dispatch<React.SetStateAction<boolean>>;
+  userList: User[];
+  setUserList: React.Dispatch<React.SetStateAction<User[]>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Search({
@@ -23,59 +30,53 @@ export default function Search({
   setSelectedCountryName,
   svgRef,
   mapBoxRef,
-  setTransform,
   setSelectedCountry,
   showUserList,
-  setShowUserList
+  setShowUserList,
+  userList,
+  setUserList,
+  loading,
+  setLoading
 }: SearchBarProps) {
+  const [selectedMajorName, setSelectedMajorName] = useState<string | null>(
+    null
+  );
+
+  useEffect(() => {
+    setUserList([]);
+  }, [selectedCountryName, selectedMajorName]);
+
   const onClickSearchButton = () => {
-    if (!selectedCountryName) return;
     setShowUserList(true);
+
+    const nationalityArr = countries.filter(
+      (country) => country.name === (selectedCountryName as string)
+    );
+
+    const majorArr = majors.filter(
+      (major) => major.name === (selectedMajorName as string)
+    );
+
+    const nationality =
+      nationalityArr.length === 0 ? '' : nationalityArr[0].code;
+    const major = majorArr.length === 0 ? '' : majorArr[0].code;
+
+    getUserList(setLoading, nationality, major).then((result) =>
+      setUserList(result)
+    );
+
     if (mapBoxRef.current && svgRef.current) {
-      // const mapBoxRect = mapBoxRef.current.getBoundingClientRect();
-      // const svgRect = svgRef.current.getBoundingClientRect();
-      // const projection = d3
-      //   .geoMercator()
-      //   .scale(100)
-      //   .translate([svgRect.width / 2 + 150, svgRect.height / 2 + 200]);
-
-      // const projectionScaled = d3
-      //   .geoMercator()
-      //   .scale(100)
-      //   .translate([svgRect.width / 2, (svgRect.height * 1.1) / 2]);
-
-      // const countryData = countries.find(
-      //   (country) => country.name === selectedCountryName
-      // );
-
       const countryPath = svgRef.current.querySelector(
         `.country[title="${selectedCountryName}"]`
       ) as SVGPathElement;
 
       if (countryPath) {
-        console.log(countryPath);
         countryPath.style.fill = 'orange';
         setSelectedCountry((prev) => {
           beforeSelectedCountryRef.current = prev;
           return countryPath;
         });
       }
-
-      // if (countryData) {
-      //   const projectedCoordinates =
-      //     beforeSelectedCountryRef.current === null
-      //       ? projection([countryData.longitude, countryData.latitude])
-      //       : projectionScaled([countryData.longitude, countryData.latitude]);
-      //   console.log(projectedCoordinates);
-      //   console.log(beforeSelectedCountryRef.current);
-
-      //   if (projectedCoordinates) {
-      //     const [x, y] = projectedCoordinates;
-      //     const translateX = mapBoxRect.width / 2 - x;
-      //     const translateY = mapBoxRect.height / 2 - y;
-      //     setTransform(`scale(1) translate(${translateX}px, ${translateY}px)`);
-      //   }
-      // }
     }
   };
 
@@ -88,6 +89,11 @@ export default function Search({
         setSelectedCountryName={setSelectedCountryName}
         onClickSearchButton={onClickSearchButton}
         setShowUserList={setShowUserList}
+        selectedMajorName={selectedMajorName}
+        setSelectedMajorName={setSelectedMajorName}
+        userList={userList}
+        loading={loading}
+        setLoading={setLoading}
       />
     </SearchContainer>
   );

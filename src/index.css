@@ -130,7 +130,8 @@ html {
 }
 
 #login-modal,
-#report-modal {
+#report-modal,
+#market-image-modal {
   position: absolute;
   top: 0;
   z-index: 20;

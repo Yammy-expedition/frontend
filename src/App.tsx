@@ -48,18 +48,20 @@ function App() {
 
   return (
     <AppContainer className="App">
-      <div>
-        <HamburgerMenuSVGWrapper onClick={() => setOpenHam((prev) => !prev)}>
-          <HamburgerMenuSVG />
-        </HamburgerMenuSVGWrapper>
-        {location.pathname !== '/admin' && location.pathname !== '/sign-up' && (
+      {location.pathname !== '/admin' && location.pathname !== '/sign-up' && (
+        <div className="Hamburger">
+          <HamburgerMenuSVGWrapper onClick={() => setOpenHam((prev) => !prev)}>
+            <HamburgerMenuSVG />
+          </HamburgerMenuSVGWrapper>
+
           <SideBar
             openHam={openHam}
             setOpenHam={setOpenHam}
             sideBarRef={sideBarRef}
           />
-        )}
-      </div>
+        </div>
+      )}
+
       <Router />
     </AppContainer>
   );
@@ -68,6 +70,7 @@ function App() {
 export default App;
 
 const AppContainer = styled.div`
+  overflow: hidden;
   position: relative;
   display: flex;
   width: 100%;

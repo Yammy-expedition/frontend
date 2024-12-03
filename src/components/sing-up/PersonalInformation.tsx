@@ -319,12 +319,16 @@ const Form = styled.div`
   flex-direction: column;
   gap: 2rem;
   white-space: pre-wrap;
-  width: 50rem;
+  width: 30rem;
   background: white;
   overflow-y: auto;
   padding: 2rem;
   font-size: 1.25rem;
   margin: 1rem 0;
+
+  @media screen and (min-width: 768px) {
+    width: 50rem;
+  }
 
   border: 1px solid var(--border-color);
   margin-bottom: 5rem;
@@ -341,9 +345,17 @@ const PeriodOfStayInKoreaBox = styled.div`
   }
 `;
 
-const MajorBox = styled.div``;
+const MajorBox = styled.div`
+  > select {
+    width: 20rem;
+  }
+`;
 
-const NationalityBox = styled.div``;
+const NationalityBox = styled.div`
+  > select {
+    width: 20rem;
+  }
+`;
 
 const SexBirthBox = styled.div`
   display: flex;
@@ -355,12 +367,16 @@ const LanguageBox = styled.div``;
 const IntroduceBox = styled.div`
   > textarea {
     padding: 1rem;
-    width: 30rem;
+    width: 25rem;
     height: 20rem;
     white-space: pre-wrap;
     overflow-y: auto;
     resize: none;
     font-family: var(--main-font);
+
+    @media screen and (min-width: 768px) {
+      width: 30rem;
+    }
   }
 `;
 
