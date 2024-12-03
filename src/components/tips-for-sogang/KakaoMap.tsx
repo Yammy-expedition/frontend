@@ -33,8 +33,12 @@ export type BuildsDataType = {
   }[];
 };
 
-export default function KakaoMap() {
-  const [modalOpen, setModalOpen] = useState(false);
+interface KakaoMapProps {
+  modalOpen: boolean;
+  setModalOpen: (value: boolean) => void;
+}
+
+export default function KakaoMap({ modalOpen, setModalOpen }: KakaoMapProps) {
   const [initLatLon, setInitLatLon] = useState({
     lat: 37.551086,
     lon: 126.940983
@@ -80,6 +84,7 @@ export default function KakaoMap() {
 
         // 마커 이미지 관련 설정
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
+        map.jump(mapOption.center, 3, { animate: true });
         const control = new window.kakao.maps.ZoomControl();
         map.addControl(control, window.kakao.maps.ControlPosition.BOTTOMLEFT);
         const markerImageUrl = 'https://i.imgur.com/MSdL2Dv.png',
