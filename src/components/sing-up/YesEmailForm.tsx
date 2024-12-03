@@ -93,45 +93,87 @@ const CertifyBox = styled.div`
   flex-direction: column;
   gap: 4rem;
   padding: 2rem;
-  width: 50rem;
-  height: 30rem;
+  width: 30rem;
+  height: 35rem;
   background: white;
+
+  @media screen and (min-width: 768px) {
+    width: 50rem;
+    height: 30rem;
+  }
 `;
 
 const EmailContainer = styled.div`
   > p {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.6rem;
   }
 
   > input {
-    padding: 0.5rem;
+    padding: 0.4rem;
   }
 
   > span {
-    font-size: 1.2rem;
-    margin-right: 2rem;
+    font-size: 1rem;
+    margin-right: 1.6rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    > p {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    > input {
+      padding: 0.5rem;
+    }
+
+    > span {
+      font-size: 1.2rem;
+      margin-right: 2rem;
+    }
   }
 `;
 
 const CertifyCodeContainer = styled.div<{ $certified: boolean }>`
   > p {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.6rem;
   }
 
   > input {
-    margin-right: 2rem;
-    padding: 0.5rem;
+    margin-right: 1.6rem;
+    padding: 0.4rem;
   }
 
   > button {
-    margin-right: 2rem;
+    margin-right: 1.6rem;
   }
 
   > span {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: ${(props) => (props.$certified ? 'blue' : 'red')};
+  }
+
+  @media screen and (min-width: 768px) {
+    > p {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    > input {
+      margin-right: 2rem;
+      padding: 0.5rem;
+    }
+
+    > button {
+      margin-right: 2rem;
+    }
+
+    > span {
+      font-size: 1.2rem;
+      color: ${(props) => (props.$certified ? 'blue' : 'red')};
+    }
   }
 `;
 
@@ -142,13 +184,19 @@ const ButtonBox = styled.div`
 `;
 
 const NextButton = styled.button<{ $certified: boolean }>`
-  width: 10rem;
-  height: 5rem;
-  font-size: 2rem;
+  width: 8rem;
+  height: 4rem;
+  font-size: 1.6rem;
   background: ${(props) =>
     props.$certified ? 'var(--vertical-gradient)' : ''};
   color: ${(props) => (props.$certified ? 'white' : '')};
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
   cursor: ${(props) => (props.$certified ? 'pointer' : '')};
+
+  @media screen and (min-width: 768px) {
+    width: 10rem;
+    height: 5rem;
+    font-size: 2rem;
+  }
 `;

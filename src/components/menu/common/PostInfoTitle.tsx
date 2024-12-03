@@ -86,7 +86,7 @@ export default function PostInfoTitle({
         )}
       </PostTitle>
 
-      {editting ? (
+      {editting && posting.board_type === 'market' ? (
         <PriceSettingBox>
           <span>Price</span>
           <input

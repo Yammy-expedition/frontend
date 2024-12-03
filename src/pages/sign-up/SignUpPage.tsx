@@ -133,7 +133,11 @@ const SignUpPageContainer = styled.div`
   align-items: center;
 
   > p {
-    font-size: 5rem;
+    font-size: 3rem;
     margin: 4rem 0;
+
+    @media screen and (min-width: 768px) {
+      font-size: 5rem;
+    }
   }
 `;

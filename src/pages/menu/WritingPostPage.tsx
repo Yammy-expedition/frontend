@@ -422,8 +422,8 @@ const ImgBox = styled.div`
     > figure {
       img {
         object-fit: cover;
-        width: 12rem;
-        height: 12rem;
+        width: 20rem;
+        height: 20rem;
       }
 
       &:hover img {

@@ -21,7 +21,6 @@ export default function TermsAndConditions({
       <AgreeBox>
         <div>
           <input
-            style={{ zoom: 1.5 }}
             type="checkbox"
             onChange={() => setChecked((prev) => !prev)}
           ></input>
@@ -43,20 +42,30 @@ export default function TermsAndConditions({
 const TermsAndConditionsContainer = styled.div`
   > p {
     font-family: var(--main-font);
-    font-size: 2rem;
+    font-size: 1.4rem;
     margin: 1rem 0;
+
+    @media screen and (min-width: 768px) {
+      font-size: 2rem;
+    }
   }
 `;
 
 const Form = styled.div`
   white-space: pre-wrap;
-  width: 50rem;
-  height: 30rem;
+  width: 30rem;
+  height: 35rem;
+
   background: white;
   overflow-y: auto;
   padding: 2rem;
   font-size: 1.25rem;
   margin: 1rem 0;
+
+  @media screen and (min-width: 768px) {
+    width: 50rem;
+    height: 30rem;
+  }
 
   border: 1px solid var(--border-color);
   color: var(--secondary-text);
@@ -67,7 +76,11 @@ const AgreeBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3.5rem;
+  gap: 2rem;
+
+  @media screen and (min-width: 768px) {
+    gap: 3.5rem;
+  }
 
   > div {
     font-size: 2rem;
@@ -75,17 +88,41 @@ const AgreeBox = styled.div`
     justify-content: center;
     align-items: center;
     gap: 1rem;
+
+    > input {
+      zoom: 1.2;
+      @media screen and (min-width: 768px) {
+        zoom: 1.5;
+      }
+    }
+
+    > span {
+      font-size: 1.6rem;
+      @media screen and (min-width: 768px) {
+        font-size: 2rem;
+      }
+    }
   }
-  margin: 3rem 0;
+  margin: 2rem 0;
+
+  @media screen and (min-width: 768px) {
+    margin: 3rem 0;
+  }
 `;
 
 const NextButton = styled.button<{ $checked: boolean }>`
-  width: 10rem;
-  height: 5rem;
-  font-size: 2rem;
+  width: 8rem;
+  height: 4rem;
+  font-size: 1.6rem;
   background: ${(props) => (props.$checked ? 'var(--vertical-gradient)' : '')};
   color: ${(props) => (props.$checked ? 'white' : '')};
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
   cursor: ${(props) => (props.$checked ? 'pointer' : '')};
+
+  @media screen and (min-width: 768px) {
+    width: 10rem;
+    height: 5rem;
+    font-size: 2rem;
+  }
 `;

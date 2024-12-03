@@ -50,6 +50,9 @@ export default function PostingDetailPage() {
     useState<boolean>(false);
   const [openImageIndex, setOpenImageIndex] = useState<number>(0);
 
+  const [imgFiles, setImgFiles] = useState<(File | null)[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
       setComments(result.comments);
@@ -64,6 +67,8 @@ export default function PostingDetailPage() {
     });
     postPostingViewCount(postingId);
   }, []);
+
+  console.log(imgFiles);
 
   useEffect(() => {
     if (openMarketImgageModal) {
@@ -87,9 +92,18 @@ export default function PostingDetailPage() {
     );
   };
 
+  const handleDeleteImage = (index: number) => {
+    // 선택한 이미지를 배열에서 제거
+    setImages((prevImages) =>
+      prevImages.filter((_, imgIndex) => imgIndex !== index)
+    );
+  };
+
   const onClickUniqueImage = (index: number) => {
-    setOpenImageIndex(index);
-    setOpenMarketImgageModal(true);
+    if (!editting) {
+      setOpenImageIndex(index);
+      setOpenMarketImgageModal(true);
+    }
   };
 
   if (!posting) {
@@ -122,7 +136,9 @@ export default function PostingDetailPage() {
             <>
               {images.map((item, index) => (
                 <div key={index} onClick={() => onClickUniqueImage(index)}>
-                  <img src={item.image} alt="stuff-image" />
+                  <figure>
+                    <img src={item.image} alt="stuff-image" />
+                  </figure>
                 </div>
               ))}
             </>
@@ -239,11 +255,13 @@ const ImgBox = styled.div`
     background: rgba(178, 31, 124, 0.7);
   }
   > div {
-    margin-bottom: 0.5rem;
-    > img {
-      object-fit: cover;
-      width: 20rem;
-      height: 20rem;
+    position: relative;
+    > figure {
+      img {
+        object-fit: cover;
+        width: 20rem;
+        height: 20rem;
+      }
     }
   }
 `;
