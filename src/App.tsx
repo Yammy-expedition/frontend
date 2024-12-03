@@ -70,6 +70,7 @@ function App() {
 export default App;
 
 const AppContainer = styled.div`
+  overflow: hidden;
   position: relative;
   display: flex;
   width: 100%;
