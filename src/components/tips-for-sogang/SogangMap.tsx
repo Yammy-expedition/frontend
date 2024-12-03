@@ -4,29 +4,50 @@ import { ReactComponent as BookIcon } from '../../assets/icons/tips-for-sogang/b
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg';
 import styled from 'styled-components';
 import KakaoMap from './KakaoMap';
+import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function SogangMap() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleTabClick = (spot: string) => {
+    setSearchParams({ spot: spot });
+    setModalOpen(false);
+  };
   return (
     <Section>
       <LocationTab>
-        <li>
+        <li
+          style={{ backgroundColor: 'var(--primary-color)' }}
+          onClick={() => handleTabClick('all')}
+        >
+          All
+        </li>
+        <li
+          style={{ backgroundColor: '#9190C0' }}
+          onClick={() => handleTabClick('study')}
+        >
           <BookIcon /> studying spot
         </li>
-        <li>
+        {/* <li>
           <PrinterIcon />
           printer
-        </li>
-        <li>
+        </li> */}
+        <li
+          style={{ backgroundColor: '#28B5B1' }}
+          onClick={() => handleTabClick('cafe')}
+        >
           <CafeIcon />
           cafeteria
         </li>
-        <SearchBox className="search">
+        {/* <SearchBox className="search">
           <SearchIcon />
           <input type="text" placeholder="search..." />
-        </SearchBox>
+        </SearchBox> */}
       </LocationTab>
       <div className="mapWrapper">
-        <KakaoMap />
+        <KakaoMap modalOpen={modalOpen} setModalOpen={setModalOpen} />
       </div>
     </Section>
   );
@@ -38,6 +59,7 @@ const Section = styled.section`
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   .mapWrapper {
     width: 100%;
     height: 100%;
@@ -45,6 +67,10 @@ const Section = styled.section`
 `;
 
 const LocationTab = styled.ul`
+  z-index: 50;
+  position: absolute;
+  top: 10px;
+  left: 5px;
   display: flex;
   gap: 1rem;
   list-style: none;
@@ -53,7 +79,7 @@ const LocationTab = styled.ul`
   li {
     width: fit-content;
     background-color: var(--main-gray);
-    color: var(--main-text);
+    color: var(--hover-text);
     border-radius: 6.5rem;
     padding: 1.2rem 2rem;
     display: flex;
@@ -65,15 +91,19 @@ const LocationTab = styled.ul`
     transition:
       color 0.3s,
       background-color 0.3s;
+    svg path {
+      stroke: white;
+    }
     &.search {
       padding: 0.5rem 2rem;
     }
     &:not(.search):hover {
-      color: var(--hover-text);
+      filter: brightness(0.8);
+      /* color: var(--hover-text);
       background-color: var(--primary-color);
       svg path {
         stroke: white;
-      }
+      } */
     }
     svg {
       width: 1.8rem;

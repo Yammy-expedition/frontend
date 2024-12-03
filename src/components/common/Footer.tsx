@@ -28,7 +28,7 @@ export default function Footer() {
     <FooterContainer>
       {isLogin ? (
         <>
-          <div>chat</div>
+          <div onClick={() => navigate('/chat')}>chat</div>
           <p>|</p>
           <div onClick={() => navigate('/my-page')}>mypage</div>
           <p>|</p>

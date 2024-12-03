@@ -10,6 +10,7 @@ import EachMenuPage from 'pages/menu/EachMenuPage';
 import PostingDetailPage from 'pages/menu/PostingDetailPage';
 import WritingPostPage from 'pages/menu/WritingPostPage';
 import AuthRoute from 'AuthRoute';
+import ChatMain from 'pages/chat/ChatMain';
 
 function Router() {
   return (
@@ -18,6 +19,8 @@ function Router() {
       <Route path="/admin" element={<AdminPage />} />
 
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/chat/:id" />
+
       <Route path="/menu">
         <Route
           path="restaurant"
@@ -38,7 +41,6 @@ function Router() {
           element={<PostingDetailPage />}
         />
       </Route>
-
       <Route path="/my-page" element={<MyPage />}>
         <Route path=":category" element={<MyPage />} />
       </Route>
@@ -47,6 +49,7 @@ function Router() {
         <Route path=":category" element={<TipsForSogangPage />} />
       </Route>
       <Route path="/writing-post" element={<WritingPostPage />} />
+      <Route path="/chat" element={<ChatMain />} />
     </Routes>
   );
 }
