@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { ReactComponent as HeartIcon } from 'assets/icons/my-page/heart.svg';
 import { ReactComponent as EyeIcon } from 'assets/icons/my-page/eye.svg';
 import { useNavigate } from 'react-router-dom';
-import { changeSex } from 'utils/my-page/findInfos';
 
 interface MyDatasProps {
   selectedTab: 'postings' | 'comments' | 'bookmarks';
@@ -58,6 +57,8 @@ export default function MyDatas({
   myCategoryDatas
 }: MyDatasProps) {
   if (!myCategoryDatas) return null;
+  console.log(myCategoryDatas);
+
   return (
     <Wrapper>
       <PostWrapper>
@@ -111,10 +112,27 @@ const PostingsLi = (postingLists: Posting[]) => {
   );
 };
 const CommentsLi = (commentLists: Comment[]) => {
+  const navigate = useNavigate();
+  function changePageName(board_type: string) {
+    if (board_type === 'restaurant') return 'Restaurants';
+    else if (board_type === 'market') return 'Markets';
+    else if (board_type === 'general') return 'General-Discussion';
+  }
   return (
     <>
       {commentLists.map((comment, key: number) => (
-        <li key={key}>
+        <li
+          key={key}
+          onClick={() =>
+            navigate(`/posting-detail/${comment.id}`, {
+              state: {
+                board_type: comment.board_type,
+                // posting: comment,
+                pageName: changePageName(comment.board_type)
+              }
+            })
+          }
+        >
           <h3>{comment.board_type}</h3>
           <h1 style={{ fontSize: '14px', fontWeight: '300' }}>
             ㄴ {comment.content}

@@ -4,26 +4,32 @@ import { ReactComponent as BookIcon } from '../../assets/icons/tips-for-sogang/b
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg';
 import styled from 'styled-components';
 import KakaoMap from './KakaoMap';
+import { useSearchParams } from 'react-router-dom';
 
 export default function SogangMap() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const handleTabClick = (spot: string) => {
+    setSearchParams({ spot: spot });
+  };
   return (
     <Section>
       <LocationTab>
-        <li>
+        <li onClick={() => handleTabClick('all')}>All</li>
+        <li onClick={() => handleTabClick('study')}>
           <BookIcon /> studying spot
         </li>
-        <li>
+        {/* <li>
           <PrinterIcon />
           printer
-        </li>
-        <li>
+        </li> */}
+        <li onClick={() => handleTabClick('cafe')}>
           <CafeIcon />
           cafeteria
         </li>
-        <SearchBox className="search">
+        {/* <SearchBox className="search">
           <SearchIcon />
           <input type="text" placeholder="search..." />
-        </SearchBox>
+        </SearchBox> */}
       </LocationTab>
       <div className="mapWrapper">
         <KakaoMap />
@@ -38,6 +44,7 @@ const Section = styled.section`
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   .mapWrapper {
     width: 100%;
     height: 100%;
@@ -45,6 +52,10 @@ const Section = styled.section`
 `;
 
 const LocationTab = styled.ul`
+  z-index: 50;
+  position: absolute;
+  top: 10px;
+  left: 5px;
   display: flex;
   gap: 1rem;
   list-style: none;

@@ -12,8 +12,8 @@ export const openableBoxList = [
   {
     parent: 'Tips for Sogang Life',
     child: [
-      { name: 'Restaurants', link: '/tips-for-sogang?category=restaurants' },
-      { name: 'Sogang Map', link: '/tips-for-sogang?category=sogang-map' }
+      { name: 'Restaurants', link: '/tips-for-sogang/restaurants' },
+      { name: 'Sogang Map', link: '/tips-for-sogang/sogang-map' }
     ],
     ownLink: '/tips-for-sogang'
   },
