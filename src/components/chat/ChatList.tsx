@@ -62,17 +62,23 @@ export default function ChatList() {
         <>
           {chatList.map((chat, key) => (
             <li onClick={() => navigateToChatDetail(chat.other_user)} key={key}>
-              <figure>
-                <img
-                  src={`${process.env.REACT_APP_API_URL}${chat.other_user.profile_image}`}
-                  alt={chat.other_user.username}
-                />
-                {chat.unread_count > 0 && <span>{chat.unread_count}</span>}
-              </figure>
-              <div>
-                <h3>{chat.other_user.username}</h3>
-                <p>{chat.last_message}</p>
+              <div className="rightBox">
+                <figure>
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}${chat.other_user.profile_image}`}
+                    alt={chat.other_user.username}
+                  />
+                  {chat.unread_count > 0 && <span>{chat.unread_count}</span>}
+                </figure>
+                <div>
+                  <h3>{chat.other_user.username}</h3>
+                  <p>{chat.last_message}</p>
+                </div>
               </div>
+              <span>
+                {chat.last_message_date.split(' ')[1].split(':')[0]}:
+                {chat.last_message_date.split(' ')[1].split(':')[1]}
+              </span>
             </li>
           ))}
         </>
@@ -88,8 +94,10 @@ const ChatUL = styled.ul`
     cursor: pointer;
     padding: 2rem 2rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 2rem;
+    padding-right: 3rem;
     color: var(--secondary-text);
     border-bottom: 1px solid var(--border-color);
     figure {
@@ -97,11 +105,15 @@ const ChatUL = styled.ul`
       height: fit-content;
       position: relative;
       border-radius: 50%;
+      border: 2px solid var(--main-text);
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: var(--hover-text);
       img {
         width: 7rem;
         height: 7rem;
         border-radius: 50%;
-        border: 1.5px solid var(--main-text);
+        scale: 1.2;
       }
       span {
         position: absolute;
@@ -122,24 +134,36 @@ const ChatUL = styled.ul`
     div {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 1rem;
       h3 {
         font-size: 1.9rem;
         font-weight: 600;
       }
       p {
+        height: 2rem;
         font-size: 1.4rem;
         font-weight: 300;
+        text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
-        width: 100%;
+        width: 50vw;
+      }
+
+      &.rightBox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
       }
     }
 
     &:hover {
       background-color: var(--primary-color);
       color: var(--hover-text);
+    }
+    span {
+      font-size: 1.4rem;
+      font-weight: 300;
     }
   }
 `;

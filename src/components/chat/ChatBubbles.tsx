@@ -53,7 +53,11 @@ export default function ChatBubbles({
             if (message.sender === chatData.user.id) {
               return (
                 <ChatBubble key={key} className="my">
-                  <p>{message.created_at.split(' ')[1]}</p>
+                  <p>
+                    {' '}
+                    {message.created_at.split(' ')[1].split(':')[0]}:
+                    {message.created_at.split(' ')[1].split(':')[1]}
+                  </p>
                   <span>{message.content}</span>
                   <figure>
                     <img
@@ -73,7 +77,10 @@ export default function ChatBubbles({
                     />
                   </figure>
                   <span>{message.content}</span>
-                  <p>{message.created_at.split(' ')[1]}</p>
+                  <p>
+                    {message.created_at.split(' ')[1].split(':')[0]}:
+                    {message.created_at.split(' ')[1].split(':')[1]}
+                  </p>
                 </ChatBubble>
               );
             }
@@ -98,6 +105,12 @@ const ChatWrapper = styled.div`
   top: 0;
   left: 0;
   overflow-y: scroll;
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
 `;
 
 const ChatBubble = styled.div`
@@ -109,19 +122,23 @@ const ChatBubble = styled.div`
     justify-content: flex-end;
     span {
       background-color: var(--border-color);
-      border-radius: 1rem 0 0 1rem;
+      background-color: var(--primary-color);
+      color: var(--hover-text);
+      border-radius: 2rem 4px 4px 2rem;
+      padding: 1.5rem 1.5rem 1.5rem 2rem;
     }
   }
   &.your {
     justify-content: flex-start;
     span {
+      padding: 1.5rem 2rem 1.5rem 1.5rem;
+
       background-color: var(--hover-text);
-      border-radius: 0 1rem 1rem 0;
+      border-radius: 4px 2rem 2rem 4px;
     }
   }
   span {
     font-size: 1.4rem;
-    padding: 1.5rem 2rem;
     display: flex;
     justify-content: flex-start;
   }
@@ -130,10 +147,11 @@ const ChatBubble = styled.div`
     padding-bottom: 1rem;
   }
   figure {
+    flex-shrink: 0;
     overflow: hidden;
     width: fit-content;
     height: fit-content;
-    border: 1.5px solid transparent;
+    border: 2px solid transparent;
     border-radius: 50%;
     background-image: linear-gradient(#fff, #fff), var(--vertical-gradient);
     background-origin: border-box;
@@ -143,6 +161,7 @@ const ChatBubble = styled.div`
     width: 4.2rem;
     height: 4rem;
     border-radius: 50%;
+    scale: 1.2;
   }
 `;
 
