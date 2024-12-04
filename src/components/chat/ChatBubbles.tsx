@@ -1,0 +1,138 @@
+import { instance } from 'api/instance';
+import Loading from 'components/common/Loading';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+export type ChatDataType = {
+  messages: {
+    id: number;
+    content: string;
+    created_at: string;
+    is_read: boolean;
+    room: number;
+    sender: number;
+    sender_name: string;
+  }[];
+  opponent: {
+    id: number;
+    nickname: string;
+    profile_image_url: string;
+  };
+  room_id: number;
+  user: {
+    id: number;
+    nickname: string;
+    profile_image_url: string;
+  };
+};
+
+export default function ChatBubbles({
+  chatData
+}: {
+  chatData: ChatDataType | null;
+}) {
+  return (
+    <Section>
+      {chatData ? (
+        <ChatWrapper>
+          {chatData.messages?.map((message, key) => {
+            if (message.sender === chatData.user.id) {
+              return (
+                <ChatBubble key={key} className="my">
+                  <p>{message.created_at.split(' ')[1]}</p>
+                  <span>{message.content}</span>
+                  <figure>
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}${chatData.user.profile_image_url}`}
+                      alt="profile"
+                    />
+                  </figure>
+                </ChatBubble>
+              );
+            } else {
+              return (
+                <ChatBubble key={key} className="your">
+                  <figure>
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}${chatData.opponent.profile_image_url}`}
+                      alt="profile"
+                    />
+                  </figure>
+                  <span>{message.content}</span>
+                  <p>{message.created_at.split(' ')[1]}</p>
+                </ChatBubble>
+              );
+            }
+          })}
+        </ChatWrapper>
+      ) : (
+        <Loading />
+      )}
+    </Section>
+  );
+}
+
+const ChatWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 7rem 2rem 9rem 3rem;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+`;
+
+const ChatBubble = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  &.my {
+    justify-content: flex-end;
+    span {
+      background-color: var(--border-color);
+      border-radius: 1rem 0 0 1rem;
+    }
+  }
+  &.your {
+    justify-content: flex-start;
+    span {
+      background-color: var(--hover-text);
+      border-radius: 0 1rem 1rem 0;
+    }
+  }
+  span {
+    font-size: 1.4rem;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+  p {
+    color: var(--secondary-text);
+    padding-bottom: 1rem;
+  }
+  figure {
+    overflow: hidden;
+    width: fit-content;
+    height: fit-content;
+    border: 1.5px solid transparent;
+    border-radius: 50%;
+    background-image: linear-gradient(#fff, #fff), var(--vertical-gradient);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+  }
+  img {
+    width: 4.2rem;
+    height: 4rem;
+    border-radius: 50%;
+  }
+`;
+
+const Section = styled.section`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
