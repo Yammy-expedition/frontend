@@ -30,12 +30,20 @@ export default function PostComment({
     setComment(e.target.value);
   };
 
+  const onKeyDownTextArea = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onClickSubmitComment();
+    }
+  };
+
   const onClickSubmitComment = () => {
     postCommentReply(posting.id.toString(), comment).then((newComment) => {
-      setComments((prevComments) => [...prevComments, newComment]); // 새 댓글 추가
+      setComments((prevComments) => [...prevComments, newComment]);
       setComment('');
     });
   };
+
   return (
     <PostCommentBox>
       <p>
@@ -51,7 +59,12 @@ export default function PostComment({
         </React.Fragment>
       ))}
       <div>
-        <textarea ref={textarea} value={comment} onChange={onChangeTextArea} />
+        <textarea
+          ref={textarea}
+          value={comment}
+          onChange={onChangeTextArea}
+          onKeyDown={onKeyDownTextArea} // onKeyDown 핸들러 추가
+        />
         <SubmitButton onClick={onClickSubmitComment}>Submit</SubmitButton>
       </div>
     </PostCommentBox>

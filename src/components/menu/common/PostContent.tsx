@@ -77,18 +77,18 @@ export default function PostContent({
           onChange={(value) => editting && setContent(value)}
         />
       </Content>
-      {posting.board_type === 'market' ? (
-        <>
-          {!editting && (
-            <BookmarkWrapper $bookmark={bookmark}>
-              <div onClick={onClickBookmarkButton}>
-                <BookmarkSVG></BookmarkSVG>
-              </div>
-              <p>{bookmarkCount}</p>
-            </BookmarkWrapper>
-          )}
-        </>
-      ) : (
+
+      <>
+        {!editting && (
+          <BookmarkWrapper $bookmark={bookmark}>
+            <div onClick={onClickBookmarkButton}>
+              <BookmarkSVG></BookmarkSVG>
+            </div>
+            <p>{bookmarkCount}</p>
+          </BookmarkWrapper>
+        )}
+      </>
+      {posting.board_type !== 'market' && (
         <>
           {!editting && (
             <LikeWrapper $like={like}>

@@ -1,10 +1,5 @@
 export const openableBoxList = [
   {
-    parent: 'Home',
-    child: [],
-    ownLink: '/'
-  },
-  {
     parent: 'What is Unicon',
     child: [],
     ownLink: '/introduction'
