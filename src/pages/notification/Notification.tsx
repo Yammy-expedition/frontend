@@ -19,7 +19,9 @@ export default function Notification() {
 
   const onClickNoti = (itemId: number, redirectURL: string) => {
     putReadNotification(itemId);
-    navigate(`/${redirectURL}`);
+    const arr = redirectURL.split('/');
+    console.log(arr);
+    navigate(`/${arr[1]}/${arr[2]}`);
   };
 
   const onClickDeleteUniqueNoti = (itemId: number) => {
