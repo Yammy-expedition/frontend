@@ -44,7 +44,6 @@ export default function ChatBubbles({
       setLength(chatData?.messages.length || 0);
     }
   }, [chatData]); // chatData가 변경될 때마다 실행
-
   return (
     <Section>
       {chatData ? (
@@ -88,12 +87,19 @@ export default function ChatBubbles({
           <div ref={chatEndRef} />
         </ChatWrapper>
       ) : (
-        <Loading />
+        <None>start chatting!</None>
       )}
     </Section>
   );
 }
-
+const None = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+`;
 const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
