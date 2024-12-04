@@ -1,6 +1,7 @@
 import { instance } from 'api/instance';
 import Loading from 'components/common/Loading';
 import { useEffect, useRef, useState } from 'react';
+import { set } from 'react-hook-form';
 import styled from 'styled-components';
 
 export type ChatDataType = {
@@ -32,12 +33,15 @@ export default function ChatBubbles({
   chatData: ChatDataType | null;
 }) {
   const chatEndRef = useRef<HTMLDivElement>(null);
-
+  const [length, setLength] = useState(0);
   // 채팅 데이터가 변경될 때마다 실행
   useEffect(() => {
     if (chatEndRef.current) {
+      if (chatData?.messages.length !== length) {
+        chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
       // chatEndRef를 사용해 스크롤을 맨 아래로 내린다.
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      setLength(chatData?.messages.length || 0);
     }
   }, [chatData]); // chatData가 변경될 때마다 실행
 
