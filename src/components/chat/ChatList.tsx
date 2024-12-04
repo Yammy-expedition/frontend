@@ -22,51 +22,32 @@ export default function ChatList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getChatList = async () => {
+    const fetchChatList = async () => {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`
       };
       try {
         const response = await instance.get('chat/rooms', { headers });
-        setChatList(response.data);
-        console.log(response.data);
-      } catch (e) {
-        console.error(e);
+
+        setChatList((prevList) => {
+          if (JSON.stringify(prevList) !== JSON.stringify(response.data)) {
+            console.log('Data updated:', response.data);
+            return response.data;
+          }
+          console.log('No data changes detected');
+          return prevList;
+        });
+      } catch (error) {
+        console.error(error);
       }
     };
-    getChatList();
+
+    // 초기 데이터 로드 및 2초마다 반복
+    fetchChatList();
+    // const interval = setInterval(fetchChatList, 2000);
+
+    // return () => clearInterval(interval); // 언마운트 시 정리
   }, []);
-
-  //채팅방 목록 가져오기
-  useEffect(() => {
-    const getChatList = async () => {
-      const headers = {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      };
-      try {
-        const response = await instance.get('chat/rooms', { headers });
-        const totalUnreadCount = response.data.reduce(
-          (acc: number, cur: ChatListType) => acc + cur.unread_count,
-          0
-        );
-        console.log(totalUnreadCount);
-
-        if (totalUnreadCount > 0) {
-          setChatList(response.data);
-          console.log(response.data);
-        } else {
-          console.log('no unread message');
-
-          return;
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    setTimeout(() => {
-      getChatList();
-    }, 2000);
-  }, [chatList]);
 
   if (chatList.length === 0) {
     return <ChatUL>채팅방이 없습니다.</ChatUL>;
