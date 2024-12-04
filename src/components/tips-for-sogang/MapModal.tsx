@@ -23,7 +23,11 @@ export default function MapModal({
       </div>
       <div>
         <h2>Mainly used by</h2>
-        <p>{selectedBuildingData?.departments}</p>
+        <p>
+          {selectedBuildingData?.departments
+            ? selectedBuildingData.departments
+            : 'All departments'}
+        </p>
       </div>
       <StudyingSpotDiv>
         <h2>Studying spots</h2>
@@ -72,7 +76,10 @@ export default function MapModal({
 const Tags = styled.span`
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
   span {
+    display: flex;
+    align-items: center;
     background-color: var(--primary-color);
     color: var(--hover-text);
     padding: 0.2rem 0.5rem;

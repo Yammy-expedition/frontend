@@ -152,7 +152,6 @@ export default function KakaoMap({ modalOpen, setModalOpen }: KakaoMapProps) {
     if (typeof window !== 'undefined' && window.kakao) {
       mapLoad();
     }
-    console.log('useffec');
   }, [searchParams, buildingsData]);
   //buildingsData, initLatLon, mapLevel, searchParams
   return (
