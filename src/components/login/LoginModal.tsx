@@ -31,6 +31,12 @@ const LoginModal = ({ onClose }: any) => {
     }
   };
 
+  const onKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onClickLogin(); // Enter 키를 누르면 onClickLogin 호출
+    }
+  };
+
   return (
     <LoginModalContainer onClick={onClose}>
       <LoginWindow onClick={(e) => e.stopPropagation()}>
@@ -58,6 +64,7 @@ const LoginModal = ({ onClose }: any) => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={onKeyDownInput}
             />
           </InputField>
         </InputBox>

@@ -40,6 +40,13 @@ export default function MenuGroup() {
     index: number
   ) => {
     toggleBox(index);
+    if (item.parent === 'Notification') {
+      const token = window.localStorage.getItem('accessToken');
+      if (!token) {
+        alert('You need to log in');
+        return;
+      }
+    }
     navigate(item.ownLink);
   };
 

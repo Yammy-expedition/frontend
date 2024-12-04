@@ -77,18 +77,21 @@ export default function PostContent({
           onChange={(value) => editting && setContent(value)}
         />
       </Content>
-      {posting.board_type === 'market' ? (
-        <>
-          {!editting && (
-            <BookmarkWrapper $bookmark={bookmark}>
-              <div onClick={onClickBookmarkButton}>
-                <BookmarkSVG></BookmarkSVG>
-              </div>
-              <p>{bookmarkCount}</p>
-            </BookmarkWrapper>
-          )}
-        </>
-      ) : (
+
+      <>
+        {!editting && (
+          <BookmarkWrapper
+            $bookmark={bookmark}
+            $bookmarkPosition={posting.board_type}
+          >
+            <div onClick={onClickBookmarkButton}>
+              <BookmarkSVG></BookmarkSVG>
+            </div>
+            <p>{bookmarkCount}</p>
+          </BookmarkWrapper>
+        )}
+      </>
+      {posting.board_type !== 'market' && (
         <>
           {!editting && (
             <LikeWrapper $like={like}>
@@ -189,11 +192,15 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const BookmarkWrapper = styled.div<{ $bookmark: boolean }>`
+const BookmarkWrapper = styled.div<{
+  $bookmark: boolean;
+  $bookmarkPosition: string;
+}>`
   position: fixed;
   right: 3rem;
-  bottom: 4rem;
-  > div {
+  bottom: ${(props) =>
+      props.$bookmarkPosition !== 'market' ? '17rem;' : '4rem;'}
+    > div {
     display: flex;
     justify-content: center;
     align-items: center;

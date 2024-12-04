@@ -39,6 +39,13 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
     });
   };
 
+  const onKeyDownReply = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // 줄바꿈 방지
+      onClickSubmitComment(); // 댓글 제출
+    }
+  };
+
   useEffect(() => {
     setLike(comment.is_liked);
   }, []);
@@ -84,6 +91,7 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
                 <textarea
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
+                  onKeyDown={onKeyDownReply}
                 />
                 <button onClick={onClickSubmitComment}>submit</button>
               </ReplyBox>
