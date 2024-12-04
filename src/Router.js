@@ -11,16 +11,17 @@ import PostingDetailPage from 'pages/menu/PostingDetailPage';
 import WritingPostPage from 'pages/menu/WritingPostPage';
 import AuthRoute from 'AuthRoute';
 import ChatMain from 'pages/chat/ChatMain';
+import ChatDetail from 'pages/chat/ChatDetail';
+import WhatIsUnicon from 'pages/what-is-unicon/WhatIsUnicon';
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/admin" element={<AdminPage />} />
-
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/chat/:id" />
-
+      <Route path="/introduction" element={<WhatIsUnicon />} />
+      <Route path="/chat/:id" element={<ChatDetail />} />
       <Route path="/menu">
         <Route
           path="restaurant"

@@ -7,10 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 
 export type BuildsDataType = {
   id: number;
-  kor_name: string;
-  eng_name: string;
-  lat: number;
-  lon: number;
+  building_name: string;
   entrance: string;
   departments: string;
   studying_spots: {
@@ -21,6 +18,7 @@ export type BuildsDataType = {
     tags: { id: number; name: string }[];
     photo: string | null;
     building: number;
+    building_name: string;
   }[];
   cafeterias: {
     id: number;
@@ -30,6 +28,7 @@ export type BuildsDataType = {
     tags: { id: number; name: string }[];
     photo: string;
     building: number;
+    building_name: string;
   }[];
 };
 
@@ -55,12 +54,19 @@ export default function KakaoMap({ modalOpen, setModalOpen }: KakaoMapProps) {
     // 건물 데이터 가져오기
     const getBuildings = async () => {
       const response = await instance.get('tips/map-building');
-      setBuildingsData(buildings);
+      if (response.data.length === buildingsData.length) {
+        return;
+      }
+      setBuildingsData(response.data);
       setStudyList(
-        buildings.filter((building) => building.studying_spots.length > 0)
+        response.data.filter(
+          (building: BuildsDataType) => building.studying_spots.length > 0
+        )
       );
       setCafeList(
-        buildings.filter((building) => building.cafeterias.length > 0)
+        response.data.filter(
+          (building: BuildsDataType) => building.cafeterias.length > 0
+        )
       );
     };
     getBuildings();
@@ -107,8 +113,11 @@ export default function KakaoMap({ modalOpen, setModalOpen }: KakaoMapProps) {
           );
 
           // 마커 생성 및 표시
-          datas.forEach(({ id, eng_name, lat, lon }) => {
+          datas.forEach(({ id }) => {
             // 마커 생성
+            const eng_name = buildings[id]?.eng_name;
+            const lat = buildings[id]?.lat;
+            const lon = buildings[id]?.lon;
             const marker = new window.kakao.maps.Marker({
               position: new window.kakao.maps.LatLng(lat, lon),
               map,
@@ -143,8 +152,8 @@ export default function KakaoMap({ modalOpen, setModalOpen }: KakaoMapProps) {
     if (typeof window !== 'undefined' && window.kakao) {
       mapLoad();
     }
-  }, [buildingsData, initLatLon, mapLevel, searchParams]);
-
+  }, [searchParams, buildingsData]);
+  //buildingsData, initLatLon, mapLevel, searchParams
   return (
     <MapSection>
       <MapDiv id="map"></MapDiv>

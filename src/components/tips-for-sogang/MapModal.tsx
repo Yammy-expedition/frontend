@@ -14,16 +14,20 @@ export default function MapModal({
   selectedBuildingData
 }: MapModalProps) {
   return (
-    <ModalWrapper modalopen={modalOpen}>
+    <ModalWrapper modalopen={modalOpen.toString()}>
       <ExitIcon className="exit" onClick={() => setModalOpen(false)} />
-      <h1>{selectedBuildingData?.eng_name}</h1>
+      <h1>{selectedBuildingData?.building_name}</h1>
       <div>
         <h2>Entrance</h2>
         <p>{selectedBuildingData?.entrance}</p>
       </div>
       <div>
         <h2>Mainly used by</h2>
-        <p>{selectedBuildingData?.departments}</p>
+        <p>
+          {selectedBuildingData?.departments
+            ? selectedBuildingData.departments
+            : 'All departments'}
+        </p>
       </div>
       <StudyingSpotDiv>
         <h2>Studying spots</h2>
@@ -54,7 +58,7 @@ export default function MapModal({
               <figcaption>
                 <h3>{spot.name}</h3>
                 <p>{spot.location}</p>
-                <p>{spot.open_hours}</p>
+                <p className="openhour">{spot.open_hours}</p>
                 <Tags>
                   {spot.tags.map((tag) => (
                     <span key={tag.id}>{tag.name} </span>
@@ -72,11 +76,14 @@ export default function MapModal({
 const Tags = styled.span`
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
   span {
+    display: flex;
+    align-items: center;
     background-color: var(--primary-color);
     color: var(--hover-text);
-    padding: 0.2rem 0.5rem;
-    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
   }
 `;
 
@@ -111,12 +118,15 @@ const StudyingSpotDiv = styled.div`
       p {
         font-size: 1.3rem;
         font-weight: 200;
+        .openhour {
+          line-height: 120%;
+        }
       }
     }
   }
 `;
 
-const ModalWrapper = styled.div<{ modalopen: boolean }>`
+const ModalWrapper = styled.div<{ modalopen: string }>`
   z-index: 100;
   overflow-y: scroll;
   position: absolute;
@@ -131,9 +141,10 @@ const ModalWrapper = styled.div<{ modalopen: boolean }>`
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  animation: ${({ modalopen }) => (modalopen ? fadeIn : fadeOut)} 0.3s ease
-    forwards;
-  visibility: ${({ modalopen }) => (modalopen ? 'visible' : 'visible')};
+  animation: ${({ modalopen }) => (modalopen === 'true' ? fadeIn : fadeOut)}
+    0.3s ease forwards;
+  visibility: ${({ modalopen }) =>
+    modalopen === 'true' ? 'visible' : 'visible'};
   h1 {
     font-size: 2.5rem;
     font-weight: 400;
@@ -165,6 +176,14 @@ const ModalWrapper = styled.div<{ modalopen: boolean }>`
       fill: black;
     }
   }
+  @media (max-width: 430px) {
+    width: 95%;
+    height: 40%;
+    bottom: 0;
+    animation: ${({ modalopen }) =>
+        modalopen === 'true' ? fadeInMobile : fadeOutMobile}
+      0.3s ease forwards;
+  }
 `;
 
 // 등장 애니메이션
@@ -188,5 +207,29 @@ const fadeOut = keyframes`
   to {
     opacity: 0;
     transform: translateX(100%);
+  }
+`;
+
+// 등장 애니메이션`
+const fadeInMobile = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// 사라짐 애니메이션
+const fadeOutMobile = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
   }
 `;
