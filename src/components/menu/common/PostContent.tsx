@@ -80,12 +80,12 @@ export default function PostContent({
       {posting.board_type === 'market' ? (
         <>
           {!editting && (
-            <SaveWrapper $bookmark={bookmark}>
+            <BookmarkWrapper $bookmark={bookmark}>
               <div onClick={onClickBookmarkButton}>
                 <BookmarkSVG></BookmarkSVG>
               </div>
               <p>{bookmarkCount}</p>
-            </SaveWrapper>
+            </BookmarkWrapper>
           )}
         </>
       ) : (
@@ -189,7 +189,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const SaveWrapper = styled.div<{ $bookmark: boolean }>`
+const BookmarkWrapper = styled.div<{ $bookmark: boolean }>`
   position: fixed;
   right: 3rem;
   bottom: 4rem;

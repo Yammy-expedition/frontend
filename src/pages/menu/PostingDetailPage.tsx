@@ -10,6 +10,7 @@ import PostContent from 'components/menu/common/PostContent';
 import PostComment from 'components/menu/common/PostComment';
 import MarketImagePortal from 'components/portal/MarketImagePortal';
 import MarketImageModal from 'components/menu/market/MarketImageModal';
+import Loading from 'components/common/Loading';
 
 export default function PostingDetailPage() {
   const location = useLocation();
@@ -50,17 +51,25 @@ export default function PostingDetailPage() {
     useState<boolean>(false);
   const [openImageIndex, setOpenImageIndex] = useState<number>(0);
 
-  const [imgFiles, setImgFiles] = useState<(File | null)[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
+  // const [imgFiles, setImgFiles] = useState<(File | null)[]>([]);
+  // const [previews, setPreviews] = useState<string[]>([]);
 
   useEffect(() => {
     getPostingDetail(postingId, setPosting).then((result) => {
+      const saleStatus =
+        result.status === 'FOR_SALE'
+          ? 'on sale'
+          : result.status === 'RESERVATION'
+            ? 'reservation'
+            : result.status === 'SOLD_OUT'
+              ? 'sold out'
+              : '';
       setComments(result.comments);
       setLike(result.is_liked);
       setLikeCount(result.like_count);
       setTitle(result.title);
       setContent(result.content);
-      setIsOnSale(result.status);
+      setIsOnSale(saleStatus);
       setBookmark(result.is_bookmarked);
       setPrice(result.price);
       setImages(result.images);
@@ -68,7 +77,9 @@ export default function PostingDetailPage() {
     postPostingViewCount(postingId);
   }, []);
 
-  console.log(imgFiles);
+  useEffect(() => {
+    console.log(state);
+  }, []);
 
   useEffect(() => {
     if (openMarketImgageModal) {
@@ -82,22 +93,18 @@ export default function PostingDetailPage() {
     };
   }, [openMarketImgageModal]);
 
-  useEffect(() => {
-    console.log(isOnSale);
-  }, [isOnSale]);
-
   const onClickSave = () => {
     patchPosting(postingId, title, content, price).then(() =>
       window.location.reload()
     );
   };
 
-  const handleDeleteImage = (index: number) => {
-    // 선택한 이미지를 배열에서 제거
-    setImages((prevImages) =>
-      prevImages.filter((_, imgIndex) => imgIndex !== index)
-    );
-  };
+  // const handleDeleteImage = (index: number) => {
+  //   // 선택한 이미지를 배열에서 제거
+  //   setImages((prevImages) =>
+  //     prevImages.filter((_, imgIndex) => imgIndex !== index)
+  //   );
+  // };
 
   const onClickUniqueImage = (index: number) => {
     if (!editting) {
@@ -107,85 +114,91 @@ export default function PostingDetailPage() {
   };
 
   if (!posting) {
-    return <></>;
+    return <Loading></Loading>;
   }
   return (
     <PostingDetailContainer>
-      <PageNameBox>
-        <p>{state.pageName}</p>
-      </PageNameBox>
+      {posting ? (
+        <>
+          <PageNameBox>
+            <p>{state.pageName}</p>
+          </PageNameBox>
 
-      {state.boardType === 'market' && (
-        <SaleTag>{isOnSale === 'FOR_SALE' ? 'on sale' : 'sold out'}</SaleTag>
-      )}
+          {posting.board_type === 'market' && (
+            <SaleTag $isOnSale={isOnSale}>{isOnSale}</SaleTag>
+          )}
 
-      <PostInfoTitle
-        posting={posting}
-        editting={editting}
-        title={title}
-        setTitle={setTitle}
-        price={price}
-        setPrice={setPrice}
-        setEditting={setEditting}
-      ></PostInfoTitle>
+          <PostInfoTitle
+            posting={posting}
+            editting={editting}
+            title={title}
+            setTitle={setTitle}
+            price={price}
+            setPrice={setPrice}
+            setEditting={setEditting}
+          ></PostInfoTitle>
 
-      {!editting && <LineGradient></LineGradient>}
-      <ImgBoxWrapper>
-        <ImgBox>
-          {state.boardType === 'market' && (
+          {!editting && <LineGradient></LineGradient>}
+          <ImgBoxWrapper>
+            <ImgBox>
+              {posting.board_type === 'market' && (
+                <>
+                  {images.map((item, index) => (
+                    <div key={index} onClick={() => onClickUniqueImage(index)}>
+                      <figure>
+                        <img src={item.image} alt="stuff-image" />
+                      </figure>
+                    </div>
+                  ))}
+                </>
+              )}
+            </ImgBox>
+          </ImgBoxWrapper>
+
+          <PostContent
+            posting={posting}
+            editting={editting}
+            content={content}
+            setContent={setContent}
+            like={like}
+            setLike={setLike}
+            likeCount={likeCount}
+            setLikeCount={setLikeCount}
+            bookmark={bookmark}
+            setBookmark={setBookmark}
+            bookmarkCount={bookmarkCount}
+            setBookmarkCount={setBookmarkCount}
+            setEditting={setEditting}
+            onClickSave={onClickSave}
+          ></PostContent>
+
+          {posting.board_type !== 'market' && (
             <>
-              {images.map((item, index) => (
-                <div key={index} onClick={() => onClickUniqueImage(index)}>
-                  <figure>
-                    <img src={item.image} alt="stuff-image" />
-                  </figure>
-                </div>
-              ))}
+              {!editting && <LineGradient></LineGradient>}
+              {!editting && (
+                <PostComment
+                  posting={posting}
+                  comments={comments}
+                  comment={comment}
+                  setComment={setComment}
+                  setComments={setComments}
+                ></PostComment>
+              )}
             </>
           )}
-        </ImgBox>
-      </ImgBoxWrapper>
 
-      <PostContent
-        posting={posting}
-        editting={editting}
-        content={content}
-        setContent={setContent}
-        like={like}
-        setLike={setLike}
-        likeCount={likeCount}
-        setLikeCount={setLikeCount}
-        bookmark={bookmark}
-        setBookmark={setBookmark}
-        bookmarkCount={bookmarkCount}
-        setBookmarkCount={setBookmarkCount}
-        setEditting={setEditting}
-        onClickSave={onClickSave}
-      ></PostContent>
-
-      {state.boardType !== 'market' && (
-        <>
-          {!editting && <LineGradient></LineGradient>}
-          {!editting && (
-            <PostComment
-              posting={posting}
-              comments={comments}
-              comment={comment}
-              setComment={setComment}
-              setComments={setComments}
-            ></PostComment>
+          {!editting && openMarketImgageModal && (
+            <MarketImagePortal>
+              <MarketImageModal
+                images={images}
+                openImageIndex={openImageIndex}
+                setOpenMarketImgageModal={setOpenMarketImgageModal}
+              ></MarketImageModal>
+            </MarketImagePortal>
           )}
         </>
-      )}
-
-      {!editting && openMarketImgageModal && (
-        <MarketImagePortal>
-          <MarketImageModal
-            images={images}
-            openImageIndex={openImageIndex}
-            setOpenMarketImgageModal={setOpenMarketImgageModal}
-          ></MarketImageModal>
-        </MarketImagePortal>
+      ) : (
+        <Loading></Loading>
       )}
     </PostingDetailContainer>
   );
@@ -193,6 +206,7 @@ export default function PostingDetailPage() {
 
 const PostingDetailContainer = styled.div`
   position: relative;
+  height: 100%;
   width: 100%;
   padding: 5.5rem 4.5rem;
   overflow: hidden;
@@ -207,12 +221,14 @@ const PageNameBox = styled.div`
   }
 `;
 
-const SaleTag = styled.div`
+const SaleTag = styled.div<{ $isOnSale: string }>`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--primary-color);
+
+  background: ${(props) => (props.$isOnSale === 'on sale' ? 'var(--primary-color);' : props.$isOnSale !== 'sold out' ? 'black;' : 'var(--main-gray);')}
+
   color: white;
   width: 7rem;
   height: 2rem;

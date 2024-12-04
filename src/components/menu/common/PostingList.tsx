@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as HeartSVG } from '../../../assets/icons/menu/heart.svg';
 import { ReactComponent as EyeSVG } from '../../../assets/icons/menu/eye.svg';
@@ -46,13 +46,19 @@ export default function PostingList({
             </RepresentImage>
           )}
 
-          <EachPost>
+          <EachPost $isOnSale={posting.status}>
             <div>
               <div>
                 <p>{posting.title}</p>
                 {posting.board_type === 'market' && (
                   <div>
-                    {posting.status === 'FOR_SALE' ? 'on sale' : 'sold out'}
+                    {posting.status === 'FOR_SALE'
+                      ? 'on sale'
+                      : posting.status === 'RESERVATION'
+                        ? 'reservation'
+                        : posting.status === 'SOLD_OUT'
+                          ? 'sold out'
+                          : ''}
                   </div>
                 )}
               </div>
@@ -103,7 +109,7 @@ const PostingContainer = styled.div`
   }
 `;
 
-const EachPost = styled.div`
+const EachPost = styled.div<{ $isOnSale: string }>`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -144,7 +150,7 @@ const EachPost = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: var(--primary-color);
+        background: ${(props) => (props.$isOnSale === 'FOR_SALE' ? 'var(--primary-color);' : props.$isOnSale !== 'SOLD_OUT' ? 'black;' : 'var(--main-gray);')}
         color: white;
 
         width: 5rem;
