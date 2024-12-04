@@ -11,6 +11,8 @@ import {
   findLanguage,
   findMajor
 } from 'utils/my-page/findInfos';
+import { useParams } from 'react-router-dom';
+import ToChatButton from './ToChatButton';
 
 export interface ProfileProps {
   birth: string;
@@ -32,6 +34,8 @@ export interface ProfileProps {
 }
 
 export default function MyProfile(profileData: ProfileProps) {
+  const { category, userId } = useParams();
+
   return (
     <Section>
       <header>
@@ -55,7 +59,14 @@ export default function MyProfile(profileData: ProfileProps) {
             <p>{findCountryname(profileData.nationality)}</p>
           </div>
         </HeaderProfileBox>
-        <button>edit</button>
+        {category ? (
+          <ToChatButton
+            userId={Number(userId)}
+            userName={profileData.nickname}
+          />
+        ) : (
+          <button>edit</button>
+        )}
       </header>
       <DetailInfo>
         <div>
@@ -146,7 +157,7 @@ const HeaderProfileBox = styled.div`
     background-origin: border-box;
     background-clip: content-box, border-box;
     img {
-      scale: 1.1;
+      scale: 1.3;
       width: 10rem;
       height: 10rem;
     }
@@ -202,7 +213,6 @@ const Section = styled.section`
       height: 3.5rem;
       font-size: 1.6rem;
       border-radius: 4px;
-      color: var(--hover-bg);
       border: 1px solid var(--hover-bg);
       cursor: pointer;
       transition:

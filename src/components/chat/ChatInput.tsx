@@ -81,7 +81,7 @@ export default function ChatInput({
         }}
         value={content}
         type="text"
-        placeholder="메시지를 입력하세요."
+        placeholder="enter your message"
       />
       <button onClick={(e) => handleSubmit(e)}>send</button>
     </InputDiv>
