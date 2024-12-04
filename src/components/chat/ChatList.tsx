@@ -91,6 +91,9 @@ export default function ChatList() {
 
 const ChatUL = styled.ul`
   li {
+    @media (max-width: 430px) {
+      padding: 1.5rem 2rem;
+    }
     cursor: pointer;
     padding: 2rem 2rem;
     display: flex;
@@ -129,8 +132,13 @@ const ChatUL = styled.ul`
         align-items: center;
         color: white;
       }
+      @media (max-width: 430px) {
+        img {
+          width: 5rem;
+          height: 5rem;
+        }
+      }
     }
-
     div {
       display: flex;
       flex-direction: column;
@@ -148,15 +156,21 @@ const ChatUL = styled.ul`
         overflow: hidden;
         width: 50vw;
       }
-
       &.rightBox {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 2rem;
       }
+      @media (max-width: 430px) {
+        h3 {
+          font-size: 1.6rem;
+        }
+        p {
+          font-size: 1.2rem;
+        }
+      }
     }
-
     &:hover {
       background-color: var(--primary-color);
       color: var(--hover-text);
