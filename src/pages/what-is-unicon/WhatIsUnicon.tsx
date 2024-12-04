@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default function WhatIsUnicon() {
   return (
     <Main>
-      <img src="https://i.imgur.com/BhWstgN.jpeg" alt="" />
+      <img src="https://i.imgur.com/tlgKwJi.jpeg" alt="" />
     </Main>
   );
 }
