@@ -1,14 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { User } from 'types/user';
 
-interface EachUserBox {
+interface EachUserBoxProps {
   user: User;
 }
 
-export default function EachUserBox({ user }: EachUserBox) {
+export default function EachUserBox({ user }: EachUserBoxProps) {
+  const navigate = useNavigate();
   return (
-    <EachUserBoxContainer>
+    <EachUserBoxContainer
+      onClick={() => navigate(`/user-profile/${user.id}/postings`)}
+    >
       <ProfileImage>
         <figure>
           <img
@@ -27,8 +31,13 @@ export default function EachUserBox({ user }: EachUserBox) {
 }
 
 const EachUserBoxContainer = styled.div`
+  padding: 1rem;
+  cursor: pointer;
   display: flex;
   gap: 2rem;
+  &:hover {
+    background: var(--main-gray);
+  }
 `;
 
 const Nickname = styled.p`

@@ -73,12 +73,16 @@ export default function MarketImageModal({
 }
 
 const ModalWrppaer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 30;
 `;
 
 const ImageWrapper = styled.div`
@@ -87,7 +91,7 @@ const ImageWrapper = styled.div`
   width: 100%;
 `;
 const CurrentImageIndicator = styled.p`
-  position: fixed;
+  position: absolute;
   color: white;
   font-size: 3rem;
   left: 50%;

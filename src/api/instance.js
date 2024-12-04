@@ -17,6 +17,7 @@ instance.interceptors.request.use((config) => {
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log(error);
     if (error.response?.status === 401) {
       const dataToSend = { refresh: Cookies.get('refreshToken') };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { openableBoxList } from 'constants/openableBox';
 import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
+import { ReactComponent as NotiSVG } from '../../assets/icons/main/notification.svg';
 import { useNavigate } from 'react-router-dom';
 
 export default function MenuGroup() {
@@ -39,6 +40,7 @@ export default function MenuGroup() {
     index: number
   ) => {
     toggleBox(index);
+    navigate(item.ownLink);
   };
 
   return (
@@ -49,8 +51,11 @@ export default function MenuGroup() {
             onClick={() => onClickBox(item, index)}
             $isOpen={OpenIndex === index && !closing}
           >
-            <IconWrapper $isOpen={OpenIndex === index && !closing}>
-              <PlusSVG />
+            <IconWrapper
+              $isOpen={OpenIndex === index && !closing}
+              $parent={item.parent}
+            >
+              {item.parent === 'Notification' ? <NotiSVG /> : <PlusSVG />}
             </IconWrapper>
             <p>{item.parent}</p>
           </OpenableBox>
@@ -123,17 +128,22 @@ const OpenableBox = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const IconWrapper = styled.div<{ $isOpen: boolean }>`
+const IconWrapper = styled.div<{ $isOpen: boolean; $parent: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
+
   transition: transform 0.4s ease;
-  transform: ${({ $isOpen }) => ($isOpen ? 'rotate(45deg)' : 'rotate(0deg)')};
+  ${(props) => {
+    if (props.$parent !== 'Notification')
+      return ` transform: ${props.$isOpen ? 'rotate(45deg)' : 'rotate(0deg)'};`;
+    else return '';
+  }}
   svg {
     width: 1.8rem;
     height: 1.8rem;
     path {
-      color: ${({ $isOpen }) => ($isOpen ? 'white' : 'var(--primary-color)')};
+      color: ${(props) => (props.$isOpen ? 'white' : 'var(--primary-color)')};
     }
   }
 `;

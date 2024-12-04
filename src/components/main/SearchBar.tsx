@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import EachUserBox from './EachUserBox';
 import { User } from 'types/user';
 import Loading from 'components/common/Loading';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchBarProps {
   showUserList: boolean;
@@ -129,7 +130,7 @@ const SearchResult = styled.div<{ $isEmpty: boolean }>`
   border: 2.5px solid var(--primary-color);
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 1.5rem;
   ${(props) =>
     props.$isEmpty ? 'text-align: center; justify-content:center;' : ''}
 

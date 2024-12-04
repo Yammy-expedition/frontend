@@ -11,6 +11,8 @@ import PostingDetailPage from 'pages/menu/PostingDetailPage';
 import WritingPostPage from 'pages/menu/WritingPostPage';
 import AuthRoute from 'AuthRoute';
 import ChatMain from 'pages/chat/ChatMain';
+import UserProfile from 'pages/user-profile/UserProfile';
+import Notification from 'pages/notification/Notification';
 import ChatDetail from 'pages/chat/ChatDetail';
 import WhatIsUnicon from 'pages/what-is-unicon/WhatIsUnicon';
 
@@ -41,16 +43,23 @@ function Router() {
           path="/posting-detail/:postingId"
           element={<PostingDetailPage />}
         />
+
+        <Route path="/my-page" element={<MyPage />}>
+          <Route path=":category" element={<MyPage />} />
+        </Route>
       </Route>
-      <Route path="/my-page" element={<MyPage />}>
-        <Route path=":category" element={<MyPage />} />
-      </Route>
+
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/tips-for-sogang" element={<TipsForSogangPage />}>
         <Route path=":category" element={<TipsForSogangPage />} />
       </Route>
       <Route path="/writing-post" element={<WritingPostPage />} />
       <Route path="/chat" element={<ChatMain />} />
+      <Route
+        path="/user-profile/:userId/:category"
+        element={<UserProfile />}
+      ></Route>
+      <Route path="/notification" element={<Notification />} />
     </Routes>
   );
 }
