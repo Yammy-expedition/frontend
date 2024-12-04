@@ -53,7 +53,7 @@ export default function ChatList() {
   }
 
   function navigateToChatDetail(other_user: ChatListType['other_user']) {
-    localStorage.setItem('other_user', JSON.stringify(other_user));
+    localStorage.setItem('other_user_id', other_user.id.toString());
     navigate(`/chat/${other_user.id}`);
   }
   return (
