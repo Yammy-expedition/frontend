@@ -139,8 +139,11 @@ const LocationTab = styled.ul`
   list-style: none;
   font-size: 1.6rem;
   overflow-x: hidden;
+  flex-wrap: wrap;
+  padding: 2rem 0;
   li {
-    width: 10vw;
+    width: 15rem;
+    flex-shrink: 0;
     background-color: var(--main-gray);
     color: var(--secondary-text);
     border-radius: 6.5rem;
@@ -162,12 +165,22 @@ const LocationTab = styled.ul`
       background-color: var(--primary-color);
     }
   }
+  @media (max-width: 430px) {
+    padding: 2rem 1rem;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    width: 100vw;
+    li {
+      width: 14rem;
+      font-size: 1.5rem;
+    }
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
 `;
 
 const PostList = styled.ul`
-  height: 60vh;
+  height: 62vh;
   overflow-y: scroll;
-  margin-top: 3rem;
   border-top: 1px solid var(--border-color);
   li {
     display: flex;
@@ -203,6 +216,11 @@ const PostList = styled.ul`
         font-weight: 200;
         font-size: 1.6rem;
       }
+    }
+  }
+  @media (max-width: 430px) {
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--hover-bg);
     }
   }
 `;

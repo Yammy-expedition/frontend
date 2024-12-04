@@ -58,7 +58,7 @@ export default function MapModal({
               <figcaption>
                 <h3>{spot.name}</h3>
                 <p>{spot.location}</p>
-                <p>{spot.open_hours}</p>
+                <p className="openhour">{spot.open_hours}</p>
                 <Tags>
                   {spot.tags.map((tag) => (
                     <span key={tag.id}>{tag.name} </span>
@@ -82,8 +82,8 @@ const Tags = styled.span`
     align-items: center;
     background-color: var(--primary-color);
     color: var(--hover-text);
-    padding: 0.2rem 0.5rem;
-    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
   }
 `;
 
@@ -118,6 +118,9 @@ const StudyingSpotDiv = styled.div`
       p {
         font-size: 1.3rem;
         font-weight: 200;
+        .openhour {
+          line-height: 120%;
+        }
       }
     }
   }
@@ -173,6 +176,14 @@ const ModalWrapper = styled.div<{ modalopen: string }>`
       fill: black;
     }
   }
+  @media (max-width: 430px) {
+    width: 95%;
+    height: 40%;
+    bottom: 0;
+    animation: ${({ modalopen }) =>
+        modalopen === 'true' ? fadeInMobile : fadeOutMobile}
+      0.3s ease forwards;
+  }
 `;
 
 // 등장 애니메이션
@@ -196,5 +207,29 @@ const fadeOut = keyframes`
   to {
     opacity: 0;
     transform: translateX(100%);
+  }
+`;
+
+// 등장 애니메이션`
+const fadeInMobile = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// 사라짐 애니메이션
+const fadeOutMobile = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100%);
   }
 `;
