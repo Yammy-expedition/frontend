@@ -48,7 +48,7 @@ const SideBarContainer = styled.div`
   padding: 0 0.6rem;
   left: -38rem;
   transition: left 0.3s ease-in-out;
-
+  z-index: 200;
   @media screen and (min-width: 768px) {
     left: 0;
     min-width: 25.4rem;

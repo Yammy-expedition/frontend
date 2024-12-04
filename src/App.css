@@ -2,6 +2,14 @@
 
 * {
   box-sizing: border-box;
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--primary-color);
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
 }
 
 html,

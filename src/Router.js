@@ -13,16 +13,17 @@ import AuthRoute from 'AuthRoute';
 import ChatMain from 'pages/chat/ChatMain';
 import UserProfile from 'pages/user-profile/UserProfile';
 import Notification from 'pages/notification/Notification';
+import ChatDetail from 'pages/chat/ChatDetail';
+import WhatIsUnicon from 'pages/what-is-unicon/WhatIsUnicon';
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/admin" element={<AdminPage />} />
-
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/chat/:id" />
-
+      <Route path="/introduction" element={<WhatIsUnicon />} />
+      <Route path="/chat/:id" element={<ChatDetail />} />
       <Route path="/menu">
         <Route
           path="restaurant"

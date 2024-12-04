@@ -57,6 +57,9 @@ const Wrapper = styled.main`
   padding-left: 3rem;
   display: flex;
   flex-direction: column;
+  @media (max-width: 430px) {
+    padding-left: 0;
+  }
 `;
 
 const Header = styled.header`
@@ -65,7 +68,7 @@ const Header = styled.header`
   gap: 2rem;
   padding-top: 2.5rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid;
+  border-bottom: 2px solid;
   border-image: var(--line-gradient) 1;
   font-family: var(--sub-font);
   letter-spacing: -1px;
@@ -76,10 +79,21 @@ const Header = styled.header`
     font-size: 1.6rem;
     color: var(--secondary-text);
   }
+  @media (max-width: 430px) {
+    padding-top: 4rem;
+    padding-left: 2rem;
+    gap: 1rem;
+    div {
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 1.3rem;
+    }
+  }
 `;
 
 const NavBtn = styled.div<{ $current: boolean }>`
-  width: fit-content;
+  width: 15rem;
   background-color: ${({ $current }) =>
     $current ? 'var(--hover-bg)' : 'var(--main-gray)'};
   color: ${({ $current }) =>
@@ -98,6 +112,11 @@ const NavBtn = styled.div<{ $current: boolean }>`
     background-color: var(--hover-bg);
     color: var(--hover-text);
   }
+  @media (max-width: 430px) {
+    width: 14rem;
+    padding: 1.2rem 3rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const Nav = styled.nav`
@@ -105,4 +124,8 @@ const Nav = styled.nav`
   display: flex;
   gap: 1rem;
   letter-spacing: -0.5px;
+  @media (max-width: 430px) {
+    padding-left: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
 `;
