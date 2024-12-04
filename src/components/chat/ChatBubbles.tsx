@@ -1,6 +1,6 @@
 import { instance } from 'api/instance';
 import Loading from 'components/common/Loading';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 export type ChatDataType = {
@@ -31,6 +31,16 @@ export default function ChatBubbles({
 }: {
   chatData: ChatDataType | null;
 }) {
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // 채팅 데이터가 변경될 때마다 실행
+  useEffect(() => {
+    if (chatEndRef.current) {
+      // chatEndRef를 사용해 스크롤을 맨 아래로 내린다.
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatData]); // chatData가 변경될 때마다 실행
+
   return (
     <Section>
       {chatData ? (
@@ -64,6 +74,7 @@ export default function ChatBubbles({
               );
             }
           })}
+          <div ref={chatEndRef} />
         </ChatWrapper>
       ) : (
         <Loading />
@@ -76,7 +87,7 @@ const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 7rem 2rem 9rem 3rem;
+  padding: 7rem 2rem 7rem 3rem;
   width: 100%;
   height: 100%;
   position: absolute;

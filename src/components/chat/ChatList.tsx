@@ -44,9 +44,8 @@ export default function ChatList() {
 
     // 초기 데이터 로드 및 2초마다 반복
     fetchChatList();
-    // const interval = setInterval(fetchChatList, 2000);
-
-    // return () => clearInterval(interval); // 언마운트 시 정리
+    const interval = setInterval(fetchChatList, 5000);
+    return () => clearInterval(interval); // 언마운트 시 정리
   }, []);
 
   if (chatList.length === 0) {
