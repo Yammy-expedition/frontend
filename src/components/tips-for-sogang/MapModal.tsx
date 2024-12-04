@@ -14,9 +14,9 @@ export default function MapModal({
   selectedBuildingData
 }: MapModalProps) {
   return (
-    <ModalWrapper modalopen={modalOpen}>
+    <ModalWrapper modalopen={modalOpen.toString()}>
       <ExitIcon className="exit" onClick={() => setModalOpen(false)} />
-      <h1>{selectedBuildingData?.eng_name}</h1>
+      <h1>{selectedBuildingData?.building_name}</h1>
       <div>
         <h2>Entrance</h2>
         <p>{selectedBuildingData?.entrance}</p>
@@ -116,7 +116,7 @@ const StudyingSpotDiv = styled.div`
   }
 `;
 
-const ModalWrapper = styled.div<{ modalopen: boolean }>`
+const ModalWrapper = styled.div<{ modalopen: string }>`
   z-index: 100;
   overflow-y: scroll;
   position: absolute;
@@ -131,9 +131,10 @@ const ModalWrapper = styled.div<{ modalopen: boolean }>`
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  animation: ${({ modalopen }) => (modalopen ? fadeIn : fadeOut)} 0.3s ease
-    forwards;
-  visibility: ${({ modalopen }) => (modalopen ? 'visible' : 'visible')};
+  animation: ${({ modalopen }) => (modalopen === 'true' ? fadeIn : fadeOut)}
+    0.3s ease forwards;
+  visibility: ${({ modalopen }) =>
+    modalopen === 'true' ? 'visible' : 'visible'};
   h1 {
     font-size: 2.5rem;
     font-weight: 400;

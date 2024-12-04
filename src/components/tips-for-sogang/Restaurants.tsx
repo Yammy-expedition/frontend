@@ -13,14 +13,8 @@ interface Restaurant {
   google_map_link: string;
 }
 
-const locationList = [
-  'All',
-  'IN_SOGANG',
-  'MAIN_GATE',
-  'BACK_GATE',
-  'WEST_GATE',
-  'SINCHON'
-];
+const locationList = ['All', 'MAIN_GATE', 'BACK_GATE', 'SINCHON'];
+const locationList2 = ['All', 'Main gate', 'Back gate', 'Sinchon'];
 
 export default function Restaurants() {
   //기본 데이터
@@ -77,7 +71,7 @@ export default function Restaurants() {
             onClick={() => handleTabClick(el)}
             key={key}
           >
-            {el}
+            {locationList2[key]}
           </li>
         ))}
       </LocationTab>
