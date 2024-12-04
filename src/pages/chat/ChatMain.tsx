@@ -2,12 +2,15 @@ import styled from 'styled-components';
 import { ReactComponent as BackIcon } from 'assets/icons/chat/back.svg';
 import { ReactComponent as ChatIcon } from 'assets/icons/chat/chat.svg';
 import ChatList from 'components/chat/ChatList';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChatMain() {
+  const navigate = useNavigate();
+
   return (
     <Main>
       <header>
-        <BackIcon />
+        <BackIcon onClick={() => navigate(-1)} />
         <ChatIcon />
         chat
       </header>
@@ -36,6 +39,9 @@ const Main = styled.main`
       color: var(--primary-color);
       width: 2rem;
       height: 2rem;
+    }
+    @media (max-width: 430px) {
+      padding-left: 4rem;
     }
   }
 `;

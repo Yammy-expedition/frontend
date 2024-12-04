@@ -107,6 +107,7 @@ const ChatWrapper = styled.div`
   overflow-y: scroll;
   &::-webkit-scrollbar-thumb {
     background-color: var(--primary-color);
+    border-radius: 10px;
   }
   &::-webkit-scrollbar {
     width: 5px;

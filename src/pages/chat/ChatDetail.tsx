@@ -5,6 +5,7 @@ import ChatBubbles from 'components/chat/ChatBubbles';
 import ChatInput from 'components/chat/ChatInput';
 import { useEffect, useState } from 'react';
 import { instance } from 'api/instance';
+import { useNavigate } from 'react-router-dom';
 export type ChatDataType = {
   messages: {
     id: number;
@@ -28,6 +29,7 @@ export type ChatDataType = {
   };
 };
 export default function ChatDetail() {
+  const navigate = useNavigate();
   const other_user_local = JSON.parse(
     localStorage.getItem('other_user') || '{}'
   );
@@ -55,7 +57,7 @@ export default function ChatDetail() {
     <Main>
       <header>
         <div>
-          <BackIcon />
+          <BackIcon onClick={() => navigate(-1)} />
           {other_user_local?.username}
         </div>
         <MoreIcon />
@@ -88,6 +90,9 @@ const Main = styled.main`
     letter-spacing: -1px;
     background-color: white;
     color: var(--primary-color);
+    @media (max-width: 430px) {
+      padding-left: 4rem;
+    }
     svg {
       color: var(--primary-color);
       width: 2rem;
