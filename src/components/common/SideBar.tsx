@@ -43,7 +43,7 @@ const SideBarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 2px 3.8px 0px rgba(0, 0, 0, 0.25);
-  min-height: 100vh;
+  min-height: 100dvh;
   min-width: 15.4rem;
   padding: 0 0.6rem;
   left: -38rem;
