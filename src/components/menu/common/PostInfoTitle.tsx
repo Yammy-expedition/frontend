@@ -8,6 +8,10 @@ import { deletePosting } from 'utils/menu/deletePosting';
 import { useNavigate } from 'react-router-dom';
 import { postReport } from 'utils/common/postReport';
 
+import { ReactComponent as EmptyBookmarkSVG } from '../../../assets/icons/menu/bookmark-regular.svg';
+import { ReactComponent as ColoredBookmarkSVG } from '../../../assets/icons/menu/bookmark-solid.svg';
+import { postBookmark } from 'utils/menu/postBookmark';
+
 interface PostInfoTitleProps {
   posting: Posting;
   editting: boolean;
@@ -16,6 +20,8 @@ interface PostInfoTitleProps {
   price: string;
   setPrice: React.Dispatch<React.SetStateAction<string>>;
   setEditting: React.Dispatch<React.SetStateAction<boolean>>;
+  bookmark: boolean;
+  setBookmark: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function PostInfoTitle({
@@ -25,7 +31,9 @@ export default function PostInfoTitle({
   setTitle,
   price,
   setPrice,
-  setEditting
+  setEditting,
+  bookmark,
+  setBookmark
 }: PostInfoTitleProps) {
   const [more, setMore] = useState<boolean>(false);
   const moreRef = useRef<HTMLDivElement>(null);
@@ -35,6 +43,8 @@ export default function PostInfoTitle({
   const [reportReason, setReportReason] = useState<string>('');
 
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -70,6 +80,11 @@ export default function PostInfoTitle({
     deletePosting(posting.id.toString()).then(() => {
       navigate(`/menu/${posting.board_type}`, { replace: true });
     });
+  };
+
+  const onClickBookmarkButton = () => {
+    if (isLoading) return;
+    postBookmark(posting.id.toString(), setBookmark, isLoading, setIsLoading);
   };
 
   return (
@@ -122,8 +137,26 @@ export default function PostInfoTitle({
             )}
           </div>
 
-          <MoreDiv ref={moreRef} onClick={() => setMore((prev) => !prev)}>
-            <span style={{ cursor: 'pointer' }}>
+          <MoreDiv ref={moreRef}>
+            {posting.board_type !== 'market' && (
+              <>
+                <span
+                  style={{ cursor: 'pointer', width: '1.5rem' }}
+                  onClick={onClickBookmarkButton}
+                >
+                  {bookmark ? (
+                    <ColoredBookmarkSVG></ColoredBookmarkSVG>
+                  ) : (
+                    <EmptyBookmarkSVG></EmptyBookmarkSVG>
+                  )}
+                </span>
+              </>
+            )}
+
+            <span
+              style={{ cursor: 'pointer' }}
+              onClick={() => setMore((prev) => !prev)}
+            >
               <MoreSVG></MoreSVG>
             </span>
             {more &&

@@ -73,6 +73,7 @@ export default function PostingDetailPage() {
       setBookmark(result.is_bookmarked);
       setPrice(result.price);
       setImages(result.images);
+      setBookmarkCount(result.bookmark_count);
     });
     postPostingViewCount(postingId);
   }, []);
@@ -136,6 +137,8 @@ export default function PostingDetailPage() {
             price={price}
             setPrice={setPrice}
             setEditting={setEditting}
+            bookmark={bookmark}
+            setBookmark={setBookmark}
           ></PostInfoTitle>
 
           {!editting && <LineGradient></LineGradient>}

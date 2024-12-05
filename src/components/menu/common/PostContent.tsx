@@ -44,8 +44,10 @@ export default function PostContent({
   setEditting,
   onClickSave
 }: PostContentProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const onclickLikeButton = () => {
-    postPostingLike(posting.id.toString(), setLike);
+    if (isLoading) return;
+    postPostingLike(posting.id.toString(), setLike, isLoading, setIsLoading);
     if (like) {
       setLikeCount((prev) => prev - 1);
     } else setLikeCount((prev) => prev + 1);
@@ -59,7 +61,8 @@ export default function PostContent({
   };
 
   const onClickBookmarkButton = () => {
-    postBookmark(posting.id.toString(), setBookmark);
+    if (isLoading) return;
+    postBookmark(posting.id.toString(), setBookmark, isLoading, setIsLoading);
     if (bookmark) {
       setBookmarkCount((prev) => prev - 1);
     } else setBookmarkCount((prev) => prev + 1);
@@ -78,19 +81,19 @@ export default function PostContent({
         />
       </Content>
 
-      <>
-        {!editting && (
-          <BookmarkWrapper
-            $bookmark={bookmark}
-            $bookmarkPosition={posting.board_type}
-          >
-            <div onClick={onClickBookmarkButton}>
-              <BookmarkSVG></BookmarkSVG>
-            </div>
-            <p>{bookmarkCount}</p>
-          </BookmarkWrapper>
-        )}
-      </>
+      {posting.board_type === 'market' && (
+        <>
+          {!editting && (
+            <BookmarkWrapper $bookmark={bookmark}>
+              <div onClick={onClickBookmarkButton}>
+                <BookmarkSVG></BookmarkSVG>
+              </div>
+              <p>{bookmarkCount}</p>
+            </BookmarkWrapper>
+          )}
+        </>
+      )}
+
       {posting.board_type !== 'market' && (
         <>
           {!editting && (
@@ -198,13 +201,11 @@ const Button = styled.button`
 
 const BookmarkWrapper = styled.div<{
   $bookmark: boolean;
-  $bookmarkPosition: string;
 }>`
   position: fixed;
   right: 3rem;
-  bottom: ${(props) =>
-      props.$bookmarkPosition !== 'market' ? '17rem;' : '4rem;'}
-    > div {
+  bottom: 4rem;
+  > div {
     display: flex;
     justify-content: center;
     align-items: center;
