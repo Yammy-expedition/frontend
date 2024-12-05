@@ -127,7 +127,7 @@ const InputBox = styled.div`
   flex-direction: column;
   gap: 2rem;
   align-items: center;
-  margin-bottom: 7.5rem;
+  margin-bottom: 3.5rem;
 `;
 
 const LoginButtonWrapper = styled.div`
