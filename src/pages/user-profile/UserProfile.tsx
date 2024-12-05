@@ -1,8 +1,7 @@
 import Loading from 'components/common/Loading';
 import MyDatas from 'components/my-page/MyDatas';
 import MyProfile from 'components/my-page/MyProfile';
-import { userInfo } from 'os';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { getUserInfo } from 'utils/common/getUserInfo';

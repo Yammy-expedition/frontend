@@ -20,4 +20,5 @@ const MainPageContainer = styled.div`
   height: auto;
   min-height: 100vh; /* 부모 요소가 자식을 감쌀 수 있도록 설정 */
   overflow: hidden;
+  background: var(--background-gradient);
 `;

@@ -97,14 +97,20 @@ export default function PostingList({
 const PostingContainer = styled.div`
   > div {
     display: flex;
-    border-bottom: 1px solid var(--secondary-text);
+    border-bottom: 1px solid var(--hover-text);
     gap: 1.5rem;
-    padding: 1rem 0;
     min-height: 8rem;
     cursor: pointer;
-
+    transition: background 0.3s;
+    @media screen and (min-width: 430px) {
+      min-height: 9rem;
+      padding: 1rem 2rem;
+    }
     @media screen and (min-width: 768px) {
       min-height: 9rem;
+    }
+    &:hover {
+      background: var(--hover-text);
     }
   }
 `;
@@ -113,8 +119,6 @@ const EachPost = styled.div<{ $isOnSale: string }>`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
-  font-family: var(--main-font);
   cursor: pointer;
   > div {
     display: flex;
@@ -130,11 +134,12 @@ const EachPost = styled.div<{ $isOnSale: string }>`
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: 10rem;
-        font-weight: 500;
+        width: 60vw;
+        font-weight: 400;
+        letter-spacing: -0.5px;
         font-size: 1.6rem;
         @media screen and (min-width: 330px) {
-          width: 12rem;
+          width: 80%;
         }
         @media screen and (min-width: 768px) {
           font-size: 2rem;
@@ -150,7 +155,12 @@ const EachPost = styled.div<{ $isOnSale: string }>`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: ${(props) => (props.$isOnSale === 'FOR_SALE' ? 'var(--primary-color);' : props.$isOnSale !== 'SOLD_OUT' ? 'black;' : 'var(--main-gray);')}
+        background: ${(props) =>
+          props.$isOnSale === 'FOR_SALE'
+            ? 'var(--primary-color);'
+            : props.$isOnSale !== 'SOLD_OUT'
+              ? 'black;'
+              : 'var(--main-gray);'};
         color: white;
 
         width: 5rem;
@@ -179,9 +189,10 @@ const PostInfo = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 200;
 
     @media screen and (min-width: 768px) {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
     }
   }
 `;
@@ -190,7 +201,7 @@ const PriceBox = styled.div`
   color: #2b2b2b;
   font-size: 1.6rem;
   font-weight: 500;
-
+  letter-spacing: -0.5px;
   @media screen and (min-width: 768px) {
     font-size: 2rem;
   }
@@ -218,25 +229,25 @@ const RepresentImage = styled.div`
 `;
 
 const StyledHeartSVG = styled(HeartSVG)`
-  width: 1.6rem;
+  width: 1.3rem;
 
   @media screen and (min-width: 768px) {
-    width: 2rem;
+    width: 1.4rem;
   }
 `;
 
 const StyledEyeSVG = styled(EyeSVG)`
-  width: 1.6rem;
+  width: 1.3rem;
 
   @media screen and (min-width: 768px) {
-    width: 2rem;
+    width: 1.4rem;
   }
 `;
 
 const StyledCommentSVG = styled(CommentSVG)`
-  width: 1.6rem;
+  width: 1.3rem;
 
   @media screen and (min-width: 768px) {
-    width: 2rem;
+    width: 1.4rem;
   }
 `;

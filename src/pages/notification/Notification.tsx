@@ -112,11 +112,10 @@ const NotificationContainer = styled.div`
 const PageNameBox = styled.div`
   margin-bottom: 3rem;
   > p {
-    font-family: var(--sub-font);
     color: var(--primary-color);
-    font-weight: 600;
-    font-size: 4rem;
-
+    font-weight: 500;
+    font-size: 3rem;
+    letter-spacing: -1px;
     @media screen and (min-width: 768px) {
       font-size: 5rem;
     }
@@ -125,7 +124,6 @@ const PageNameBox = styled.div`
 
 const NotiListContainer = styled.div`
   width: 100%;
-  background: pink;
 `;
 
 const NotiList = styled.ul`

@@ -13,8 +13,8 @@ interface Restaurant {
   google_map_link: string;
 }
 
-const locationList = ['All', 'MAIN_GATE', 'BACK_GATE', 'SINCHON'];
-const locationList2 = ['All', 'Main gate', 'Back gate', 'Sinchon'];
+const locationList = ['All', 'MAIN_GATE', 'BACK_GATE', 'WEST_GATE', 'SINCHON'];
+const locationList2 = ['All', 'Main gate', 'Back gate', 'West gate', 'Sinchon'];
 
 export default function Restaurants() {
   //기본 데이터

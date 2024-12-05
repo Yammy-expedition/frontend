@@ -1,8 +1,10 @@
 :root {
   --primary-color: #b21f7c;
+  --secondary-color: #e3dfff;
   --primary-dark: #81165a;
   --main-text: #333;
   --secondary-text: #717171;
+  --bg-gray: #eee;
   --main-gray: #d9d9d9;
   --border-color: #c6c6c6;
   --hover-bg: #000;
@@ -10,17 +12,15 @@
   --main-gradient: linear-gradient(
     90deg,
     rgba(178, 31, 124, 1) 22%,
-    rgba(0, 0, 0, 1) 100%
+    #4c0d0f 100%
   );
+  --background-gradient: linear-gradient(180deg, #eee 65%, #e3dfff 100%);
   --line-gradient: linear-gradient(
     90deg,
     rgba(178, 31, 124, 0) 41%,
     rgba(178, 31, 124, 1) 100%
   );
-  --vertical-gradient: linear-gradient(
-    rgba(178, 31, 124, 1) 22%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  --vertical-gradient: linear-gradient(rgba(178, 31, 124, 1) 22%, #4c0d0f 100%);
   --main-font: 'Pretendard', sans-serif;
   --sub-font: 'Times New Roman', serif;
 }

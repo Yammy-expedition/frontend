@@ -66,33 +66,42 @@ const SearchContainer = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin: 4rem 0 2rem 0;
+  margin: 3rem 0 2rem 0;
   border-bottom: 1px solid var(--line-gradient);
   > div {
     display: flex;
     gap: 1rem;
+  }
+  @media screen and (min-width: 430px) {
+    padding: 0 2rem;
   }
 `;
 
 const SearchBox = styled.div`
   > select {
     width: 13rem;
-    height: 2.5rem;
+    height: 3rem;
     text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
   }
 `;
 
 const SearchBar = styled.div`
   position: relative;
-
   > input {
     width: 100%;
-    height: 2.5rem;
-    padding-right: 3rem;
+    height: 3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0 3rem 0 1rem;
+    &:focus {
+      outline: none;
+    }
   }
 
   > button {
-    height: 2.5rem;
+    height: 3rem;
     position: absolute;
     top: 0;
     right: 0;
@@ -107,7 +116,9 @@ const SearchBar = styled.div`
 const FilteringBox = styled.div`
   > select {
     width: 13rem;
-    height: 2.5rem;
+    height: 3rem;
     text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
   }
 `;

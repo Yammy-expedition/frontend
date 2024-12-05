@@ -116,12 +116,12 @@ export default function PostContent({
 
 const PostContentBox = styled.div`
   margin-top: 3.5rem;
-
   font-size: 3rem;
 `;
 
 const Content = styled.div`
   margin-bottom: 6rem;
+  letter-spacing: 0;
 `;
 
 const LikeWrapper = styled.div<{ $like: boolean }>`
@@ -135,11 +135,15 @@ const LikeWrapper = styled.div<{ $like: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 5rem;
+    height: 5rem;
     background: ${(props) =>
       props.$like ? 'var(--vertical-gradient)' : '#979797'};
     border-radius: 100%;
+    svg {
+      width: 50%;
+      height: 50%;
+    }
   }
 
   > p {

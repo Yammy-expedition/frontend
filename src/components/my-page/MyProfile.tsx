@@ -34,7 +34,7 @@ export interface ProfileProps {
 }
 
 export default function MyProfile(profileData: ProfileProps) {
-  const { category, userId } = useParams();
+  const { userId } = useParams();
 
   return (
     <Section>
@@ -59,7 +59,7 @@ export default function MyProfile(profileData: ProfileProps) {
             <p>{findCountryname(profileData.nationality)}</p>
           </div>
         </HeaderProfileBox>
-        {category ? (
+        {userId ? (
           <ToChatButton
             userId={Number(userId)}
             userName={profileData.nickname}
