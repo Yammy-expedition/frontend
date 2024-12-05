@@ -2,10 +2,13 @@ import { instance } from 'api/instance';
 
 export const postBookmark = async (
   postingId: string,
-  setBookmark: React.Dispatch<React.SetStateAction<boolean>>
+  setBookmark: React.Dispatch<React.SetStateAction<boolean>>,
+  isLoading: boolean,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  if (isLoading) return;
+  setIsLoading(true);
   const accessToken = localStorage.getItem('accessToken');
-
   const headers = { Authorization: `Bearer ${accessToken}` };
 
   try {
@@ -21,5 +24,7 @@ export const postBookmark = async (
     }
   } catch (err) {
     console.log(err);
+  } finally {
+    setIsLoading(false);
   }
 };
