@@ -49,7 +49,19 @@ export default function ChatList() {
   }, []);
 
   if (chatList.length === 0) {
-    return <ChatUL>채팅방이 없습니다.</ChatUL>;
+    return (
+      <ChatUL
+        style={{
+          width: '100%',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        채팅방이 없습니다.
+      </ChatUL>
+    );
   }
 
   function navigateToChatDetail(other_user: ChatListType['other_user']) {
@@ -64,10 +76,12 @@ export default function ChatList() {
             <li onClick={() => navigateToChatDetail(chat.other_user)} key={key}>
               <div className="rightBox">
                 <figure>
-                  <img
-                    src={`${process.env.REACT_APP_API_URL}${chat.other_user.profile_image}`}
-                    alt={chat.other_user.username}
-                  />
+                  <div>
+                    <img
+                      src={`${process.env.REACT_APP_API_URL}${chat.other_user.profile_image}`}
+                      alt={chat.other_user.username}
+                    />
+                  </div>
                   {chat.unread_count > 0 && <span>{chat.unread_count}</span>}
                 </figure>
                 <div>
@@ -109,9 +123,14 @@ const ChatUL = styled.ul`
       position: relative;
       border-radius: 50%;
       border: 2px solid var(--main-text);
-      overflow: hidden;
       flex-shrink: 0;
       background-color: var(--hover-text);
+      div {
+        width: fit-content;
+        height: fit-content;
+        overflow: hidden;
+        border-radius: 50%;
+      }
       img {
         width: 7rem;
         height: 7rem;
@@ -121,12 +140,13 @@ const ChatUL = styled.ul`
       span {
         position: absolute;
         top: 0;
-        right: 0;
-        font-size: 1.2rem;
+        right: -1rem;
+        font-size: 1.4rem;
+        font-weight: 400;
         border-radius: 50%;
         background-color: var(--primary-dark);
-        width: 2rem;
-        height: 2rem;
+        width: 2.5rem;
+        height: 2.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -136,6 +156,11 @@ const ChatUL = styled.ul`
         img {
           width: 5rem;
           height: 5rem;
+        }
+        span {
+          font-size: 1.2rem;
+          width: 2rem;
+          height: 2rem;
         }
       }
     }

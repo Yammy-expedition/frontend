@@ -42,7 +42,8 @@ export default function SearchBar({
   return (
     <>
       <div>
-        <select
+        <Select
+          style={{ paddingLeft: '1rem', fontWeight: '100' }}
           name="countries"
           id=""
           value={selectedCountryName || ''}
@@ -56,8 +57,9 @@ export default function SearchBar({
               {item.name}
             </option>
           ))}
-        </select>
-        <select
+        </Select>
+        <Select
+          style={{ paddingLeft: '1rem', fontWeight: '100' }}
           name="major"
           id=""
           value={selectedMajorName || ''}
@@ -69,11 +71,10 @@ export default function SearchBar({
           {majors.map((item, index) => (
             <option key={index}>{item.name}</option>
           ))}
-        </select>
+        </Select>
         <SearchButton onClick={onClickSearchButton}>Search</SearchButton>
       </div>
-
-      {}
+      <LineGradient />
       <div>
         {showUserList && (
           <SearchResult $isEmpty={userList.length === 0}>
@@ -97,24 +98,33 @@ export default function SearchBar({
   );
 }
 
+const LineGradient = styled.div`
+  height: 0.2rem;
+  margin-top: 1rem;
+  background-image: var(--line-gradient);
+`;
+
+const Select = styled.select`
+  border: 1px solid var(--border-color);
+`;
+
 const SearchButton = styled.button`
-  padding:0.75rem;
+  padding: 0.75rem;
 
   color: white;
   font-style: italic;
-  cursor:pointer;
+  cursor: pointer;
   background-image: var(--vertical-gradient);
-  border:none;
+  border: none;
   border-radius: 0.5rem;
 
   width: ${(7 * 5) / 6}rem;
   height: ${(4.2 * 5) / 6}rem;
 
   @media screen and (min-width: 1024px) {
-      width: 7rem;
-      height: 4.2rem;
+    width: 7rem;
+    height: 4.2rem;
   }
-};
 `;
 
 const SearchResult = styled.div<{ $isEmpty: boolean }>`
@@ -127,33 +137,28 @@ const SearchResult = styled.div<{ $isEmpty: boolean }>`
     width: 100%;
   }
   overflow: auto;
-  border: 2.5px solid var(--primary-color);
+  border: 1.5px solid var(--primary-color);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0rem;
   ${(props) =>
     props.$isEmpty ? 'text-align: center; justify-content:center;' : ''}
 
   height: 36.5rem;
-  padding: 3rem;
 
   @media screen and (min-width: 1024px) and (max-height: 768px) {
-    padding: 3rem;
     height: 25.5rem;
   }
 
   @media screen and (min-width: 1024px) and (max-height: 644px) {
-    padding: 3rem;
     height: 14.5rem;
   }
 
   @media screen and (max-width: 1023px) and (max-height: 767px) {
-    padding: 2rem;
     height: 18.5rem;
   }
 
   @media screen and (max-width: 1023px) and (min-height: 768px) {
-    padding: 2rem;
     height: 27.5rem;
   }
 `;

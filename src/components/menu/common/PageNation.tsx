@@ -112,6 +112,6 @@ const WriteButton = styled.button`
   width: 8rem;
   height: 3.5rem;
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 100;
   cursor: pointer;
 `;

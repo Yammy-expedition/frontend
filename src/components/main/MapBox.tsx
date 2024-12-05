@@ -124,7 +124,7 @@ export default function MapBox() {
         ) as SVGPathElement;
 
         if (countryPath) {
-          countryPath.style.fill = 'orange';
+          countryPath.style.fill = '#b6afe3';
           setSelectedCountry(countryPath);
         }
 
@@ -214,9 +214,8 @@ export default function MapBox() {
 const MapContainer = styled.div`
   width: 100%;
   position: relative;
-  height: 80%;
+  height: 100%;
   padding-top: calc(200 / 400 * 100%);
-
   > span {
     pointer-events: none;
     opacity: 0.3;

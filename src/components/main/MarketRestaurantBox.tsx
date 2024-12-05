@@ -2,6 +2,7 @@ import { postings } from 'constants/posting';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
+import { ReactComponent as SparkleSVG } from '../../assets/icons/main/sparkle.svg';
 import { useNavigate } from 'react-router-dom';
 import { Posting } from 'types/posting';
 import { getPostingList } from 'utils/common/getPostingList';
@@ -24,7 +25,7 @@ export default function MarketRestaurantBox() {
         <div>
           <SquareRestaurantPlus>
             <div>
-              <Square></Square>
+              <SparkleSVG />
               <p>Restaurant</p>
             </div>
             <Plus onClick={() => navigate('/menu/restaurant')}>
@@ -67,7 +68,8 @@ export default function MarketRestaurantBox() {
         <div>
           <SquareRestaurantPlus>
             <div>
-              <Square></Square>
+              {/* <Square></Square> */}
+              <SparkleSVG />
               <p>Market</p>
             </div>
             <Plus onClick={() => navigate('/menu/market')}>
@@ -115,13 +117,12 @@ const MarketRestaurant = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 3rem;
-
   width: 100%;
   height: auto; /* 높이를 자식 요소에 따라 조정 */
-  padding: 0 3rem;
+  padding: 0 3rem 0rem 3rem;
 
   @media screen and (min-width: 320px) and (max-width: 768px) {
-    margin-top: 15rem;
+    margin-top: 10rem;
   }
 
   @media screen and (min-width: 768px) {
@@ -146,9 +147,10 @@ const Market = styled.div`
 `;
 
 const SquareRestaurantPlus = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
+  letter-spacing: -1px;
   > div {
     display: flex;
     align-items: center;
@@ -158,6 +160,14 @@ const SquareRestaurantPlus = styled.div`
       font-size: 2rem;
       @media screen and (min-width: 1024px) {
         font-size: 2.4rem;
+      }
+    }
+    svg {
+      width: 2rem;
+      height: 2rem;
+      @media screen and (min-width: 1024px) {
+        width: 2.4rem;
+        height: 2.4rem;
       }
     }
   }
@@ -176,11 +186,15 @@ const Square = styled.div`
 
 const Plus = styled.div`
   cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+    color: var(--border-color);
+  }
 `;
 
 const List = styled.div`
-  border: 2px solid #97979780;
-  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px 5px 0 0;
   padding: 2rem;
   background: white;
   height: 100%;
@@ -189,6 +203,9 @@ const List = styled.div`
   gap: 1.75rem;
   font-size: 1.2rem;
   overflow: hidden;
+  @media screen and (max-width: 768px) {
+    border-radius: 5px;
+  }
 `;
 
 const CircleTitleCreatedAt = styled.div`

@@ -34,7 +34,7 @@ export interface ProfileProps {
 }
 
 export default function MyProfile(profileData: ProfileProps) {
-  const { category, userId } = useParams();
+  const { userId } = useParams();
 
   return (
     <Section>
@@ -59,7 +59,7 @@ export default function MyProfile(profileData: ProfileProps) {
             <p>{findCountryname(profileData.nationality)}</p>
           </div>
         </HeaderProfileBox>
-        {category ? (
+        {userId ? (
           <ToChatButton
             userId={Number(userId)}
             userName={profileData.nickname}
@@ -99,8 +99,10 @@ export default function MyProfile(profileData: ProfileProps) {
         </div>
         <div className="marginTop">
           <p>i will be in sogang for</p>
-          <span>2025.03.02~2025.12.02</span>
-          {/* <span>{profileData.start_date}~{profileData.end_date}</span> */}
+          {/* <span>2025.03.02~2025.12.02</span> */}
+          <span>
+            {profileData.start_date} ~ {profileData.end_date}
+          </span>
         </div>
         <div className="marginTop">
           <p>introduce</p>
@@ -141,6 +143,24 @@ const DetailInfo = styled.div`
       }
     }
   }
+  @media screen and (max-width: 430px) {
+    padding-left: 1rem;
+    margin-top: 2rem;
+    div {
+      gap: 1rem 2rem;
+      font-size: 1.4rem;
+      flex-wrap: wrap;
+      span {
+        max-width: 70%;
+      }
+      p {
+        font-size: 1.3rem;
+      }
+      &.marginTop {
+        width: 70vw;
+      }
+    }
+  }
 `;
 
 const HeaderProfileBox = styled.div`
@@ -148,6 +168,7 @@ const HeaderProfileBox = styled.div`
   align-items: flex-start;
   gap: 3rem;
   figure {
+    flex-shrink: 0;
     overflow: hidden;
     width: fit-content;
     height: fit-content;
@@ -160,6 +181,12 @@ const HeaderProfileBox = styled.div`
       scale: 1.3;
       width: 10rem;
       height: 10rem;
+    }
+    @media screen and (max-width: 430px) {
+      img {
+        width: 7.2rem;
+        height: 7rem;
+      }
     }
   }
   div {
@@ -196,6 +223,11 @@ const HeaderProfileBox = styled.div`
       font-size: 2rem;
     }
   }
+  @media screen and (max-width: 430px) {
+    margin-top: 2rem;
+    gap: 1rem;
+    /* align-items: flex-end; */
+  }
 `;
 
 const Section = styled.section`
@@ -221,6 +253,18 @@ const Section = styled.section`
       &:hover {
         background-color: var(--hover-bg);
         color: var(--hover-text);
+      }
+    }
+  }
+  @media screen and (max-width: 430px) {
+    padding: 3rem 2rem;
+    header {
+      align-items: flex-end;
+      button {
+        margin-bottom: 2rem;
+        width: 7rem;
+        height: 3rem;
+        font-size: 1.4rem;
       }
     }
   }

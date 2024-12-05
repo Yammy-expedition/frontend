@@ -17,10 +17,11 @@ export default function ToChatButton({
 }
 
 const Btn = styled.button`
+  border: none;
   width: 5rem;
   height: 2rem;
   background-color: var(--primary-color);
-  background-image: var(--vertical-gradient);
+  background: var(--vertical-gradient);
   color: white;
   border-radius: 1rem;
   font-size: 1rem;

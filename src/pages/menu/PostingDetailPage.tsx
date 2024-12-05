@@ -213,14 +213,15 @@ const PostingDetailContainer = styled.div`
   width: 100%;
   padding: 5.5rem 4.5rem;
   overflow: hidden;
+  letter-spacing: -1px;
 `;
 
 const PageNameBox = styled.div`
   > p {
-    font-family: var(--sub-font);
+    font-family: var(--primary-font);
     color: var(--primary-color);
-    font-weight: 600;
-    font-size: 5rem;
+    font-weight: 500;
+    font-size: 3rem;
   }
 `;
 
@@ -230,7 +231,12 @@ const SaleTag = styled.div<{ $isOnSale: string }>`
   justify-content: center;
   align-items: center;
 
-  background: ${(props) => (props.$isOnSale === 'on sale' ? 'var(--primary-color);' : props.$isOnSale !== 'sold out' ? 'black;' : 'var(--main-gray);')}
+  background: ${(props) =>
+    props.$isOnSale === 'on sale'
+      ? 'var(--primary-color);'
+      : props.$isOnSale !== 'sold out'
+        ? 'black;'
+        : 'var(--main-gray);'};
 
   color: white;
   width: 7rem;

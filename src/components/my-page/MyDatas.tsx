@@ -57,7 +57,6 @@ export default function MyDatas({
   myCategoryDatas
 }: MyDatasProps) {
   if (!myCategoryDatas) return null;
-  console.log(myCategoryDatas);
 
   return (
     <Wrapper>
@@ -172,7 +171,7 @@ const PostWrapper = styled.ul`
     }
     h1 {
       font-size: 1.6rem;
-      font-weight: 600;
+      font-weight: 300;
     }
     div {
       color: var(--secondary-text);
@@ -191,6 +190,9 @@ const PostWrapper = styled.ul`
       }
     }
   }
+  @media screen and (max-width: 430px) {
+    padding: 0;
+  }
 `;
 
 const Wrapper = styled.section`
@@ -199,4 +201,7 @@ const Wrapper = styled.section`
   padding: 3rem 0 0 5rem;
   background-color: var(--hover-text);
   position: relative;
+  @media screen and (max-width: 430px) {
+    padding: 3rem 0rem 0 2rem;
+  }
 `;

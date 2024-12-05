@@ -13,8 +13,8 @@ interface Restaurant {
   google_map_link: string;
 }
 
-const locationList = ['All', 'MAIN_GATE', 'BACK_GATE', 'SINCHON'];
-const locationList2 = ['All', 'Main gate', 'Back gate', 'Sinchon'];
+const locationList = ['All', 'MAIN_GATE', 'BACK_GATE', 'WEST_GATE', 'SINCHON'];
+const locationList2 = ['All', 'Main gate', 'Back gate', 'West gate', 'Sinchon'];
 
 export default function Restaurants() {
   //기본 데이터
@@ -174,7 +174,7 @@ const LocationTab = styled.ul`
       width: 14rem;
       font-size: 1.5rem;
     }
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
   }
 `;
 

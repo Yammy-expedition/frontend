@@ -155,7 +155,6 @@ const PageContainer = styled.div`
   position: relative;
   width: 100%;
   padding: 5rem 3rem;
-
   @media screen and (min-width: 768px) {
     padding: 6.5rem 4.5rem;
   }
@@ -163,18 +162,21 @@ const PageContainer = styled.div`
 
 const PageNameBox = styled.div`
   > p {
-    font-family: var(--sub-font);
+    font-family: var(--main-font);
     color: var(--primary-color);
-    font-weight: 600;
-    font-size: 4rem;
-
+    font-weight: 500;
+    font-size: 3rem;
+    letter-spacing: -2px;
     @media screen and (min-width: 768px) {
-      font-size: 5rem;
+      font-size: 3rem;
+    }
+    @media screen and (min-width: 430px) {
+      padding: 0 2rem;
     }
   }
 `;
 
 const LineGradient = styled.div`
-  height: 0.1rem;
+  height: 0.2rem;
   background-image: var(--line-gradient);
 `;

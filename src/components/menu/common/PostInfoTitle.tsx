@@ -270,7 +270,7 @@ const PostHeader = styled.div`
 
 const PostTitle = styled.p`
   font-size: 2.5rem;
-  font-weight: 500;
+  font-weight: 300;
 
   > input {
     font-size: 2.5rem;
@@ -284,15 +284,16 @@ const PostInfo = styled.div`
   display: flex;
   justify-content: space-between;
   color: var(--secondary-text);
-
+  font-weight: 200;
   > div {
     display: flex;
     gap: 2rem;
     > span {
-    font-size: 1.6rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 `;
 
