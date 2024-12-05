@@ -49,7 +49,19 @@ export default function ChatList() {
   }, []);
 
   if (chatList.length === 0) {
-    return <ChatUL>채팅방이 없습니다.</ChatUL>;
+    return (
+      <ChatUL
+        style={{
+          width: '100%',
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        채팅방이 없습니다.
+      </ChatUL>
+    );
   }
 
   function navigateToChatDetail(other_user: ChatListType['other_user']) {

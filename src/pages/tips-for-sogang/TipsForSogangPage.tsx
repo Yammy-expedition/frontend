@@ -3,6 +3,7 @@ import SogangMap from 'components/tips-for-sogang/SogangMap';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { ReactComponent as SparkleIcon } from 'assets/icons/main/sparkle.svg';
 
 export default function TipsForSogangPage() {
   const [selectedCategory, setSelectedCategory] = useState('restaurants');
@@ -25,7 +26,11 @@ export default function TipsForSogangPage() {
   return (
     <Wrapper>
       <Header>
-        <div>Tips for Sogang Life</div>
+        <div>
+          {' '}
+          <SparkleIcon />
+          Tips for Sogang Life
+        </div>
         <p>
           Tips for Sogang Life is what Unicon managements collected directly!
         </p>
@@ -65,25 +70,36 @@ const Wrapper = styled.main`
 const Header = styled.header`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   padding-top: 2.5rem;
   padding-bottom: 2rem;
   border-bottom: 2px solid;
   border-image: var(--line-gradient) 1;
-  font-family: var(--sub-font);
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   div {
-    font-size: 3.5rem;
+    font-size: 2.9rem;
+    font-weight: 400;
+    color: var(--hover-bg);
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
   }
   p {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    font-weight: 200;
     color: var(--secondary-text);
   }
   @media (max-width: 430px) {
-    padding-top: 4rem;
+    padding-top: 5rem;
     padding-left: 2rem;
     gap: 1rem;
     div {
+      font-weight: 300;
       font-size: 2.5rem;
     }
     p {

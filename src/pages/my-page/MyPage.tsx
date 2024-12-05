@@ -183,7 +183,7 @@ const Main = styled.main`
   }
 `;
 
-const NavTabs = styled.ul`
+export const NavTabs = styled.ul`
   display: flex;
   padding-left: 5rem;
   li {
@@ -206,6 +206,13 @@ const NavTabs = styled.ul`
     &.isSelected {
       background-color: var(--hover-text);
       color: var(--primary-color);
+    }
+  }
+  @media screen and (max-width: 430px) {
+    padding-left: 0;
+    li {
+      width: 12rem;
+      font-size: 1.2rem;
     }
   }
 `;

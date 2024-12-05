@@ -1,10 +1,12 @@
 import Loading from 'components/common/Loading';
 import MyDatas from 'components/my-page/MyDatas';
 import MyProfile from 'components/my-page/MyProfile';
+import { NavTabs } from 'pages/my-page/MyPage';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { getUserInfo } from 'utils/common/getUserInfo';
+import { jwtDecode } from 'jwt-decode';
 
 export interface ProfileProps {
   birth: string;
@@ -56,7 +58,9 @@ const categoryKeys: Array<keyof MyCagegoryDatasProps> = [
   'postings',
   'scraps'
 ];
-
+interface DecodedToken {
+  user_id: number;
+}
 export default function UserProfile() {
   const { userId } = useParams() as { userId: string };
   const [userProfileData, setUserProfileData] = useState<ProfileProps>();
@@ -67,6 +71,22 @@ export default function UserProfile() {
   const { category } = useParams();
   const [myCategoryDatas, setMyCategoryDatas] =
     useState<MyCagegoryDatasProps | null>(null);
+  const [jWTUserId, setJWTUserId] = useState<number | null>(null);
+  useEffect(() => {
+    //JWT 토큰을 사용해서 현 로그인 유저의 유저 아이디를 가져온다.
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        const decoded: DecodedToken = jwtDecode<DecodedToken>(token);
+        setJWTUserId(decoded.user_id);
+      }
+    } catch (error) {
+      console.error('JWT decoding error:', error);
+    }
+    if (jWTUserId === Number(userId)) {
+      navigate('/my-page');
+    }
+  }, [jWTUserId]);
 
   useEffect(() => {
     getUserInfo(Number(userId)).then((userInfo) => {
@@ -178,29 +198,29 @@ const Main = styled.main`
   }
 `;
 
-const NavTabs = styled.ul`
-  display: flex;
-  padding-left: 5rem;
-  li {
-    width: 15rem;
-    height: 4rem;
-    border-radius: 5px 5px 0 0;
-    color: var(--secondary-text);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition:
-      background-color 0.3s,
-      color 0.3s;
-    &:hover {
-      background-color: var(--hover-text);
-      color: var(--primary-color);
-    }
-    &.isSelected {
-      background-color: var(--hover-text);
-      color: var(--primary-color);
-    }
-  }
-`;
+// const NavTabs = styled.ul`
+//   display: flex;
+//   padding-left: 5rem;
+//   li {
+//     width: 15rem;
+//     height: 4rem;
+//     border-radius: 5px 5px 0 0;
+//     color: var(--secondary-text);
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-size: 1.4rem;
+//     cursor: pointer;
+//     transition:
+//       background-color 0.3s,
+//       color 0.3s;
+//     &:hover {
+//       background-color: var(--hover-text);
+//       color: var(--primary-color);
+//     }
+//     &.isSelected {
+//       background-color: var(--hover-text);
+//       color: var(--primary-color);
+//     }
+//   }
+// `;
