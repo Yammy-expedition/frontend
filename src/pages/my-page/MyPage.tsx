@@ -67,7 +67,7 @@ export default function MyPage() {
       navigate(`/my-page/${category}`);
     } else {
       setSelectedTab('postings');
-      navigate(`/my-page/posts`);
+      navigate(`/my-page/postings`);
     }
   }, []);
 

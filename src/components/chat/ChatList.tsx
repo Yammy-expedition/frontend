@@ -78,7 +78,7 @@ export default function ChatList() {
                 <figure>
                   <div>
                     <img
-                      src={`${process.env.REACT_APP_API_URL}${chat.other_user.profile_image}`}
+                      src={`${chat.other_user.profile_image}`}
                       alt={chat.other_user.username}
                     />
                   </div>

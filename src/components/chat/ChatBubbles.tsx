@@ -60,7 +60,7 @@ export default function ChatBubbles({
                   <span>{message.content}</span>
                   <figure>
                     <img
-                      src={`${process.env.REACT_APP_API_URL}${chatData.user.profile_image_url}`}
+                      src={`${chatData.user.profile_image_url}`}
                       alt="profile"
                     />
                   </figure>
@@ -71,7 +71,7 @@ export default function ChatBubbles({
                 <ChatBubble key={key} className="your">
                   <figure>
                     <img
-                      src={`${process.env.REACT_APP_API_URL}${chatData.opponent.profile_image_url}`}
+                      src={`${chatData.opponent.profile_image_url}`}
                       alt="profile"
                     />
                   </figure>
