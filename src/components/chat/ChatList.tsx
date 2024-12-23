@@ -21,6 +21,8 @@ export default function ChatList() {
   const [chatList, setChatList] = useState<ChatListType[]>([]);
   const navigate = useNavigate();
 
+  // API Calling
+  //********************************************************************************************************************* */
   useEffect(() => {
     const fetchChatList = async () => {
       const headers = {
@@ -47,6 +49,7 @@ export default function ChatList() {
     const interval = setInterval(fetchChatList, 5000);
     return () => clearInterval(interval); // 언마운트 시 정리
   }, []);
+  //********************************************************************************************************************** */
 
   if (chatList.length === 0) {
     return (
