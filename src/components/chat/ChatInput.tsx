@@ -24,16 +24,11 @@ export type ChatDataType = {
     profile_image_url: string;
   };
 };
-export default function ChatInput({
-  otheruserid,
-  setChatData
-}: {
-  otheruserid: number;
-  setChatData: React.Dispatch<React.SetStateAction<ChatDataType | null>>;
-}) {
+export default function ChatInput({ otheruserid }: { otheruserid: number }) {
   const [content, setContent] = useState('');
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (content === '') return;
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
     };
@@ -48,25 +43,25 @@ export default function ChatInput({
         }
       );
       // 메시지 전송 후 상태 업데이트
-      setChatData((prevData) => {
-        if (!prevData) return null;
+      // setChatData((prevData) => {
+      //   if (!prevData) return null;
 
-        return {
-          ...prevData,
-          messages: [
-            ...prevData.messages,
-            {
-              id: response.data.id, // 서버에서 반환된 메시지 ID
-              content: content,
-              created_at: response.data.created_at,
-              is_read: response.data.is_read,
-              room: response.data.room,
-              sender: response.data.sender,
-              sender_name: response.data.sender_name
-            }
-          ]
-        };
-      });
+      //   return {
+      //     ...prevData,
+      //     messages: [
+      //       ...prevData.messages,
+      //       {
+      //         id: response.data.id, // 서버에서 반환된 메시지 ID
+      //         content: content,
+      //         created_at: response.data.created_at,
+      //         is_read: response.data.is_read,
+      //         room: response.data.room,
+      //         sender: response.data.sender,
+      //         sender_name: response.data.sender_name
+      //       }
+      //     ]
+      //   };
+      // });
 
       setContent('');
     } catch (e) {

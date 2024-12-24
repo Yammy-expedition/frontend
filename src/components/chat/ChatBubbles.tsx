@@ -43,7 +43,9 @@ export default function ChatBubbles({
       // chatEndRef를 사용해 스크롤을 맨 아래로 내린다.
       setLength(chatData?.messages.length || 0);
     }
+    //console.log(chatData);
   }, [chatData]); // chatData가 변경될 때마다 실행
+
   return (
     <Section>
       {chatData ? (

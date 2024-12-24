@@ -3,6 +3,7 @@ import Loading from 'components/common/Loading';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 type ChatListType = {
   id: number;
@@ -19,37 +20,85 @@ type ChatListType = {
 
 export default function ChatList() {
   const [chatList, setChatList] = useState<ChatListType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  // API Calling
-  //********************************************************************************************************************* */
+  // SSE method
+  //****************************************************************************************************** */
   useEffect(() => {
-    const fetchChatList = async () => {
+    const RunSSE = () => {
+      const EventSource = EventSourcePolyfill || NativeEventSource;
       const headers = {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`
       };
-      try {
-        const response = await instance.get('chat/rooms', { headers });
+      const evtSource = new EventSource(
+        `${process.env.REACT_APP_API_URL}chat/rooms/stream`,
+        { headers: headers, withCredentials: true }
+      );
+      //console.log('열려라 참깨!');
+      //console.log('참깨빵 준비 중, 순살 고기 준비 중:', evtSource);
 
-        setChatList((prevList) => {
-          if (JSON.stringify(prevList) !== JSON.stringify(response.data)) {
-            console.log('Data updated:', response.data);
-            return response.data;
-          }
-          console.log('No data changes detected');
-          return prevList;
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      evtSource.onmessage = function (event) {
+        try {
+          console.log('Event received:', event);
+          const newEvent = JSON.parse(event.data);
+          //console.log(newEvent.rooms);
+          setChatList(newEvent.rooms);
+          setIsLoading(false);
+        } catch (err) {
+          console.error('Error parsing event data:', err);
+        }
+      };
+
+      evtSource.onerror = async (err) => {
+        console.error('evtSource failed:', err);
+        evtSource.close();
+        setTimeout(RunSSE, 1000);
+      };
+
+      return () => {
+        //console.log('닫혀라 참깨!!!!');
+        evtSource.close();
+      };
     };
 
-    // 초기 데이터 로드 및 2초마다 반복
-    fetchChatList();
-    const interval = setInterval(fetchChatList, 5000);
-    return () => clearInterval(interval); // 언마운트 시 정리
+    return RunSSE();
   }, []);
+  //****************************************************************************************************** */
+
+  // API Calling
+  //********************************************************************************************************************* */
+  // useEffect(() => {
+  //   const fetchChatList = async () => {
+  //     const headers = {
+  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+  //     };
+  //     try {
+  //       const response = await instance.get('chat/rooms', { headers });
+
+  //       setChatList((prevList) => {
+  //         if (JSON.stringify(prevList) !== JSON.stringify(response.data)) {
+  //           console.log('Data updated:', response.data);
+  //           return response.data;
+  //         }
+  //         console.log('No data changes detected');
+  //         return prevList;
+  //       });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   // 초기 데이터 로드 및 2초마다 반복
+  //   fetchChatList();
+  //   const interval = setInterval(fetchChatList, 5000);
+  //   return () => clearInterval(interval); // 언마운트 시 정리
+  // }, []);
   //********************************************************************************************************************** */
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (chatList.length === 0) {
     return (

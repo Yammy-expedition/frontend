@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@types/d3-geo": "^3.1.0",
+    "@types/event-source-polyfill": "^1.0.5",
     "@types/js-cookie": "^3.0.6",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "^22.8.6",
@@ -64,6 +65,7 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "event-source-polyfill": "^1.0.31",
     "prettier": "^3.3.3",
     "svgo": "^3.3.2"
   }
