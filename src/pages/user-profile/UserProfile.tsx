@@ -118,7 +118,7 @@ export default function UserProfile() {
       navigate(`/user-profile/${userId}/${category}`);
     } else {
       setSelectedTab('postings');
-      navigate(`/user-profile/posts`);
+      navigate(`/user-profile/postings`);
     }
   }, [userId, category, navigate]);
 

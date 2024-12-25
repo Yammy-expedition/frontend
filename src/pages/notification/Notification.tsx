@@ -1,5 +1,5 @@
 import Loading from 'components/common/Loading';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AllInfoNotification } from 'types/notification';
@@ -26,7 +26,10 @@ export default function Notification() {
 
   const onClickDeleteUniqueNoti = (itemId: number) => {
     deleteNotification(itemId).then(() =>
-      getNotification().then((result) => setNotice(result))
+      getNotification().then((result) => {
+        console.log(result);
+        setNotice(result);
+      })
     );
   };
 
@@ -49,12 +52,11 @@ export default function Notification() {
               <>
                 {notice.list.map((item, index) => (
                   <EachNoti key={index}>
-                    <>{console.log(notice.list.length)}</>
                     <NotiInfo>
                       <ImgBox>
                         <figure>
                           <img
-                            src={`${process.env.REACT_APP_API_URL}${item.actor.profile_image}`}
+                            src={`https://unicon.azureedge.net/media/${item.actor.profile_image}`}
                             alt="profile-img"
                           />
                         </figure>
