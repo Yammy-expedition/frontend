@@ -14,10 +14,38 @@ export default function MarketRestaurantBox() {
   const [marketPostings, setMarketPostings] = useState<Posting[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      // 레스토랑 데이터 가져오기
+      await getPostingList('restaurant', setRestaurantPostings, 1, setLoading);
+      // 마켓 데이터 가져오기
+      await getPostingList('market', setMarketPostings, 1, setLoading);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    getPostingList('restaurant', setRestaurantPostings, 1, setLoading);
-    getPostingList('market', setMarketPostings, 1, setLoading);
-    console.log(restaurantPostings);
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        console.log('Page restored from cache. Fetching new data...');
+        fetchData(); // 페이지가 캐시에서 복원될 때 데이터를 다시 가져오기
+      }
+    };
+
+    // 브라우저 `pageshow` 이벤트 리스너 등록
+    window.addEventListener('pageshow', handlePageShow);
+
+    // 컴포넌트가 처음 마운트될 때 데이터 패칭
+    fetchData();
+
+    // 언마운트 시 이벤트 리스너 정리
+    return () => {
+      window.removeEventListener('pageshow', handlePageShow);
+    };
   }, []);
   return (
     <MarketRestaurant>
@@ -45,7 +73,7 @@ export default function MarketRestaurantBox() {
                     <Circle></Circle>
                     <Title
                       onClick={() =>
-                        navigate(`/posting-detail/${post.id}`, {
+                        navigate(`/posting/${post.id}`, {
                           state: {
                             posting: post,
                             boardType: 'restaurant',
@@ -89,7 +117,7 @@ export default function MarketRestaurantBox() {
                     <Circle></Circle>
                     <Title
                       onClick={() =>
-                        navigate(`/posting-detail/${post.id}`, {
+                        navigate(`/posting/${post.id}`, {
                           state: {
                             posting: post,
                             boardType: 'market',

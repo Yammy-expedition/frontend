@@ -5,6 +5,11 @@ import styled from 'styled-components';
 import { AllInfoNotification } from 'types/notification';
 import { getNotification } from 'utils/notification/getNotification';
 import { ReactComponent as TrashCanSVG } from '../../assets/icons/notification/trash-can-regular.svg';
+import { ReactComponent as CommentSVG } from '../../assets/icons/notification/comment-solid.svg';
+import { ReactComponent as MessageSVG } from '../../assets/icons/notification/message-solid.svg';
+import { ReactComponent as ReportSVG } from '../../assets/icons/notification/flag-solid.svg';
+import { ReactComponent as FollowSVG } from '../../assets/icons/notification/user-plus-solid.svg';
+import { ReactComponent as SystemSVG } from '../../assets/icons/notification/user-tie-solid.svg';
 import { putReadNotification } from 'utils/notification/putReadNotification';
 import { deleteNotification } from 'utils/notification/deleteNotification';
 import { deleteAllNotification } from 'utils/notification/deleteAllNotification';
@@ -19,8 +24,9 @@ export default function Notification() {
 
   const onClickNoti = (itemId: number, redirectURL: string) => {
     putReadNotification(itemId);
+
     const arr = redirectURL.split('/');
-    console.log(arr);
+
     navigate(`/${arr[1]}/${arr[2]}`);
   };
 
@@ -39,6 +45,14 @@ export default function Notification() {
     );
   };
 
+  const SVGContributor = (notification_type: string) => {
+    if (notification_type === 'MESSAGE') return <MessageSVG />;
+    else if (notification_type === 'COMMENT') return <CommentSVG />;
+    else if (notification_type === 'FOLLOW') return <FollowSVG />;
+    else if (notification_type === 'REPORT') return <ReportSVG />;
+    else return <SystemSVG />;
+  };
+
   return (
     <NotificationContainer>
       <PageNameBox>
@@ -53,14 +67,9 @@ export default function Notification() {
                 {notice.list.map((item, index) => (
                   <EachNoti key={index}>
                     <NotiInfo>
-                      <ImgBox>
-                        <figure>
-                          <img
-                            src={`https://unicon.azureedge.net/media/${item.actor.profile_image}`}
-                            alt="profile-img"
-                          />
-                        </figure>
-                      </ImgBox>
+                      <SVGWrapper>
+                        {SVGContributor(item.notification_type)}
+                      </SVGWrapper>
 
                       <div
                         onClick={() =>
@@ -182,6 +191,10 @@ const ImgBox = styled.div`
       height: 5rem;
     }
   }
+`;
+
+const SVGWrapper = styled.div`
+  width: 4rem;
 `;
 
 const DeleteButtonWrapper = styled.div`
