@@ -36,73 +36,75 @@ export default function ChatDetail() {
   const [chatData, setChatData] = useState<ChatDataType | null>(null);
   // new
   //************************************************************************************************************ */
-  useEffect(() => {
-    const RunSSE = () => {
-      const EventSource = EventSourcePolyfill || NativeEventSource;
-      const headers = {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      };
+  // useEffect(() => {
+  //   const RunSSE = () => {
+  //     const EventSource = EventSourcePolyfill || NativeEventSource;
+  //     const headers = {
+  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+  //     };
 
-      const evtSource = new EventSource(
-        `${process.env.REACT_APP_API_URL}chat/${other_user_local_id}/messages/stream`,
-        { headers: headers, withCredentials: true }
-      );
+  //     const evtSource = new EventSource(
+  //       `${process.env.REACT_APP_API_URL}chat/${other_user_local_id}/messages/stream`,
+  //       { headers: headers, withCredentials: true }
+  //     );
 
-      evtSource.onmessage = function (event) {
-        try {
-          console.log('Event received:', event);
-          const newEvent = JSON.parse(event.data);
-          console.log(newEvent);
-          setChatData((prev) => {
-            if (prev === null) return newEvent;
-            else
-              return {
-                ...prev,
-                messages: [...prev.messages, newEvent.messages[0]]
-              };
-          });
-        } catch (err) {
-          console.error('Error parsing event data:', err);
-        }
-      };
+  //     evtSource.onmessage = function (event) {
+  //       try {
+  //         console.log('Event received:', event);
+  //         const newEvent = JSON.parse(event.data);
+  //         console.log(newEvent);
+  //         setChatData((prev) => {
+  //           if (prev === null) return newEvent;
+  //           else
+  //             return {
+  //               ...prev,
+  //               messages: [...prev.messages, newEvent.messages[0]]
+  //             };
+  //         });
+  //       } catch (err) {
+  //         console.error('Error parsing event data:', err);
+  //       }
+  //     };
 
-      evtSource.onerror = async (err) => {
-        console.error('evtSource failed:', err);
-        evtSource.close();
-        setTimeout(RunSSE, 1000);
-      };
+  //     evtSource.onerror = async (err) => {
+  //       console.error('evtSource failed:', err);
+  //       evtSource.close();
+  //       setTimeout(RunSSE, 1000);
+  //     };
 
-      return () => {
-        evtSource.close();
-      };
-    };
+  //     return () => {
+  //       evtSource.close();
+  //     };
+  //   };
 
-    return RunSSE();
-  }, []);
+  //   return RunSSE();
+  // }, []);
   //************************************************************************************************************ */
 
   // old
   //************************************************************************************************************ */
-  // useEffect(() => {
-  //   const getChatDetail = async () => {
-  //     const headers = {
-  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-  //     };
-  //     try {
-  //       const response = await instance.get(
-  //         `/chat/${other_user_local_id}/messages`,
-  //         {
-  //           headers
-  //         }
-  //       );
-  //       setChatData(response.data);
-  //       console.log(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getChatDetail();
-  // }, [chatData]);
+  useEffect(() => {
+    const getChatDetail = async () => {
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      };
+      try {
+        const response = await instance.get(
+          `/chat/${other_user_local_id}/messages`,
+          {
+            headers
+          }
+        );
+        setChatData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getChatDetail();
+    const interval = setInterval(getChatDetail, 3000);
+    return () => clearInterval(interval); // 언마운트 시 정리
+  }, [chatData]);
   //************************************************************************************************************ */
 
   return (
