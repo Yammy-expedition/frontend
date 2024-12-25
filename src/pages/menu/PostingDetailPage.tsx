@@ -13,13 +13,6 @@ import MarketImageModal from 'components/menu/market/MarketImageModal';
 import Loading from 'components/common/Loading';
 
 export default function PostingDetailPage() {
-  const location = useLocation();
-  const state = location.state as {
-    posting: Posting;
-    boardType: string;
-    pageName: string;
-  };
-
   interface ImagesResponse {
     id: number;
     image: string;
@@ -79,10 +72,6 @@ export default function PostingDetailPage() {
   }, []);
 
   useEffect(() => {
-    console.log(state);
-  }, []);
-
-  useEffect(() => {
     if (openMarketImgageModal) {
       document.body.style.overflow = 'hidden'; // 스크롤 비활성화
     } else {
@@ -93,6 +82,12 @@ export default function PostingDetailPage() {
       document.body.style.overflow = 'auto'; // 컴포넌트 언마운트 시 스크롤 복원
     };
   }, [openMarketImgageModal]);
+
+  const getPageName = (boardType: string) => {
+    if (boardType === 'general') return 'General Discussion';
+    else if (boardType === 'market') return 'Markets';
+    else return 'Restaurants';
+  };
 
   const onClickSave = () => {
     patchPosting(postingId, title, content, price).then(() =>
@@ -122,7 +117,7 @@ export default function PostingDetailPage() {
       {posting ? (
         <>
           <PageNameBox>
-            <p>{state.pageName}</p>
+            <p>{getPageName(posting.board_type)}</p>
           </PageNameBox>
 
           {posting.board_type === 'market' && (

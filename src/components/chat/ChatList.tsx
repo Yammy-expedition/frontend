@@ -35,16 +35,15 @@ export default function ChatList() {
         `${process.env.REACT_APP_API_URL}chat/rooms/stream`,
         { headers: headers, withCredentials: true }
       );
-      //console.log('열려라 참깨!');
-      //console.log('참깨빵 준비 중, 순살 고기 준비 중:', evtSource);
+      console.log('열려라 참깨!');
+      console.log('참깨빵 준비 중, 순살 고기 준비 중:', evtSource);
 
       evtSource.onmessage = function (event) {
         try {
           console.log('Event received:', event);
           const newEvent = JSON.parse(event.data);
-          //console.log(newEvent.rooms);
+          console.log(newEvent.rooms);
           setChatList(newEvent.rooms);
-          setIsLoading(false);
         } catch (err) {
           console.error('Error parsing event data:', err);
         }
@@ -57,8 +56,8 @@ export default function ChatList() {
       };
 
       return () => {
-        //console.log('닫혀라 참깨!!!!');
         evtSource.close();
+        console.log('닫혀라 참깨!!!!');
       };
     };
 
@@ -95,10 +94,6 @@ export default function ChatList() {
   //   return () => clearInterval(interval); // 언마운트 시 정리
   // }, []);
   //********************************************************************************************************************** */
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   if (chatList.length === 0) {
     return (

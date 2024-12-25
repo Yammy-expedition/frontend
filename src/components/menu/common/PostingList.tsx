@@ -25,7 +25,7 @@ export default function PostingList({
         <div
           key={index}
           onClick={() =>
-            navigate(`/posting-detail/${posting.id}`, {
+            navigate(`/posting/${posting.id}`, {
               state: {
                 posting: posting,
                 boardType: boardType,
