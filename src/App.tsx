@@ -48,19 +48,22 @@ function App() {
 
   return (
     <AppContainer className="App">
-      {location.pathname !== '/admin' && location.pathname !== '/sign-up' && (
-        <div className="Hamburger">
-          <HamburgerMenuSVGWrapper onClick={() => setOpenHam((prev) => !prev)}>
-            <HamburgerMenuSVG />
-          </HamburgerMenuSVGWrapper>
+      {location.pathname.split('/')[1] !== 'admin' &&
+        location.pathname !== '/sign-up' && (
+          <div className="Hamburger">
+            <HamburgerMenuSVGWrapper
+              onClick={() => setOpenHam((prev) => !prev)}
+            >
+              <HamburgerMenuSVG />
+            </HamburgerMenuSVGWrapper>
 
-          <SideBar
-            openHam={openHam}
-            setOpenHam={setOpenHam}
-            sideBarRef={sideBarRef}
-          />
-        </div>
-      )}
+            <SideBar
+              openHam={openHam}
+              setOpenHam={setOpenHam}
+              sideBarRef={sideBarRef}
+            />
+          </div>
+        )}
 
       <Router />
     </AppContainer>

@@ -15,12 +15,19 @@ import UserProfile from 'pages/user-profile/UserProfile';
 import Notification from 'pages/notification/Notification';
 import ChatDetail from 'pages/chat/ChatDetail';
 import WhatIsUnicon from 'pages/what-is-unicon/WhatIsUnicon';
+import AllUsers from 'components/admin/AllUsers';
+import AllReports from 'components/admin/AllReports';
+import AllReportedUsers from 'components/admin/AllReportedUsers';
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
-      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin" element={<AdminPage />}>
+        <Route path="users" element={<AllUsers />} />
+        <Route path="reports" element={<AllReports />} />
+        <Route path="reported-users" element={<AllReportedUsers />} />
+      </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/introduction" element={<WhatIsUnicon />} />
       <Route path="/chat/:id" element={<ChatDetail />} />
