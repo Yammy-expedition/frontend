@@ -83,6 +83,8 @@ const LocationTab = styled.ul`
 `;
 
 const LocationElement = styled.li`
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  overflow: hidden;
   max-width: 10rem;
   height: 5rem;
   background-color: var(--main-gray);
@@ -97,8 +99,8 @@ const LocationElement = styled.li`
   letter-spacing: -0.5px;
   transition:
     color 0.3s,
-    background-color 0.3s;
-  /* max-width 0.4s; */
+    background-color 0.3s,
+    max-width 1s;
   svg path {
     stroke-width: 2;
     stroke: white;
@@ -117,6 +119,7 @@ const LocationElement = styled.li`
     width: 1.8rem;
     height: 1.8rem;
     stroke-width: 2;
+    flex-shrink: 0;
   }
   path {
     transition: stroke 0.3s;
@@ -130,9 +133,13 @@ const LocationElement = styled.li`
       opacity 0.2s,
       visibility 0.2s,
       display 0.2s;
+    flex-shrink: 0;
   }
   &:hover > span {
     display: inline;
     opacity: 1;
+  }
+  &:active {
+    scale: 0.9;
   }
 `;

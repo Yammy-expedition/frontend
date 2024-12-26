@@ -151,6 +151,7 @@ const InputBox = styled.li`
   gap: 0.6rem;
   cursor: pointer;
   letter-spacing: -0.5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   input {
     background: none;
     border: none;
