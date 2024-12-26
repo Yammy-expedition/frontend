@@ -83,7 +83,7 @@ const AppContainer = styled.div`
     }
 
     @media screen and (min-width: 1024px) {
-      margin-left: 34.4rem;
+      margin-left: 32rem;
     }
   }
 `;

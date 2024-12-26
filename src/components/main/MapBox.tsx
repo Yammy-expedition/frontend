@@ -124,7 +124,7 @@ export default function MapBox() {
         ) as SVGPathElement;
 
         if (countryPath) {
-          countryPath.style.fill = '#b6afe3';
+          countryPath.style.fill = 'var(--secondary-color)';
           setSelectedCountry(countryPath);
         }
 

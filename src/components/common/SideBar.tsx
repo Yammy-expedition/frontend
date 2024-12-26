@@ -26,14 +26,23 @@ export default function SideBar({
 
   return (
     <SideBarContainer ref={sideBarRef}>
-      <Hamburger setOpenHam={setOpenHam} />
-      <TitleBox />
-      <MenuGroup />
+      <Header>
+        <Hamburger setOpenHam={setOpenHam} />
+        <TitleBox />
+        <MenuGroup />
+      </Header>
       <Footer />
     </SideBarContainer>
   );
 }
-
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 2rem;
+  gap: 1rem;
+`;
 const SideBarContainer = styled.div`
   position: fixed;
   z-index: 10;
@@ -44,8 +53,8 @@ const SideBarContainer = styled.div`
   align-items: center;
   box-shadow: 0px 2px 3.8px 0px rgba(0, 0, 0, 0.25);
   min-height: 100dvh;
-  min-width: 15.4rem;
-  padding: 0 0.6rem;
+  min-width: 80vw;
+  padding: 0 2rem;
   left: -38rem;
   transition: left 0.3s ease-in-out;
   z-index: 200;
@@ -55,7 +64,7 @@ const SideBarContainer = styled.div`
   }
 
   @media screen and (min-width: 1024px) {
-    min-width: 34.4rem;
+    min-width: 32rem;
     padding: 0 2rem;
   }
 `;
