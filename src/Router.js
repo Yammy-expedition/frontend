@@ -39,10 +39,7 @@ function Router() {
         ></Route>
       </Route>
       <Route element={<AuthRoute />}>
-        <Route
-          path="/posting-detail/:postingId"
-          element={<PostingDetailPage />}
-        />
+        <Route path="/posting/:postingId" element={<PostingDetailPage />} />
 
         <Route path="/my-page" element={<MyPage />}>
           <Route path=":category" element={<MyPage />} />

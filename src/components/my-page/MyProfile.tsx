@@ -41,10 +41,7 @@ export default function MyProfile(profileData: ProfileProps) {
       <header>
         <HeaderProfileBox>
           <figure>
-            <img
-              src={`${process.env.REACT_APP_API_URL}${profileData.profile_image}`}
-              alt="profile"
-            />
+            <img src={`${profileData.profile_image}`} alt="profile" />
           </figure>
           <div>
             <h1>

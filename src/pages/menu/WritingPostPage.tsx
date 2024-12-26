@@ -130,7 +130,7 @@ export default function WritingPostPage() {
     if (isContentUpdated) {
       postPosting(title, content, state.boardType, price, newImgFiles).then(
         (result) => {
-          navigate(`/posting-detail/${result.id}`, {
+          navigate(`/posting/${result.id}`, {
             replace: true,
             state: {
               boardType: state.boardType,

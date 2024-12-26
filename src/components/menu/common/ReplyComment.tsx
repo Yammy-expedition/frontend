@@ -54,9 +54,7 @@ export default function ReplyComment({
         <ProfileBox>
           <figure>
             <div>
-              <img
-                src={`${process.env.REACT_APP_API_URL}${comment.profile_image}`}
-              />
+              <img src={`${comment.profile_image}`} />
             </div>
           </figure>
         </ProfileBox>

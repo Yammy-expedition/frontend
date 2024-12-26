@@ -55,9 +55,7 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
         <ProfileBox>
           <figure>
             <div>
-              <img
-                src={`${process.env.REACT_APP_API_URL}${comment.profile_image}`}
-              />
+              <img src={`${comment.profile_image}`} />
             </div>
           </figure>
         </ProfileBox>

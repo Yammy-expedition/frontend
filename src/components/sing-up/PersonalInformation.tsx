@@ -78,6 +78,10 @@ export default function PersonalInformation({
     setValue('languages', selectedLanguagesCode);
   }, [selectedLanguagesCode]);
 
+  useEffect(() => {
+    setValue('is_active', true);
+  }, []);
+
   return (
     <PersonalInformationContainer onSubmit={handleSubmit(submit)}>
       <p>③ Self-Certification</p>

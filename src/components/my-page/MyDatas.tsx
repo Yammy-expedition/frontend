@@ -81,7 +81,7 @@ const PostingsLi = (postingLists: Posting[]) => {
       {postingLists.map((post, key: number) => (
         <li
           onClick={() =>
-            navigate(`/posting-detail/${post.id}`, {
+            navigate(`/posting/${post.id}`, {
               state: {
                 board_type: post.board_type,
                 posting: post,
@@ -123,7 +123,7 @@ const CommentsLi = (commentLists: Comment[]) => {
         <li
           key={key}
           onClick={() =>
-            navigate(`/posting-detail/${comment.id}`, {
+            navigate(`/posting/${comment.id}`, {
               state: {
                 board_type: comment.board_type,
                 // posting: comment,

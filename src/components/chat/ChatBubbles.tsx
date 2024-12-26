@@ -43,7 +43,9 @@ export default function ChatBubbles({
       // chatEndRef를 사용해 스크롤을 맨 아래로 내린다.
       setLength(chatData?.messages.length || 0);
     }
+    //console.log(chatData);
   }, [chatData]); // chatData가 변경될 때마다 실행
+
   return (
     <Section>
       {chatData ? (
@@ -60,7 +62,7 @@ export default function ChatBubbles({
                   <span>{message.content}</span>
                   <figure>
                     <img
-                      src={`${process.env.REACT_APP_API_URL}${chatData.user.profile_image_url}`}
+                      src={`${chatData.user.profile_image_url}`}
                       alt="profile"
                     />
                   </figure>
@@ -71,7 +73,7 @@ export default function ChatBubbles({
                 <ChatBubble key={key} className="your">
                   <figure>
                     <img
-                      src={`${process.env.REACT_APP_API_URL}${chatData.opponent.profile_image_url}`}
+                      src={`${chatData.opponent.profile_image_url}`}
                       alt="profile"
                     />
                   </figure>

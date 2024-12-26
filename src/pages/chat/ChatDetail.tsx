@@ -6,6 +6,7 @@ import ChatInput from 'components/chat/ChatInput';
 import { useEffect, useState } from 'react';
 import { instance } from 'api/instance';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 export type ChatDataType = {
   messages: {
     id: number;
@@ -33,6 +34,55 @@ export default function ChatDetail() {
   const location = useLocation();
   const other_user_local_id = localStorage.getItem('other_user_id');
   const [chatData, setChatData] = useState<ChatDataType | null>(null);
+  // new
+  //************************************************************************************************************ */
+  // useEffect(() => {
+  //   const RunSSE = () => {
+  //     const EventSource = EventSourcePolyfill || NativeEventSource;
+  //     const headers = {
+  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+  //     };
+
+  //     const evtSource = new EventSource(
+  //       `${process.env.REACT_APP_API_URL}chat/${other_user_local_id}/messages/stream`,
+  //       { headers: headers, withCredentials: true }
+  //     );
+
+  //     evtSource.onmessage = function (event) {
+  //       try {
+  //         console.log('Event received:', event);
+  //         const newEvent = JSON.parse(event.data);
+  //         console.log(newEvent);
+  //         setChatData((prev) => {
+  //           if (prev === null) return newEvent;
+  //           else
+  //             return {
+  //               ...prev,
+  //               messages: [...prev.messages, newEvent.messages[0]]
+  //             };
+  //         });
+  //       } catch (err) {
+  //         console.error('Error parsing event data:', err);
+  //       }
+  //     };
+
+  //     evtSource.onerror = async (err) => {
+  //       console.error('evtSource failed:', err);
+  //       evtSource.close();
+  //       setTimeout(RunSSE, 1000);
+  //     };
+
+  //     return () => {
+  //       evtSource.close();
+  //     };
+  //   };
+
+  //   return RunSSE();
+  // }, []);
+  //************************************************************************************************************ */
+
+  // old
+  //************************************************************************************************************ */
   useEffect(() => {
     const getChatDetail = async () => {
       const headers = {
@@ -46,12 +96,17 @@ export default function ChatDetail() {
           }
         );
         setChatData(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     getChatDetail();
+    const interval = setInterval(getChatDetail, 3000);
+    return () => clearInterval(interval); // 언마운트 시 정리
   }, [chatData]);
+  //************************************************************************************************************ */
+
   return (
     <Main>
       <header>
@@ -62,10 +117,7 @@ export default function ChatDetail() {
         <MoreIcon />
       </header>
       <ChatBubbles chatData={chatData} />
-      <ChatInput
-        otheruserid={Number(other_user_local_id)}
-        setChatData={setChatData}
-      />
+      <ChatInput otheruserid={Number(other_user_local_id)} />
     </Main>
   );
 }

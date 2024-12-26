@@ -1,10 +1,15 @@
 import Loading from 'components/common/Loading';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AllInfoNotification } from 'types/notification';
 import { getNotification } from 'utils/notification/getNotification';
 import { ReactComponent as TrashCanSVG } from '../../assets/icons/notification/trash-can-regular.svg';
+import { ReactComponent as CommentSVG } from '../../assets/icons/notification/comment-solid.svg';
+import { ReactComponent as MessageSVG } from '../../assets/icons/notification/message-solid.svg';
+import { ReactComponent as ReportSVG } from '../../assets/icons/notification/flag-solid.svg';
+import { ReactComponent as FollowSVG } from '../../assets/icons/notification/user-plus-solid.svg';
+import { ReactComponent as SystemSVG } from '../../assets/icons/notification/user-tie-solid.svg';
 import { putReadNotification } from 'utils/notification/putReadNotification';
 import { deleteNotification } from 'utils/notification/deleteNotification';
 import { deleteAllNotification } from 'utils/notification/deleteAllNotification';
@@ -19,14 +24,18 @@ export default function Notification() {
 
   const onClickNoti = (itemId: number, redirectURL: string) => {
     putReadNotification(itemId);
+
     const arr = redirectURL.split('/');
-    console.log(arr);
+
     navigate(`/${arr[1]}/${arr[2]}`);
   };
 
   const onClickDeleteUniqueNoti = (itemId: number) => {
     deleteNotification(itemId).then(() =>
-      getNotification().then((result) => setNotice(result))
+      getNotification().then((result) => {
+        console.log(result);
+        setNotice(result);
+      })
     );
   };
 
@@ -34,6 +43,14 @@ export default function Notification() {
     deleteAllNotification().then(() =>
       getNotification().then((result) => setNotice(result))
     );
+  };
+
+  const SVGContributor = (notification_type: string) => {
+    if (notification_type === 'MESSAGE') return <MessageSVG />;
+    else if (notification_type === 'COMMENT') return <CommentSVG />;
+    else if (notification_type === 'FOLLOW') return <FollowSVG />;
+    else if (notification_type === 'REPORT') return <ReportSVG />;
+    else return <SystemSVG />;
   };
 
   return (
@@ -49,16 +66,10 @@ export default function Notification() {
               <>
                 {notice.list.map((item, index) => (
                   <EachNoti key={index}>
-                    <>{console.log(notice.list.length)}</>
                     <NotiInfo>
-                      <ImgBox>
-                        <figure>
-                          <img
-                            src={`${process.env.REACT_APP_API_URL}${item.actor.profile_image}`}
-                            alt="profile-img"
-                          />
-                        </figure>
-                      </ImgBox>
+                      <SVGWrapper>
+                        {SVGContributor(item.notification_type)}
+                      </SVGWrapper>
 
                       <div
                         onClick={() =>
@@ -180,6 +191,10 @@ const ImgBox = styled.div`
       height: 5rem;
     }
   }
+`;
+
+const SVGWrapper = styled.div`
+  width: 4rem;
 `;
 
 const DeleteButtonWrapper = styled.div`
