@@ -1,6 +1,7 @@
 import { ReactComponent as CafeIcon } from '../../assets/icons/tips-for-sogang/cafe.svg';
-// import { ReactComponent as PrinterIcon } from '../../assets/icons/tips-for-sogang/printer.svg';
+import { ReactComponent as PrinterIcon } from '../../assets/icons/tips-for-sogang/printer.svg';
 import { ReactComponent as BookIcon } from '../../assets/icons/tips-for-sogang/book.svg';
+import { ReactComponent as HospitalIcon } from '../../assets/icons/tips-for-sogang/hospital.svg';
 import styled from 'styled-components';
 import KakaoMap from './KakaoMap';
 import { useSearchParams } from 'react-router-dom';
@@ -29,18 +30,22 @@ export default function SogangMap() {
           style={{ backgroundColor: '#9190C0' }}
           onClick={() => handleTabClick('study')}
         >
-          <BookIcon /> studying spot
+          <BookIcon /> <span>studying spot</span>
         </LocationElement>
-        {/* <LocationElement>
-          <PrinterIcon />
-          printer
-        </LocationElement> */}
         <LocationElement
           style={{ backgroundColor: '#28B5B1' }}
           onClick={() => handleTabClick('cafe')}
         >
           <CafeIcon />
-          cafeteria
+          <span>cafeteria</span>
+        </LocationElement>
+        <LocationElement style={{ backgroundColor: '#C3D350' }}>
+          <PrinterIcon />
+          <span>printer</span>
+        </LocationElement>
+        <LocationElement style={{ backgroundColor: '#003F91' }}>
+          <HospitalIcon />
+          <span>hospital</span>
         </LocationElement>
         <SearchBox />
       </LocationTab>
@@ -73,11 +78,12 @@ const LocationTab = styled.ul`
   gap: 1rem;
   list-style: none;
   font-size: 1.6rem;
+  flex-wrap: wrap;
   /* overflow-x: hidden; */
 `;
 
 const LocationElement = styled.li`
-  width: fit-content;
+  max-width: 10rem;
   height: 5rem;
   background-color: var(--main-gray);
   color: var(--hover-text);
@@ -92,7 +98,9 @@ const LocationElement = styled.li`
   transition:
     color 0.3s,
     background-color 0.3s;
+  /* max-width 0.4s; */
   svg path {
+    stroke-width: 2;
     stroke: white;
   }
   &.search {
@@ -103,14 +111,28 @@ const LocationElement = styled.li`
     }
   }
   &:not(.search):hover {
-    filter: brightness(0.8);
+    max-width: 20rem;
   }
   svg {
     width: 1.8rem;
     height: 1.8rem;
-    margin-right: 0.5rem;
+    stroke-width: 2;
   }
   path {
     transition: stroke 0.3s;
+  }
+  span {
+    margin-left: 0.5rem;
+    display: none;
+    opacity: 0;
+    transition-delay: 0.5s;
+    transition:
+      opacity 0.2s,
+      visibility 0.2s,
+      display 0.2s;
+  }
+  &:hover > span {
+    display: inline;
+    opacity: 1;
   }
 `;
