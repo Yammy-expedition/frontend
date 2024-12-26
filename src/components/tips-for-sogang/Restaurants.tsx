@@ -43,7 +43,7 @@ export default function Restaurants() {
       }
     };
     getPostList();
-  }, [restaurantList]);
+  }, []);
 
   useEffect(() => {
     if (searchParams.has('location')) {
@@ -60,7 +60,7 @@ export default function Restaurants() {
       setLocation('All');
       setFilteredRestaurantList(restaurantList);
     }
-  }, [searchParams, location, filteredRestaurantList, restaurantList]);
+  }, [searchParams, location, restaurantList]);
 
   return (
     <Section>
@@ -174,7 +174,7 @@ const LocationTab = styled.ul`
       width: 14rem;
       font-size: 1.5rem;
     }
-    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 `;
 

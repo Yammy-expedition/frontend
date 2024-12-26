@@ -1,6 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import { BuildsDataType } from './KakaoMap';
 import { ReactComponent as ExitIcon } from 'assets/icons/tips-for-sogang/exit.svg';
+import { ReactComponent as LocationIcon } from 'assets/icons/tips-for-sogang/map.svg';
+import { ReactComponent as TimeIcon } from 'assets/icons/tips-for-sogang/time.svg';
 
 interface MapModalProps {
   setModalOpen: (value: boolean) => void;
@@ -37,8 +39,14 @@ export default function MapModal({
               {spot.photo && <img src={spot.photo} alt="studying spot" />}
               <figcaption>
                 <h3>{spot.name}</h3>
-                <p>{spot.location}</p>
-                <p>{spot.open_hours}</p>
+                <p>
+                  <LocationIcon />
+                  {spot.location}
+                </p>
+                <p className="openhour">
+                  <TimeIcon />
+                  {spot.open_hours}
+                </p>
                 <Tags>
                   {spot.tags.map((tag) => (
                     <span key={tag.id}>{tag.name} </span>
@@ -57,8 +65,14 @@ export default function MapModal({
               {spot.photo && <img src={spot.photo} alt="studying spot" />}
               <figcaption>
                 <h3>{spot.name}</h3>
-                <p>{spot.location}</p>
-                <p className="openhour">{spot.open_hours}</p>
+                <p>
+                  <LocationIcon />
+                  {spot.location}
+                </p>
+                <p className="openhour">
+                  <TimeIcon />
+                  {spot.open_hours}
+                </p>
                 <Tags>
                   {spot.tags.map((tag) => (
                     <span key={tag.id}>{tag.name} </span>
@@ -78,6 +92,8 @@ const Tags = styled.span`
   gap: 0.5rem;
   flex-wrap: wrap;
   span {
+    font-weight: 400;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     background-color: var(--primary-color);
@@ -89,8 +105,9 @@ const Tags = styled.span`
 
 const StudyingSpotDiv = styled.div`
   img {
-    width: 8rem;
-    height: 8rem;
+    width: 9rem;
+    height: 9rem;
+    border-radius: 4px;
   }
   h2 {
     font-size: 1.3rem;
@@ -98,28 +115,42 @@ const StudyingSpotDiv = styled.div`
     color: var(--secondary-text);
   }
   h3 {
-    font-size: 1.6rem;
-    font-weight: 300;
+    letter-spacing: -1px;
+    font-size: 1.8rem;
+    font-weight: 500;
   }
   div {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     border-bottom: 1px solid var(--main-gray);
-    padding: 2rem 0;
+    padding: 1rem 0;
   }
   figure {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     figcaption {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       p {
+        display: flex;
+        align-items: flex-start;
         font-size: 1.3rem;
         font-weight: 200;
-        .openhour {
-          line-height: 120%;
+        &.openhour {
+          line-height: 140%;
+        }
+        svg {
+          flex-shrink: 0;
+          fill: var(--hover-bg);
+          stroke-width: 2;
+          width: 1.5rem;
+          height: 1.5rem;
+          margin-right: 0.5rem;
+          path {
+            fill: var(--hover-bg);
+          }
         }
       }
     }
@@ -127,6 +158,7 @@ const StudyingSpotDiv = styled.div`
 `;
 
 const ModalWrapper = styled.div<{ modalopen: string }>`
+  border-radius: 5px;
   z-index: 100;
   overflow-y: scroll;
   position: absolute;

@@ -135,6 +135,24 @@ export default function KakaoMap({ modalOpen, setModalOpen }: KakaoMapProps) {
           });
         };
 
+        //서치에 따른 이벤트...
+        if (searchParams.has('search')) {
+          const buildingId = Number(searchParams.get('search'));
+
+          const searchedBuilding = buildingsData.find(
+            (data) => data.id === Number(searchParams.get('search'))
+          );
+          if (searchedBuilding) {
+            handleSelectBuildingData(searchedBuilding.id);
+            setModalOpen(true);
+            const moveLatLng = new window.kakao.maps.LatLng(
+              buildings[buildingId]?.lat,
+              buildings[buildingId]?.lon
+            );
+            map.jump(moveLatLng, 1, { animate: true });
+          }
+        }
+
         if (searchParams.has('spot')) {
           if (searchParams.get('spot') === 'study') {
             handleMarker(studyMarkerImageUrl, studyList);
