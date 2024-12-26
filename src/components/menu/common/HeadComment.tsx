@@ -112,6 +112,7 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
 const CommentContainer = styled.div`
   flex-direction: column;
   margin-bottom: 1rem;
+  border-bottom: 1px solid var(--hover-text);
   > div {
     display: flex;
     gap: 1rem;

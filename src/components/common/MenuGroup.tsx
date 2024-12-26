@@ -95,8 +95,8 @@ const OpenableBoxList = styled.div`
 
 const OpenableBox = styled.div<{ $isOpen: boolean }>`
   padding: 0 1rem;
-  border-radius: 5px;
-  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  border: 0.7px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -109,7 +109,7 @@ const OpenableBox = styled.div<{ $isOpen: boolean }>`
   overflow: hidden;
   transition: color 0.4s ease-in;
   @media screen and (min-width: 1024px) {
-    height: 6.2rem;
+    height: 5.5rem;
   }
   > p {
     letter-spacing: -1px;

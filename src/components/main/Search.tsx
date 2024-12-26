@@ -71,7 +71,7 @@ export default function Search({
       ) as SVGPathElement;
 
       if (countryPath) {
-        countryPath.style.fill = 'orange';
+        countryPath.style.fill = '#B6AFE3';
         setSelectedCountry((prev) => {
           beforeSelectedCountryRef.current = prev;
           return countryPath;
