@@ -217,6 +217,7 @@ const RepresentImage = styled.div`
   background: lightGray;
   > div {
     > img {
+      border-radius: 4px;
       object-fit: cover;
       width: 10rem;
       height: 10rem;
