@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as SparkleIcon } from 'assets/icons/main/sparkle.svg';
+import { ReactComponent as RestaurantIcon } from 'assets/icons/tips-for-sogang/restaurants.svg';
+import { ReactComponent as MapIcon } from 'assets/icons/tips-for-sogang/map.svg';
 
 export default function TipsForSogangPage() {
   const [selectedCategory, setSelectedCategory] = useState('restaurants');
@@ -40,13 +42,15 @@ export default function TipsForSogangPage() {
           $current={selectedCategory === 'restaurants'}
           onClick={() => handleCategoryChange('restaurants')}
         >
-          Restaurants
+          <RestaurantIcon />
+          <span>Restaurants</span>
         </NavBtn>
         <NavBtn
           $current={selectedCategory === 'sogang-map'}
           onClick={() => handleCategoryChange('sogang-map')}
         >
-          Sogang Map
+          <MapIcon />
+          <span>Sogang Map</span>
         </NavBtn>
       </Nav>
       <div style={{ height: '100%' }}>
@@ -109,7 +113,7 @@ const Header = styled.header`
 `;
 
 const NavBtn = styled.div<{ $current: boolean }>`
-  width: 15rem;
+  width: 18rem;
   background-color: ${({ $current }) =>
     $current ? 'var(--hover-bg)' : 'var(--main-gray)'};
   color: ${({ $current }) =>
@@ -117,6 +121,7 @@ const NavBtn = styled.div<{ $current: boolean }>`
   border-radius: 6.5rem;
   padding: 1.5rem 3rem;
   display: flex;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
   font-size: 1.6rem;
@@ -128,19 +133,24 @@ const NavBtn = styled.div<{ $current: boolean }>`
     background-color: var(--hover-bg);
     color: var(--hover-text);
   }
+  svg {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
   @media (max-width: 430px) {
-    width: 14rem;
-    padding: 1.2rem 3rem;
+    width: 45vw;
+    padding: 1.2rem 1rem;
     font-size: 1.5rem;
   }
 `;
 
 const Nav = styled.nav`
-  padding: 2rem 0;
+  padding: 1rem 0;
   display: flex;
   gap: 1rem;
   letter-spacing: -0.5px;
   @media (max-width: 430px) {
+    justify-content: center;
     padding-left: 1rem;
     border-bottom: 1px solid var(--border-color);
   }

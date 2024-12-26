@@ -43,7 +43,7 @@ export default function Restaurants() {
       }
     };
     getPostList();
-  }, [restaurantList]);
+  }, []);
 
   useEffect(() => {
     if (searchParams.has('location')) {
@@ -60,7 +60,7 @@ export default function Restaurants() {
       setLocation('All');
       setFilteredRestaurantList(restaurantList);
     }
-  }, [searchParams, location, filteredRestaurantList, restaurantList]);
+  }, [searchParams, location, restaurantList]);
 
   return (
     <Section>

@@ -83,9 +83,10 @@ const LocationTab = styled.ul`
 `;
 
 const LocationElement = styled.li`
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   overflow: hidden;
-  max-width: 10rem;
+  max-width: 8rem;
   height: 5rem;
   background-color: var(--main-gray);
   color: var(--hover-text);
@@ -113,7 +114,7 @@ const LocationElement = styled.li`
     }
   }
   &:not(.search):hover {
-    max-width: 20rem;
+    max-width: 25rem;
   }
   svg {
     width: 1.8rem;
