@@ -89,6 +89,7 @@ export default function ReportDetail() {
               <th>신고유형</th>
               <th>카테고리</th>
               <th>신고 일시</th>
+              <th>상태</th>
             </tr>
           </thead>
           <tbody>
@@ -99,6 +100,24 @@ export default function ReportDetail() {
               <td>{report?.report_type}</td>
               <td>{report?.content_type}</td>
               <td>{dayjs(report?.reported_at).format('YY-MM-DD HH:mm')}</td>
+              {report?.status === 'P' ? (
+                <Status color="#ffcc00">
+                  <p></p>
+                  <span>대기</span>
+                </Status>
+              ) : null}
+              {report?.status === 'R' ? (
+                <Status color="#ff0000">
+                  <p></p>
+                  <span>반려</span>
+                </Status>
+              ) : null}
+              {report?.status === 'A' ? (
+                <Status color="#00ff00">
+                  <p></p>
+                  <span>접수</span>
+                </Status>
+              ) : null}
             </tr>
           </tbody>
         </table>
@@ -164,12 +183,14 @@ export default function ReportDetail() {
         <h2>◼︎ 신고 사유</h2>
         <p>{report?.reason}</p>
       </ReportReason>
-      <Buttons>
-        <button onClick={() => handleSubmitClick(true)}>
-          {isLoading ? <Loading /> : '신고 접수'}
-        </button>
-        <button onClick={() => handleSubmitClick(false)}>신고 반려</button>
-      </Buttons>
+      {report?.status === 'P' && (
+        <Buttons>
+          <button onClick={() => handleSubmitClick(true)}>
+            {isLoading ? <Loading /> : '신고 접수'}
+          </button>
+          <button onClick={() => handleSubmitClick(false)}>신고 반려</button>
+        </Buttons>
+      )}
       {isModalOpen && (
         <AdminModalPortal>
           <ReportModal setIsModalOpen={setIsModalOpen} reportId={reportId} />
@@ -317,5 +338,21 @@ const ContentDetail = styled.div`
     max-width: 85%;
     font-size: 1.6rem;
     padding: 2rem 0rem;
+  }
+`;
+
+const Status = styled.td`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  p {
+    border-radius: 50%;
+    background-color: ${({ color }) => color};
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  span {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
   }
 `;
