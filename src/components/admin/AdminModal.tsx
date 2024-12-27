@@ -61,6 +61,10 @@ const Buttons = styled.div`
     cursor: pointer;
     border-radius: 5px;
     font-weight: 700;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
     &:first-child {
       background-color: var(--secondary-color);
     }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from 'assets/icons/admin/exit.svg';
 import { useState } from 'react';
 import Loading from 'components/common/Loading';
+// import Loading from 'components/common/Loading';
 
 type ReportModalProps = {
   setIsModalOpen: (value: boolean) => void;
@@ -82,6 +83,10 @@ const Buttons = styled.div`
     }
     &:active {
       scale: 0.95;
+    }
+    img {
+      width: 100%;
+      object-fit: contain;
     }
   }
 `;

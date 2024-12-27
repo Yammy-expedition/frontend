@@ -70,6 +70,7 @@ export default function AllReports() {
               <th>신고유형</th>
               <th>카테고리</th>
               <th>신고 일시</th>
+              <th>상태</th>
             </tr>
           </thead>
           <tbody>
@@ -84,6 +85,24 @@ export default function AllReports() {
                 <td>{report.report_type}</td>
                 <td>{report.content_type}</td>
                 <td>{dayjs(report.reported_at).format('YY-MM-DD HH:mm')}</td>
+                {report.status === 'P' ? (
+                  <Status color="#ffcc00">
+                    <p></p>
+                    <span>대기</span>
+                  </Status>
+                ) : null}
+                {report.status === 'R' ? (
+                  <Status color="#ff0000">
+                    <p></p>
+                    <span>반려</span>
+                  </Status>
+                ) : null}
+                {report.status === 'A' ? (
+                  <Status color="#00ff00">
+                    <p></p>
+                    <span>접수</span>
+                  </Status>
+                ) : null}
               </tr>
             ))}
           </tbody>
@@ -135,6 +154,7 @@ const Wrapper = styled.div`
         }
       }
       tr {
+        cursor: pointer;
         font-size: 1.6rem;
         &:hover {
           background-color: var(--hover-text);
@@ -160,5 +180,21 @@ const Wrapper = styled.div`
         }
       }
     }
+  }
+`;
+
+const Status = styled.td`
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  p {
+    border-radius: 50%;
+    background-color: ${({ color }) => color};
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  span {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
   }
 `;
