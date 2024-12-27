@@ -12,7 +12,11 @@ export default function WhatIsUnicon() {
   // }
   return (
     <Main>
-      <img src="https://i.imgur.com/4OaiP1I.jpeg" alt="" />
+      <img src="https://i.imgur.com/MKUTMQp.png" alt="" />
+      <img src="https://i.imgur.com/k9d4wgP.png" alt="" />
+      <img src="https://i.imgur.com/vTZu3bm.png" alt="" />
+      <img src="https://i.imgur.com/KnkGW04.png" alt="" />
+      <img src="https://i.imgur.com/OiNLLjO.png" alt="" />
     </Main>
   );
 }
@@ -20,6 +24,7 @@ export default function WhatIsUnicon() {
 const Main = styled.main`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   overflow-y: scroll;
   img {
