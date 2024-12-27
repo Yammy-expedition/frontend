@@ -6,6 +6,7 @@ import { ReactComponent as MinusUserIcon } from 'assets/icons/admin/minusUser.sv
 
 export default function AdminSideBar() {
   const navigate = useNavigate();
+  const location = window.location.pathname.split('/')[2];
   return (
     <Section>
       <TitleBox>
@@ -17,54 +18,67 @@ export default function AdminSideBar() {
       </TitleBox>
       <Nav>
         <ul>
-          <li>
+          <Li
+            $islocation={location === 'users'}
+            onClick={() => navigate('/admin/users')}
+          >
             <span>
               <UserIcon />
               회원가입 관리
             </span>
-          </li>
-          <li>
+          </Li>
+          <Li
+            $islocation={location === 'reports'}
+            onClick={() => navigate('/admin/reports')}
+          >
             <span>
               <ReportsIcon />
               신고 관리
             </span>
-          </li>
-          <li>
+          </Li>
+          <Li
+            $islocation={location === 'reported-users'}
+            onClick={() => navigate('/admin/reported-users')}
+          >
             <span>
               <MinusUserIcon />
               신고 회원 관리
             </span>
-          </li>
+          </Li>
         </ul>
       </Nav>
     </Section>
   );
 }
 
+const Li = styled.li<{ $islocation?: boolean }>`
+  background-color: ${({ $islocation }) =>
+    $islocation ? 'var(--main-gray)' : 'transparent'};
+  font-size: 1.6rem;
+  padding: 2rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--border-color);
+  }
+  span {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  svg {
+    width: 2rem;
+    height: 2rem;
+    fill: ${({ $islocation }) =>
+      $islocation ? 'var(--hover-bg)' : 'var(--secondary-color)'};
+  }
+`;
+
 const Nav = styled.nav`
   ul {
     list-style: none;
-    li {
-      font-size: 1.6rem;
-      padding: 2rem;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border-color);
-      transition: background-color 0.3s;
-      cursor: pointer;
-      &:hover {
-        background-color: var(--border-color);
-      }
-      span {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-      }
-      svg {
-        fill: var(--secondary-color);
-        width: 2rem;
-        height: 2rem;
-      }
-    }
   }
 `;
 

@@ -18,6 +18,7 @@ import WhatIsUnicon from 'pages/what-is-unicon/WhatIsUnicon';
 import AllUsers from 'components/admin/AllUsers';
 import AllReports from 'components/admin/AllReports';
 import AllReportedUsers from 'components/admin/AllReportedUsers';
+import ReportDetail from 'components/admin/ReportDetail';
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/admin" element={<AdminPage />}>
         <Route path="users" element={<AllUsers />} />
         <Route path="reports" element={<AllReports />} />
+        <Route path="reports/:reportId" element={<ReportDetail />} />
         <Route path="reported-users" element={<AllReportedUsers />} />
       </Route>
       <Route path="/login" element={<LoginPage />} />
