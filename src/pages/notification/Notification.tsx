@@ -13,17 +13,67 @@ import { ReactComponent as SystemSVG } from '../../assets/icons/notification/use
 import { putReadNotification } from 'utils/notification/putReadNotification';
 import { deleteNotification } from 'utils/notification/deleteNotification';
 import { deleteAllNotification } from 'utils/notification/deleteAllNotification';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 
 export default function Notification() {
-  const [notice, setNotice] = useState<AllInfoNotification>();
+  const [notice, setNotice] = useState<AllInfoNotification | null>(null);
   const navigate = useNavigate();
 
+  // new
+  //************************************************************************************************ */
+
   useEffect(() => {
-    getNotification().then((result) => setNotice(result));
+    const RunSSE = () => {
+      const EventSource = EventSourcePolyfill || NativeEventSource;
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      };
+      const evtSource = new EventSource(
+        `${process.env.REACT_APP_API_URL}notification/stream`,
+        { headers: headers, withCredentials: true }
+      );
+      console.log('열려라 참깨!');
+      console.log('참깨빵 준비 중, 순살 고기 준비 중:', evtSource);
+
+      evtSource.onmessage = function (event) {
+        try {
+          console.log('Event received:', event);
+          const newEvent = JSON.parse(event.data);
+          console.log(newEvent);
+          setNotice((prev) => {
+            if (prev === null) return newEvent;
+            else return { ...prev, list: [[newEvent.list[0]], ...prev.list] };
+          });
+        } catch (err) {
+          console.error('Error parsing event data:', err);
+        }
+      };
+
+      evtSource.onerror = async (err) => {
+        console.error('evtSource failed:', err);
+        evtSource.close();
+        setTimeout(RunSSE, 1000);
+      };
+
+      return () => {
+        evtSource.close();
+        console.log('닫혀라 참깨!!!!');
+      };
+    };
+
+    return RunSSE();
   }, []);
+  //************************************************************************************************ */
+
+  // old
+  //************************************************************************************************ */
+  // useEffect(() => {
+  //   getNotification().then((result) => setNotice(result));
+  // }, []);
+  //************************************************************************************************ */
 
   const onClickNoti = (itemId: number, redirectURL: string) => {
-    putReadNotification(itemId);
+    putReadNotification(itemId); // 알림 읽음 처리
 
     const arr = redirectURL.split('/');
 
@@ -76,7 +126,6 @@ export default function Notification() {
                           onClickNoti(item.id, item.redirect_url.redirect_url)
                         }
                       >
-                        <h1>{item.actor.nickname}</h1>
                         <p>{item.content}</p>
                       </div>
                     </NotiInfo>
@@ -162,9 +211,6 @@ const NotiInfo = styled.div`
     flex-direction: column;
     cursor: pointer;
     gap: 1rem;
-    > h1 {
-      font-size: 2rem;
-    }
 
     > p {
       font-size: 1.3rem;

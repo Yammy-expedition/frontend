@@ -309,12 +309,13 @@ const MoreDiv = styled.div`
 
     top: 2.5rem;
     right: 0;
-    width: 5rem;
+    width: 7rem;
 
     > div {
       &:hover {
         background: var(--main-gray);
       }
+      font-size: 1.5rem;
       border: 1px solid var(--border-color);
       cursor: pointer;
       display: flex;

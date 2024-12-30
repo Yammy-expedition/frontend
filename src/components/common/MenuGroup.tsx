@@ -5,7 +5,11 @@ import { ReactComponent as PlusSVG } from '../../assets/icons/plus.svg';
 import { ReactComponent as NotiSVG } from '../../assets/icons/main/notification.svg';
 import { useNavigate } from 'react-router-dom';
 
-export default function MenuGroup() {
+interface MenuGroupProps {
+  setOpenHam: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function MenuGroup({ setOpenHam }: MenuGroupProps) {
   const [OpenIndex, setOpenIndex] = useState<number | null>(null);
   const [closing, setClosing] = useState(false);
   const navigate = useNavigate();
@@ -40,6 +44,9 @@ export default function MenuGroup() {
     index: number
   ) => {
     toggleBox(index);
+    if (item.parent === 'What is Unicon') {
+      if (window.innerWidth <= 768) setOpenHam(false);
+    }
     if (item.parent === 'Notification') {
       const token = window.localStorage.getItem('accessToken');
       if (!token) {
@@ -48,6 +55,11 @@ export default function MenuGroup() {
       }
     }
     navigate(item.ownLink);
+  };
+
+  const onClickChildItem = (childItem: { name: string; link: string }) => {
+    navigate(childItem.link);
+    if (window.innerWidth <= 768) setOpenHam(false);
   };
 
   return (
@@ -70,7 +82,7 @@ export default function MenuGroup() {
             {item.child.map((childItem, childIndex) => (
               <ChildItem
                 key={childIndex}
-                onClick={() => navigate(childItem.link)}
+                onClick={() => onClickChildItem(childItem)}
               >
                 {childItem.name}
               </ChildItem>
