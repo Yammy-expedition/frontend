@@ -18,7 +18,7 @@ export default function SideBar({
 }: SideBarProps) {
   useEffect(() => {
     if (!openHam) {
-      sideBarRef.current?.style.setProperty('left', '-38rem');
+      sideBarRef.current?.style.setProperty('left', '-100rem');
     } else {
       sideBarRef.current?.style.setProperty('left', '0');
     }
@@ -28,10 +28,10 @@ export default function SideBar({
     <SideBarContainer ref={sideBarRef}>
       <Header>
         <Hamburger setOpenHam={setOpenHam} />
-        <TitleBox />
-        <MenuGroup />
+        <TitleBox setOpenHam={setOpenHam} />
+        <MenuGroup setOpenHam={setOpenHam} />
       </Header>
-      <Footer />
+      <Footer setOpenHam={setOpenHam} />
     </SideBarContainer>
   );
 }
@@ -58,7 +58,8 @@ const SideBarContainer = styled.div`
   left: -38rem;
   transition: left 0.3s ease-in-out;
   z-index: 200;
-  @media screen and (min-width: 768px) {
+
+  @media screen and (min-width: 320px) {
     left: 0;
     min-width: 25.4rem;
   }

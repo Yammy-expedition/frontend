@@ -4,7 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Footer() {
+interface FooterProps {
+  setOpenHam: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Footer({ setOpenHam }: FooterProps) {
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>();
 
@@ -24,6 +28,12 @@ export default function Footer() {
   }, []);
 
   const navigate = useNavigate();
+
+  const onClickLogin = () => {
+    if (window.innerWidth < 768) setOpenHam(false);
+    setLoginModalOpen(true);
+  };
+
   return (
     <FooterContainer>
       {isLogin ? (
@@ -36,7 +46,7 @@ export default function Footer() {
         </>
       ) : (
         <>
-          <div onClick={() => setLoginModalOpen(true)}>login</div>
+          <div onClick={onClickLogin}>login</div>
           <p>|</p>
           <div onClick={() => navigate('/sign-up')}>sign up</div>
 

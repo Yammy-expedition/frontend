@@ -134,6 +134,6 @@ html {
 #market-image-modal {
   position: absolute;
   top: 0;
-  z-index: 20;
+  z-index: 300;
   left: 0;
 }

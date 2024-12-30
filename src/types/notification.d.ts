@@ -1,9 +1,7 @@
-import { User } from './user';
-
 export interface NotiList {
   id: number;
   notification_type: string;
-  actor: User;
+  actor: number;
   content: string;
   related_id: number;
   created_at: string;

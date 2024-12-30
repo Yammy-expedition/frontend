@@ -128,8 +128,8 @@ const EachPost = styled.div<{ $isOnSale: string }>`
     > div {
       display: flex;
       align-items: center;
-
       gap: 1rem;
+
       > p {
         white-space: nowrap;
         overflow: hidden;
@@ -140,6 +140,7 @@ const EachPost = styled.div<{ $isOnSale: string }>`
         font-size: 1.6rem;
         @media screen and (min-width: 330px) {
           width: 80%;
+          font-size: 1.4rem;
         }
         @media screen and (min-width: 768px) {
           font-size: 2rem;
@@ -152,6 +153,7 @@ const EachPost = styled.div<{ $isOnSale: string }>`
       }
 
       > div {
+        font-size: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -165,7 +167,6 @@ const EachPost = styled.div<{ $isOnSale: string }>`
 
         width: 5rem;
         height: 1.75rem;
-        font-size: 1.2rem;
 
         border-radius: 40rem;
 
@@ -208,8 +209,8 @@ const PriceBox = styled.div`
 `;
 
 const RepresentImage = styled.div`
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
   @media screen and (min-width: 768px) {
     width: 13rem;
     height: 13rem;
@@ -219,8 +220,8 @@ const RepresentImage = styled.div`
     > img {
       border-radius: 4px;
       object-fit: cover;
-      width: 10rem;
-      height: 10rem;
+      width: 8rem;
+      height: 8rem;
       @media screen and (min-width: 768px) {
         width: 13rem;
         height: 13rem;

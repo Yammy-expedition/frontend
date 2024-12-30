@@ -2,10 +2,19 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function TitleBox() {
+interface TitleBoxProps {
+  setOpenHam?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function TitleBox({ setOpenHam }: TitleBoxProps) {
   const navigate = useNavigate();
+
+  const onClickLogo = () => {
+    navigate('/');
+    if (window.innerWidth <= 768 && setOpenHam) setOpenHam(false);
+  };
   return (
-    <LogoBox onClick={() => navigate('/')}>
+    <LogoBox onClick={onClickLogo}>
       {/* <BackgroundCircle />
       <div style={{ zIndex: 10, width: '100%' }}>
      
