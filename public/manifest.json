@@ -51,8 +51,8 @@
       "purpose": "any"
     },
     {
-      "src": "images/logo.svg",
-      "type": "image/svg+xml",
+      "src": "images/logo.png",
+      "type": "image/png",
       "sizes": "599x599",
       "purpose": "any"
     }
@@ -62,10 +62,6 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "orientation": "portrait",
-  "launch_handler": {
-    "route_to": "existing-client",
-    "navigate_existing_client": "always"
-  },
   "screenshots": [
     {
       "src": "images/main_screenshot2.png",
@@ -81,5 +77,10 @@
     }
   ],
   "id": "https://unicon-one.vercel.app/",
-  "description": "UNICON is a simple and intuitive platform that supports communication and information sharing between users."
+  "description": "UNICON is a simple and intuitive platform that supports communication and information sharing between users.",
+  "launch_handler": {
+    "route_to": "existing-client",
+    "navigate_existing_client": "always",
+    "client_mode": "navigate-existing"
+  }
 }
