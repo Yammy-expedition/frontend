@@ -55,6 +55,11 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
+  "orientation": "portrait",
+  "launch_handler": {
+    "route_to": "existing-client",
+    "navigate_existing_client": "always"
+  },
   "screenshots": [
     {
       "src": "images/main_screenshot2.png",
@@ -68,5 +73,7 @@
       "sizes": "883x1454",
       "form_factor": "narrow"
     }
-  ]
+  ],
+  "id": "https://unicon-one.vercel.app/",
+  "description": "UNICON is a simple and intuitive platform that supports communication and information sharing between users."
 }
