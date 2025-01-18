@@ -15,22 +15,24 @@ instance.interceptors.request.use((config) => {
 });
 
 instance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   async (error) => {
     console.log(error);
+    console.log(error.response.status);
     if (error.response?.status === 401) {
       const dataToSend = { refresh: Cookies.get('refreshToken') };
+      const newAccessToken = (await instance.post('/user/refresh', dataToSend))
+        .data.access;
 
-      try {
-        const response = await instance.post('/user/refresh', dataToSend);
+      error.config.headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${newAccessToken}`
+      };
 
-        if (response.status === 200) {
-          window.localStorage.setItem('accessToken', response.data.access);
-        }
-      } catch (err) {
-        console.log('Error in instance');
-        console.log(err);
-      }
+      const response = await axios.request(error.config);
+      return response;
     }
     return Promise.reject(error);
   }

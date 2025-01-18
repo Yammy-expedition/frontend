@@ -38,8 +38,8 @@ export default function Footer({ setOpenHam }: FooterProps) {
     <FooterContainer>
       {isLogin ? (
         <>
-          <div onClick={() => navigate('/chat')}>chat</div>
-          <p>|</p>
+          {/* <div onClick={() => navigate('/chat')}>chat</div>
+          <p>|</p> */}
           <div onClick={() => navigate('/my-page')}>mypage</div>
           <p>|</p>
           <div onClick={onClickLogout}>logout</div>
