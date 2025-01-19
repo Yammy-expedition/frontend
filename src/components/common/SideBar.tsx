@@ -9,12 +9,14 @@ interface SideBarProps {
   openHam: boolean;
   setOpenHam: React.Dispatch<React.SetStateAction<boolean>>;
   sideBarRef: React.RefObject<HTMLDivElement>;
+  isLoggedIn: boolean;
 }
 
 export default function SideBar({
   openHam,
   setOpenHam,
-  sideBarRef
+  sideBarRef,
+  isLoggedIn
 }: SideBarProps) {
   useEffect(() => {
     if (!openHam) {
@@ -31,7 +33,7 @@ export default function SideBar({
         <TitleBox setOpenHam={setOpenHam} />
         <MenuGroup setOpenHam={setOpenHam} />
       </Header>
-      <Footer setOpenHam={setOpenHam} />
+      <Footer setOpenHam={setOpenHam} isLoggedIn={isLoggedIn} />
     </SideBarContainer>
   );
 }

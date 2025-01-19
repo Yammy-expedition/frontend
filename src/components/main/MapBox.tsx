@@ -193,7 +193,7 @@ export default function MapBox() {
         tooltipPosition={tooltipPosition}
       ></WorldMap>
 
-      <Search
+      {/* <Search
         beforeSelectedCountryRef={beforeSelectedCountryRef}
         svgRef={svgRef}
         mapBoxRef={mapBoxRef}
@@ -206,7 +206,7 @@ export default function MapBox() {
         setUserList={setUserList}
         loading={loading}
         setLoading={setLoading}
-      ></Search>
+      ></Search> */}
     </MapContainer>
   );
 }

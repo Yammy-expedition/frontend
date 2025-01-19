@@ -7,11 +7,23 @@ import './style/font.css';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as HamburgerMenuSVG } from './assets/icons/common/hamburgermenu.svg';
+import { checkSession } from 'api/session';
+import Loading from 'components/common/Loading';
 
 function App() {
   const location = useLocation();
   const [openHam, setOpenHam] = useState<boolean>(false);
   const sideBarRef = useRef<HTMLDivElement>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const initializeSession = async () => {
+      const sessionValid = await checkSession();
+      setIsLoggedIn(sessionValid);
+    };
+
+    initializeSession();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,6 +58,10 @@ function App() {
     };
   }, [sideBarRef]);
 
+  if (isLoggedIn === null) {
+    return <Loading />; // 세션 확인
+  }
+
   return (
     <AppContainer className="App">
       {location.pathname.split('/')[1] !== 'admin' &&
@@ -61,6 +77,7 @@ function App() {
               openHam={openHam}
               setOpenHam={setOpenHam}
               sideBarRef={sideBarRef}
+              isLoggedIn={isLoggedIn}
             />
           </div>
         )}

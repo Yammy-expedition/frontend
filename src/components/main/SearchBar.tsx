@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import EachUserBox from './EachUserBox';
 import { User } from 'types/user';
 import Loading from 'components/common/Loading';
-import { useNavigate } from 'react-router-dom';
 
 interface SearchBarProps {
   showUserList: boolean;
@@ -17,7 +16,6 @@ interface SearchBarProps {
   setSelectedMajorName: React.Dispatch<React.SetStateAction<string | null>>;
   userList: User[];
   loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function SearchBar({
@@ -29,8 +27,7 @@ export default function SearchBar({
   selectedMajorName,
   setSelectedMajorName,
   userList,
-  loading,
-  setLoading
+  loading
 }: SearchBarProps) {
   const onChangeSelectedMajorName = (
     e: React.ChangeEvent<HTMLSelectElement>

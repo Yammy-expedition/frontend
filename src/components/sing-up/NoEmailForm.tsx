@@ -156,7 +156,7 @@ export default function NoEmailForm({
           <p>{`*It takes some times to accept you, because we have to check this file.
 And we will destroy this file after checking
 
-*Chat, Post and Comment functions are not available until you are approved`}</p>
+*'Community can be used after you are approved`}</p>
         </ProvingContainer>
       </CertifyBox>
 

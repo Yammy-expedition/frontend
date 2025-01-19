@@ -93,7 +93,6 @@ export default function Search({
         setSelectedMajorName={setSelectedMajorName}
         userList={userList}
         loading={loading}
-        setLoading={setLoading}
       />
     </SearchContainer>
   );
