@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 export const checkSession = async (): Promise<boolean> => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = Cookies.get('refreshToken');
-  console.log(accessToken, refreshToken);
 
   // Access 토큰과 Refresh 토큰이 없으면 세션 없음
   if (!accessToken || !refreshToken) {
