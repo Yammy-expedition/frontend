@@ -25,11 +25,15 @@ instance.interceptors.response.use(
       const dataToSend = { refresh: Cookies.get('refreshToken') };
       const newAccessToken = (await instance.post('/user/refresh', dataToSend))
         .data.access;
+      console.log(newAccessToken);
 
       error.config.headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${newAccessToken}`
       };
+
+      window.localStorage.removeItem('accessToken');
+      window.localStorage.setItem('accessToken', newAccessToken);
 
       const response = await axios.request(error.config);
       return response;

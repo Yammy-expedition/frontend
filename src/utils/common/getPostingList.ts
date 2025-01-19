@@ -12,9 +12,6 @@ export const getPostingList = async (
 ) => {
   setLoading(true);
   try {
-    console.log(
-      `/posting?board_type=${boradType}&page=${page}${orderType ? `&sort_by=${orderType}` : ''}${searchType ? `&search_type=${searchType}` : ''}${searchContent ? `&keyword=${searchContent}` : ''}`
-    );
     const response = await instance.get(
       `/posting?board_type=${boradType}&page=${page}${orderType ? `&sort_by=${orderType}` : ''}${searchType ? `&search_type=${searchType}` : ''}${searchContent ? `&keyword=${searchContent}` : ''}`
     );

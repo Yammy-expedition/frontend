@@ -6,10 +6,10 @@ import styled from 'styled-components';
 
 interface FooterProps {
   setOpenHam: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoggedIn: boolean;
 }
 
-export default function Footer({ setOpenHam }: FooterProps) {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+export default function Footer({ setOpenHam, isLoggedIn }: FooterProps) {
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>();
 
   const HandleModalShow = () => {
@@ -21,12 +21,6 @@ export default function Footer({ setOpenHam }: FooterProps) {
     window.location.reload();
   };
 
-  useEffect(() => {
-    if (window.localStorage.getItem('accessToken')) {
-      setIsLogin(true);
-    }
-  }, []);
-
   const navigate = useNavigate();
 
   const onClickLogin = () => {
@@ -36,7 +30,7 @@ export default function Footer({ setOpenHam }: FooterProps) {
 
   return (
     <FooterContainer>
-      {isLogin ? (
+      {isLoggedIn ? (
         <>
           {/* <div onClick={() => navigate('/chat')}>chat</div>
           <p>|</p> */}
