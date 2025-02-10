@@ -56,12 +56,12 @@ export default function MyProfile(profileData: ProfileProps) {
             <p>{findCountryname(profileData.nationality)}</p>
           </div>
         </HeaderProfileBox>
-        {userId ? (
-          <ToChatButton
-            userId={Number(userId)}
-            userName={profileData.nickname}
-          />
-        ) : (
+        {userId ? null : (
+          // <ToChatButton
+          //   userId={Number(userId)}
+          //   userName={profileData.nickname}
+          // />
+          // ToChatButton은 타인의 프로필에서 채팅을 거는 버튼임
           <button>edit</button>
         )}
       </header>

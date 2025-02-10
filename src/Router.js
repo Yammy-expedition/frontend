@@ -32,7 +32,7 @@ function Router() {
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/introduction" element={<WhatIsUnicon />} />
-      <Route path="/chat/:id" element={<ChatDetail />} />
+      {/* <Route path="/chat/:id" element={<ChatDetail />} /> */}
       <Route path="/menu">
         <Route
           path="restaurant"
@@ -60,7 +60,7 @@ function Router() {
         <Route path=":category" element={<TipsForSogangPage />} />
       </Route>
       <Route path="/writing-post" element={<WritingPostPage />} />
-      <Route path="/chat" element={<ChatMain />} />
+      {/* <Route path="/chat" element={<ChatMain />} /> */}
       <Route
         path="/user-profile/:userId/:category"
         element={<UserProfile />}
