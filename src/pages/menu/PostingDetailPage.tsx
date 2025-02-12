@@ -141,7 +141,7 @@ export default function PostingDetailPage() {
             <ImgBox>
               {posting.board_type === 'market' && (
                 <>
-                  {images.map((item, index) => (
+                  {images?.map((item, index) => (
                     <div key={index} onClick={() => onClickUniqueImage(index)}>
                       <figure>
                         <img src={item.image} alt="stuff-image" />

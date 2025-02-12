@@ -65,7 +65,7 @@ export default function Restaurants() {
   return (
     <Section>
       <LocationTab>
-        {locationList.map((el, key) => (
+        {locationList?.map((el, key) => (
           <li
             className={location === el ? 'selected' : ''}
             onClick={() => handleTabClick(el)}

@@ -13,7 +13,7 @@ export const postPosting = async (
   dataToSend.append('board_type', boardType);
   dataToSend.append('price', price);
   if (imgFiles) {
-    const blobImgFiles = imgFiles.map((imgFile) => {
+    const blobImgFiles = imgFiles?.map((imgFile) => {
       return new Blob([imgFile], { type: imgFile.type });
     });
     blobImgFiles.forEach((blob) => dataToSend.append('images', blob));

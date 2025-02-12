@@ -93,7 +93,7 @@ export default function ReplyComment({
               </ReplyBox>
             </ReplyBoxWrapper>
           )}
-          {replies.map((reply) => (
+          {replies?.map((reply) => (
             <ReplyComment
               key={reply.id}
               postingId={postingId}

@@ -67,7 +67,7 @@ export default function MarketRestaurantBox() {
             <Loading></Loading>
           ) : (
             <>
-              {restaurantPostings.map((post, index2) => (
+              {restaurantPostings?.map((post, index2) => (
                 <CircleTitleCreatedAt key={index2}>
                   <CircleTitle>
                     <Circle></Circle>
@@ -111,7 +111,7 @@ export default function MarketRestaurantBox() {
             <Loading></Loading>
           ) : (
             <>
-              {marketPostings.map((post, index2) => (
+              {marketPostings?.map((post, index2) => (
                 <CircleTitleCreatedAt key={index2}>
                   <CircleTitle>
                     <Circle></Circle>

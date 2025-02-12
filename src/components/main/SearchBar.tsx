@@ -49,7 +49,7 @@ export default function SearchBar({
           <option disabled hidden value="">
             Select Country
           </option>
-          {countries.map((item, index) => (
+          {countries?.map((item, index) => (
             <option key={index} value={item.name}>
               {item.name}
             </option>
@@ -65,7 +65,7 @@ export default function SearchBar({
           <option disabled hidden value="">
             Select Major
           </option>
-          {majors.map((item, index) => (
+          {majors?.map((item, index) => (
             <option key={index}>{item.name}</option>
           ))}
         </Select>
@@ -82,7 +82,7 @@ export default function SearchBar({
                 {userList.length === 0 ? (
                   <div>No User Exists OTL</div>
                 ) : (
-                  userList.map((item, index) => {
+                  userList?.map((item, index) => {
                     return <EachUserBox key={index} user={item}></EachUserBox>;
                   })
                 )}

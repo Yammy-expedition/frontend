@@ -64,7 +64,7 @@ export default function MenuGroup({ setOpenHam }: MenuGroupProps) {
 
   return (
     <OpenableBoxList>
-      {openableBoxList.map((item, index) => (
+      {openableBoxList?.map((item, index) => (
         <div key={index}>
           <OpenableBox
             onClick={() => onClickBox(item, index)}
@@ -79,7 +79,7 @@ export default function MenuGroup({ setOpenHam }: MenuGroupProps) {
             <p>{item.parent}</p>
           </OpenableBox>
           <ChildList $isVisible={OpenIndex === index && !closing}>
-            {item.child.map((childItem, childIndex) => (
+            {item.child?.map((childItem, childIndex) => (
               <ChildItem
                 key={childIndex}
                 onClick={() => onClickChildItem(childItem)}

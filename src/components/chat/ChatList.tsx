@@ -148,7 +148,7 @@ export default function ChatList() {
     <ChatUL>
       {chatList ? (
         <>
-          {chatList.map((chat, key) => (
+          {chatList?.map((chat, key) => (
             <li onClick={() => navigateToChatDetail(chat.other_user)} key={key}>
               <div className="rightBox">
                 <figure>

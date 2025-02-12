@@ -42,7 +42,7 @@ export default function PageNation({
         {Array.from(
           { length: pageLength },
           (value, index) => startPage + index
-        ).map((page) => (
+        )?.map((page) => (
           <div
             key={page}
             onClick={() => handlePageChange(page)}

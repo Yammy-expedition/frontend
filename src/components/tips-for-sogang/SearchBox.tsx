@@ -20,7 +20,7 @@ export default function SearchBox() {
         return;
       }
       setBuildingsData(response.data);
-      const names = response.data.map((building: BuildsDataType) => ({
+      const names = response.data?.map((building: BuildsDataType) => ({
         name: building.building_name,
         building_id: building.id
       }));
@@ -79,7 +79,7 @@ export default function SearchBox() {
       {isFocused && (
         <ResultBox>
           {filteredBuildingNames.length > 0 ? (
-            filteredBuildingNames.map(
+            filteredBuildingNames?.map(
               (
                 building: { name: string; building_id: number },
                 key: number
