@@ -220,7 +220,7 @@ export default function WritingPostPage() {
               </PriceSettingBox>
 
               <ImgBox>
-                {previews.map((preview, index) => (
+                {previews?.map((preview, index) => (
                   <div key={index}>
                     {preview ? (
                       <figure onClick={() => handleDeleteImage(index)}>

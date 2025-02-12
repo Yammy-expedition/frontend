@@ -124,7 +124,7 @@ export default function PersonalInformation({
             <option disabled hidden value="">
               Select Country
             </option>
-            {countries.map((item, index) => (
+            {countries?.map((item, index) => (
               <option key={index} value={item.code}>
                 {item.name}
               </option>

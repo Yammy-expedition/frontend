@@ -95,7 +95,7 @@ export default function HeadComment({ comment, postingId }: HeadCommentProps) {
               </ReplyBox>
             </ReplyBoxWrapper>
           )}
-          {replies.map((replaycomment) => (
+          {replies?.map((replaycomment) => (
             <ReplyComment
               key={replaycomment.id}
               postingId={postingId}

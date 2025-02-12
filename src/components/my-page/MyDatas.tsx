@@ -78,7 +78,7 @@ const PostingsLi = (postingLists: Posting[]) => {
   }
   return (
     <>
-      {postingLists.map((post, key: number) => (
+      {postingLists?.map((post, key: number) => (
         <li
           onClick={() =>
             navigate(`/posting/${post.id}`, {
@@ -119,7 +119,7 @@ const CommentsLi = (commentLists: Comment[]) => {
   }
   return (
     <>
-      {commentLists.map((comment, key: number) => (
+      {commentLists?.map((comment, key: number) => (
         <li
           key={key}
           onClick={() =>

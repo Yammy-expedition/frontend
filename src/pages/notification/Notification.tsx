@@ -114,7 +114,7 @@ export default function Notification() {
           <NotiList>
             {notice ? (
               <>
-                {notice.list.map((item, index) => (
+                {notice.list?.map((item, index) => (
                   <EachNoti key={index}>
                     <NotiInfo>
                       <SVGWrapper>

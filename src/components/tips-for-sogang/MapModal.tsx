@@ -33,7 +33,7 @@ export default function MapModal({
       </div>
       <StudyingSpotDiv>
         <h2>Studying spots</h2>
-        {selectedBuildingData?.studying_spots.map((spot) => (
+        {selectedBuildingData?.studying_spots?.map((spot) => (
           <div key={spot.id}>
             <figure>
               {spot.photo && <img src={spot.photo} alt="studying spot" />}
@@ -48,7 +48,7 @@ export default function MapModal({
                   {spot.open_hours}
                 </p>
                 <Tags>
-                  {spot.tags.map((tag) => (
+                  {spot.tags?.map((tag) => (
                     <span key={tag.id}>{tag.name} </span>
                   ))}
                 </Tags>
@@ -59,7 +59,7 @@ export default function MapModal({
       </StudyingSpotDiv>
       <StudyingSpotDiv>
         <h2>Cafeterias</h2>
-        {selectedBuildingData?.cafeterias.map((spot) => (
+        {selectedBuildingData?.cafeterias?.map((spot) => (
           <div key={spot.id}>
             <figure>
               {spot.photo && <img src={spot.photo} alt="studying spot" />}
@@ -74,7 +74,7 @@ export default function MapModal({
                   {spot.open_hours}
                 </p>
                 <Tags>
-                  {spot.tags.map((tag) => (
+                  {spot.tags?.map((tag) => (
                     <span key={tag.id}>{tag.name} </span>
                   ))}
                 </Tags>

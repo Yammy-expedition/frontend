@@ -4,7 +4,7 @@ import { majors } from 'constants/majors';
 
 export function findCountryname(nationality: string) {
   const arr: string[] = [];
-  nationality.split(',').map((nat) => {
+  nationality.split(',')?.map((nat) => {
     const country = countries.find((country) => country.code === nat.trim());
     if (country) arr.push(country.name);
     else arr.push('Unknown');
@@ -20,7 +20,7 @@ export function changeSex(sex: string) {
 
 export function findMajor(code: string) {
   const arr: string[] = [];
-  code.split(',').map((maj) => {
+  code.split(',')?.map((maj) => {
     const major = majors.find((major) => major.code === maj.trim());
     if (major) arr.push(major.name);
     else arr.push('Unknown');
@@ -30,7 +30,7 @@ export function findMajor(code: string) {
 
 export function findLanguage(code: string) {
   const arr: string[] = [];
-  code.split(',').map((lang) => {
+  code.split(',')?.map((lang) => {
     const language = languages.find(
       (language) => language.code === lang.trim()
     );
