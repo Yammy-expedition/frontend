@@ -68,7 +68,10 @@ export default function RestaurantsPage({ boardType }: RestaurantsPageProps) {
       orderType,
       searchType,
       searchContent
-    ).then((result) => setLastPage(Math.ceil(result / 5)));
+    ).then((result) => {
+      setLastPage(Math.ceil(result / 5));
+      console.log(Math.ceil(result / 5));
+    });
   }, [boardType, currentPage, orderType]);
 
   const handlePageChange = (page: number) => {

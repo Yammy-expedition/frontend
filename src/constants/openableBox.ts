@@ -10,7 +10,7 @@ export const openableBoxList = [
       { name: 'Restaurants', link: '/tips-for-sogang/restaurants' },
       { name: 'Sogang Map', link: '/tips-for-sogang/sogang-map' }
     ],
-    ownLink: '/tips-for-sogang'
+    ownLink: '/tips-for-sogang/restaurants'
   },
   {
     parent: 'Menu',
@@ -19,7 +19,7 @@ export const openableBoxList = [
       { name: 'Markets', link: '/menu/market' },
       { name: 'Generel Discussion', link: '/menu/general' }
     ],
-    ownLink: ''
+    ownLink: '/menu/restaurant'
   },
   {
     parent: 'Notification',

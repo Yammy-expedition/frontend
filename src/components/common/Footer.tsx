@@ -4,8 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Footer() {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+interface FooterProps {
+  setOpenHam: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoggedIn: boolean;
+}
+
+export default function Footer({ setOpenHam, isLoggedIn }: FooterProps) {
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>();
 
   const HandleModalShow = () => {
@@ -17,26 +21,26 @@ export default function Footer() {
     window.location.reload();
   };
 
-  useEffect(() => {
-    if (window.localStorage.getItem('accessToken')) {
-      setIsLogin(true);
-    }
-  }, []);
-
   const navigate = useNavigate();
+
+  const onClickLogin = () => {
+    if (window.innerWidth < 768) setOpenHam(false);
+    setLoginModalOpen(true);
+  };
+
   return (
     <FooterContainer>
-      {isLogin ? (
+      {isLoggedIn ? (
         <>
-          <div onClick={() => navigate('/chat')}>chat</div>
-          <p>|</p>
+          {/* <div onClick={() => navigate('/chat')}>chat</div>
+          <p>|</p> */}
           <div onClick={() => navigate('/my-page')}>mypage</div>
           <p>|</p>
           <div onClick={onClickLogout}>logout</div>
         </>
       ) : (
         <>
-          <div onClick={() => setLoginModalOpen(true)}>login</div>
+          <div onClick={onClickLogin}>login</div>
           <p>|</p>
           <div onClick={() => navigate('/sign-up')}>sign up</div>
 
